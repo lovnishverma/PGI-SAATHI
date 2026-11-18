@@ -1,0 +1,37 @@
+name: PGI Saathi CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache-dependency-path: |
+            frontend/package-lock.json
+            backend/package-lock.json
+
+      # Test Frontend Build
+      - name: Install Frontend Dependencies
+        run: cd frontend && npm install
+
+      - name: Build Frontend (Vite)
+        run: cd frontend && npm run build
+
+      # Test Backend
+      - name: Install Backend Dependencies
+        run: cd backend && npm install
+
+      - name: Test Backend Initialization
+        run: cd backend && node -e "require('./src/server.js'); console.log('Backend initialized successfully'); process.exit(0);"

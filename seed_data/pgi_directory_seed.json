@@ -1,0 +1,277 @@
+{
+  "metadata": {
+    "source": "PGIMER Patient Help Guide (November 2026) & PGI Saathi SRS v1.0",
+    "version": "1.0.0",
+    "verified_at": "2026-11-17",
+    "status": "baseline_seed",
+    "disclaimer": "Independent patient guide seed data. Not an official PGIMER publication. Hospital-specific room numbers, counters, and schedules must be reconfirmed on-site."
+  },
+  "buildings": [
+    {
+      "id": "new_opd",
+      "name": "New OPD Block",
+      "hindi_name": "न्यू ओपीडी ब्लॉक",
+      "punjabi_name": "ਨਿਊ ਓਪੀਡੀ ਬਲਾਕ",
+      "description": "Main outpatient facility housing general registration counters and majority of specialty clinics.",
+      "reception_phone": ["0172-2756969", "0172-2756868"],
+      "landmark": "Near Gate No. 1 / Main roundabout",
+      "is_separate_building": false
+    },
+    {
+      "id": "acc",
+      "name": "Advanced Cardiac Centre (ACC)",
+      "hindi_name": "एडवांस्ड कार्डिएक सेंटर (ACC)",
+      "punjabi_name": "ਐਡਵਾਂਸਡ ਕਾਰਡੀਅਕ ਸੈਂਟਰ (ACC)",
+      "description": "Dedicated cardiology and cardiothoracic surgery building. Do not search for cardiac clinics inside New OPD.",
+      "reception_phone": ["0172-2755353"],
+      "landmark": "Separate building near Nehru Hospital",
+      "is_separate_building": true
+    },
+    {
+      "id": "apc",
+      "name": "Advanced Paediatric Centre (APC)",
+      "hindi_name": "एडवांस्ड पीडियाट्रिक सेंटर (APC)",
+      "punjabi_name": "ਐਡਵਾਂਸਡ ਪੀਡੀਆਟ੍ਰਿਕ ਸੈਂਟਰ (APC)",
+      "description": "Dedicated specialty hospital for children and infant medical care.",
+      "reception_phone": ["0172-2755858"],
+      "landmark": "Separate building next to Advanced Eye Centre",
+      "is_separate_building": true
+    },
+    {
+      "id": "aec",
+      "name": "Advanced Eye Centre (AEC)",
+      "hindi_name": "एडवांस्ड आई सेंटर (AEC)",
+      "punjabi_name": "ਐਡਵਾਂਸਡ ਆਈ ਸੈਂਟਰ (AEC)",
+      "description": "Dedicated ophthalmology hospital for eye conditions, surgery, and vision care.",
+      "reception_phone": ["0172-2755252"],
+      "landmark": "Separate building near APC",
+      "is_separate_building": true
+    },
+    {
+      "id": "atc",
+      "name": "Advanced Trauma Centre (ATC)",
+      "hindi_name": "एडवांस्ड ट्रॉमा सेंटर (ATC)",
+      "punjabi_name": "ਐਡਵਾਂਸਡ ਟ੍ਰੋਮਾ ਸੈਂਟਰ (ATC)",
+      "description": "24/7 dedicated acute emergency trauma care facility for accidents, major injuries, and acute critical trauma.",
+      "reception_phone": ["0172-2755454"],
+      "landmark": "Emergency sector road",
+      "is_separate_building": true
+    },
+    {
+      "id": "nehru_hospital",
+      "name": "Nehru Hospital / Emergency Block",
+      "hindi_name": "नेहरू हॉस्पिटल / इमरजेंसी ब्लॉक",
+      "punjabi_name": "ਨਹਿਰੂ ਹਸਪਤਾਲ / ਐਮਰਜੈਂਸੀ ਬਲਾਕ",
+      "description": "Main indoor wards, 24/7 medical and surgical emergency triage.",
+      "reception_phone": ["0172-2755555"],
+      "landmark": "Central complex",
+      "is_separate_building": true
+    }
+  ],
+  "departments": [
+    {
+      "id": "internal_medicine",
+      "name": "Internal Medicine / General Medicine",
+      "hindi_name": "इंटरनल मेडिसिन / सामान्य चिकित्सा",
+      "punjabi_name": "ਜਨਰਲ ਮੈਡੀਸਨ",
+      "building_id": "new_opd",
+      "concerns": ["fever", "bukhar", "weakness", "kamzori", "diabetes", "sugar", "blood pressure", "bp", "general illness"],
+      "notes": "Primary starting point for adults without an established sub-specialty diagnosis.",
+      "referral_needed": false
+    },
+    {
+      "id": "pulmonary_medicine",
+      "name": "Pulmonary Medicine / Chest Clinic",
+      "hindi_name": "पल्मोनरी मेडिसिन / छाती एवं सांस विभाग",
+      "punjabi_name": "ਛਾਤੀ ਅਤੇ ਸਾਹ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["cough", "purani khansi", "asthma", "copd", "breathing trouble", "saans phoolna"],
+      "notes": "May require initial assessment or referral from General Medicine.",
+      "referral_needed": false
+    },
+    {
+      "id": "cardiology",
+      "name": "Cardiology (Heart)",
+      "hindi_name": "हृदय रोग विभाग (कार्डियोलॉजी)",
+      "punjabi_name": "ਦਿਲ ਦਾ ਰੋਗ ਵਿਭਾਗ",
+      "building_id": "acc",
+      "concerns": ["heart attack follow-up", "dil ki bimari", "chest pain follow-up", "palpitations", "dil ki dhadkan", "angioplasty check"],
+      "notes": "Located in separate Advanced Cardiac Centre (ACC) building.",
+      "referral_needed": false
+    },
+    {
+      "id": "neurology",
+      "name": "Neurology / Medicine",
+      "hindi_name": "न्यूरोलॉजी (तंत्रिका रोग)",
+      "punjabi_name": "ਦਿਮਾਗ ਅਤੇ ਨਸਾਂ ਦਾ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["epilepsy", "mirgi", "seizures", "daura", "nerve pain", "haath kaanpna", "tremors", "numbness"],
+      "notes": "Confirm clinic room at New OPD help desk.",
+      "referral_needed": false
+    },
+    {
+      "id": "orthopaedics",
+      "name": "Orthopaedics (Bones & Joints)",
+      "hindi_name": "हड्डी एवं जोड़ रोग (ऑर्थोपेडिक्स)",
+      "punjabi_name": "ਹੱਡੀਆਂ ਅਤੇ ਜੋੜਾਂ ਦਾ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["bone fracture", "joint pain", "ghutne ka dard", "knee pain", "kamar dard", "back pain", "haddi ki dikkat"],
+      "notes": "Confirm exact room and token counter at New OPD reception.",
+      "referral_needed": false
+    },
+    {
+      "id": "general_surgery",
+      "name": "General Surgery",
+      "hindi_name": "जनरल सर्जरी (शल्य चिकित्सा)",
+      "punjabi_name": "ਜਨਰਲ ਸਰਜਰੀ",
+      "building_id": "new_opd",
+      "concerns": ["hernia", "gallbladder stones", "pitta ki pathri", "swelling", "gilti", "operation assessment"],
+      "notes": "New OPD block.",
+      "referral_needed": false
+    },
+    {
+      "id": "gastroenterology",
+      "name": "Gastroenterology (Stomach & Liver)",
+      "hindi_name": "गैस्ट्रोएंटरोलॉजी (पेट एवं लिवर)",
+      "punjabi_name": "ਪੇਟ ਅਤੇ ਲਿਵਰ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["jaundice", "piliya", "liver problem", "stomach pain", "pet ki dikkat", "hepatitis", "cirrhosis"],
+      "notes": "Subspecialty clinic; may require initial referral from Medicine.",
+      "referral_needed": true
+    },
+    {
+      "id": "nephrology",
+      "name": "Nephrology (Kidney)",
+      "hindi_name": "नेफ्रोलॉजी (गुर्दा रोग)",
+      "punjabi_name": "ਗੁਰਦੇ ਦਾ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["kidney problem", "gurda", "high creatinine", "dialysis", "swelling on face/legs"],
+      "notes": "May require prior consultation in Medicine or referral letter.",
+      "referral_needed": true
+    },
+    {
+      "id": "urology",
+      "name": "Urology (Urinary & Prostate)",
+      "hindi_name": "यूरोलॉजी (मूत्र रोग)",
+      "punjabi_name": "ਯੂਰੋਲੋਜੀ",
+      "building_id": "new_opd",
+      "concerns": ["kidney stones", "peshab ki pathri", "prostate", "difficulty urinating", "peshab mein dikkat"],
+      "notes": "New OPD specialty; reconfirm clinic room at registration.",
+      "referral_needed": false
+    },
+    {
+      "id": "obs_gynae",
+      "name": "Obstetrics & Gynaecology",
+      "hindi_name": "प्रसूति एवं स्त्री रोग विभाग",
+      "punjabi_name": "ਇਸਤਰੀ ਰੋਗ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["pregnancy", "garbhvastha", "irregular periods", "mahila rog", "women health"],
+      "notes": "Confirm exact registration counter and floor in New OPD.",
+      "referral_needed": false
+    },
+    {
+      "id": "paediatrics",
+      "name": "Paediatrics (Children)",
+      "hindi_name": "बाल रोग विभाग (पीडियाट्रिक्स)",
+      "punjabi_name": "ਬੱਚਿਆਂ ਦਾ ਵਿਭਾਗ",
+      "building_id": "apc",
+      "concerns": ["child illness", "bachche ki bimari", "infant fever", "growth issues", "pediatric checkup"],
+      "notes": "Located in separate Advanced Paediatric Centre (APC) building.",
+      "referral_needed": false
+    },
+    {
+      "id": "ophthalmology",
+      "name": "Ophthalmology (Eye)",
+      "hindi_name": "नेत्र रोग विभाग (आंखों का विभाग)",
+      "punjabi_name": "ਅੱਖਾਂ ਦਾ ਵਿਭਾਗ",
+      "building_id": "aec",
+      "concerns": ["eye problem", "aankh ka dard", "dim vision", "dhundhla dikhna", "cataract", "motiyabind", "chashma"],
+      "notes": "Located in separate Advanced Eye Centre (AEC) building.",
+      "referral_needed": false
+    },
+    {
+      "id": "ent",
+      "name": "Otolaryngology / ENT (Ear, Nose, Throat)",
+      "hindi_name": "ईएनटी (कान, नाक, गला)",
+      "punjabi_name": "ਕੰਨ, ਨੱਕ, ਗਲਾ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["ear pain", "kaan ka behna", "nose bleeding", "throat pain", "gale mein dard", "hearing loss"],
+      "notes": "New OPD block; check help desk for room assignment.",
+      "referral_needed": false
+    },
+    {
+      "id": "dermatology",
+      "name": "Dermatology (Skin)",
+      "hindi_name": "चर्म रोग विभाग (त्वचा)",
+      "punjabi_name": "ਚਮੜੀ ਦੇ ਰੋਗ",
+      "building_id": "new_opd",
+      "concerns": ["itching", "khujli", "rashes", "daane", "skin allergy", "vitiligo", "fungal infection"],
+      "notes": "New OPD block.",
+      "referral_needed": false
+    },
+    {
+      "id": "psychiatry",
+      "name": "Psychiatry (Mental Health)",
+      "hindi_name": "मनोचिकित्सा विभाग (मानसिक स्वास्थ्य)",
+      "punjabi_name": "ਮਾਨਸਿਕ ਸਿਹਤ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["depression", "anxiety", "ghabrahat", "neend na aana", "insomnia", "stress", "tension"],
+      "notes": "New OPD block.",
+      "referral_needed": false
+    },
+    {
+      "id": "oral_health",
+      "name": "Oral Health Sciences (Dental)",
+      "hindi_name": "दंत चिकित्सा विभाग",
+      "punjabi_name": "ਦੰਦਾਂ ਦਾ ਵਿਭਾਗ",
+      "building_id": "new_opd",
+      "concerns": ["tooth pain", "daant ka dard", "gum bleeding", "cavity", "jaw pain"],
+      "notes": "Department reception in New OPD block.",
+      "referral_needed": false
+    }
+  ],
+  "opd_schedule": {
+    "weekdays": {
+      "days": "Monday – Friday",
+      "registration_timings": "8:00 AM – 11:00 AM",
+      "notes": "Registration counters close sharply. Special clinics have separate schedules."
+    },
+    "saturday_and_holidays": {
+      "days": "Saturday / Gazetted Holidays",
+      "registration_timings": "8:00 AM – 10:30 AM",
+      "notes": "Closed on Sundays. Emergency remains open 24/7."
+    }
+  },
+  "sample_collection": [
+    {
+      "type": "Routine Blood & Urine Collection",
+      "published_location": "New OPD, Block-C, 1st Floor, Room 127",
+      "verification_warning": "Reference location from published guide. Always check the exact room stamped on your doctor's test slip.",
+      "fasting_guidance": "Fasting is NOT required for every blood test. Do not stop prescribed medications unless specifically advised by your doctor."
+    },
+    {
+      "type": "Therapeutic Drug Monitoring (TDM)",
+      "published_location": "New OPD, Ground Floor, Room 25",
+      "verification_warning": "Intended specifically for drug monitoring samples, not routine blood counts."
+    },
+    {
+      "type": "Microbiology / Stool / Sputum / Culture",
+      "published_location": "Department of Microbiology / designated lab counter",
+      "verification_warning": "Counter depends on the specific sample. Ask the lab help desk near Room 127 or check the slip."
+    },
+    {
+      "type": "Radiology (X-Ray / Ultrasound / CT / MRI)",
+      "published_location": "Radiology department appointment desk",
+      "verification_warning": "Ultrasound, CT, and MRI usually require scheduling and appointment token."
+    }
+  ],
+  "emergency_warning_signs": [
+    "Severe central chest pain, pressure, or radiating pain to jaw/arm",
+    "Extreme shortness of breath or sudden inability to breathe",
+    "Loss of consciousness, sudden fainting, or unresponsiveness",
+    "Sudden weakness, paralysis of one side of face/body, or slurred speech (Stroke alert)",
+    "Severe uncontrolled bleeding, major burns, or acute road accident injuries",
+    "Continuous seizures or lack of consciousness following a seizure"
+  ],
+  "emergency_instruction": "DO NOT WAIT IN THE ROUTINE OPD REGISTRATION QUEUE. Proceed immediately to Emergency / Nehru Hospital or Advanced Trauma Centre (ATC)."
+}

@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: check if caller is an authorized admin
+    function isAdmin() {
+      return request.auth != null && (
+        request.auth.token.admin == true ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Public read for published directory entries (Departments & Buildings)
+    match /departments/{deptId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /buildings/{buildingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // System configuration (OPD timings, emergency guidelines, test counters)
+    match /system_config/{configId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // User Feedback: Anonymous write-only with strict validation
+    // Protects patient privacy (disallows unauthorized reads and oversized payloads)
+    match /feedback/{feedbackId} {
+      allow create: if request.resource.data.keys().hasAll(['category', 'message', 'created_at'])
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() > 5
+                    && request.resource.data.message.size() <= 1200
+                    && (!request.resource.data.keys().hasAny(['cr_number', 'aadhaar', 'medical_report', 'prescription']));
+      allow read, update, delete: if isAdmin();
+    }
+
+    // Admin profiles and audit logs
+    match /admins/{adminId} {
+      allow read, write: if isAdmin();
+    }
+
+    match /audit_logs/{logId} {
+      allow read, write: if isAdmin();
+    }
+
+    // Deny all other unmatched paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
