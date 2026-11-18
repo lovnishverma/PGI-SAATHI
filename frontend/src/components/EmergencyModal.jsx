@@ -1,23 +1,45 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { AlertTriangle, Phone, X, ShieldAlert } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const EmergencyModal = ({ isOpen, onClose, emergencyData }) => {
   const { t } = useLanguage();
+  const closeButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      // Focus the close button when opened
+      closeButtonRef.current?.focus();
+
+      // Close on Escape key press
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+          onClose();
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+    }
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
+    <div 
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="emergency-dialog-title"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200"
+    >
       <div className="bg-white rounded-3xl max-w-md w-full p-5 shadow-2xl border-2 border-red-500 overflow-hidden">
         {/* Modal Header */}
         <div className="flex items-center justify-between pb-3 border-b border-red-100">
           <div className="flex items-center gap-2">
             <div className="p-2 rounded-xl bg-red-100 text-red-600">
-              <ShieldAlert className="w-6 h-6 animate-pulse" />
+              <ShieldAlert className="w-6 h-6 animate-pulse" aria-hidden="true" />
             </div>
             <div>
-              <h3 className="font-bold text-lg text-red-700">
+              <h3 id="emergency-dialog-title" className="font-bold text-lg text-red-700">
                 {t('emergency_banner_title')}
               </h3>
               <p className="text-[11px] text-red-900 font-semibold uppercase tracking-wider">
@@ -26,10 +48,12 @@ export const EmergencyModal = ({ isOpen, onClose, emergencyData }) => {
             </div>
           </div>
           <button
+            ref={closeButtonRef}
             onClick={onClose}
-            className="p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+            aria-label="Close emergency modal"
+            className="p-2 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-700 transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus-visible:outline-2 focus-visible:outline-red-600"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 

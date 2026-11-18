@@ -9,6 +9,7 @@ import { LabTestGuide } from './components/LabTestGuide';
 import { HelpDeskPhrases } from './components/HelpDeskPhrases';
 import { EmergencyModal } from './components/EmergencyModal';
 import { GoldenRules } from './components/GoldenRules';
+import { InstallPrompt } from './components/InstallPrompt';
 import { dataService } from './services/dataService';
 
 function MainApp() {
@@ -79,6 +80,9 @@ function MainApp() {
     }`}>
       {/* Sticky Header */}
       <Header onOpenEmergency={() => setIsEmergencyOpen(true)} />
+
+      {/* PWA Offline Install Banner */}
+      <InstallPrompt />
 
       {/* Main Container */}
       <main className="flex-1 max-w-xl w-full mx-auto p-4 space-y-4">

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Building2, Phone, MapPin, AlertCircle, Compass } from 'lucide-react';
+import { Building2, Phone, MapPin, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
 export const BuildingsGuide = ({ buildings }) => {
-  const { lang, t, highContrast } = useLanguage();
+  const { lang, highContrast } = useLanguage();
 
   const getBuildingTitle = (b) => {
     if (lang === 'hi' && b.hindi_name) return b.hindi_name;

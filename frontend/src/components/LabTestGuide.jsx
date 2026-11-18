@@ -1,10 +1,10 @@
 import React from 'react';
-import { FlaskConical, AlertTriangle, CheckCircle2, MapPin, Pill, HelpCircle, FileText } from 'lucide-react';
+import { FlaskConical, AlertTriangle, MapPin, HelpCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
 export const LabTestGuide = ({ protocols, fourQuestions }) => {
-  const { lang, t, highContrast } = useLanguage();
+  const { lang, highContrast } = useLanguage();
 
   return (
     <div className="space-y-4 pb-20">

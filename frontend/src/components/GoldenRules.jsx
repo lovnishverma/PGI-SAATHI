@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Compass, CheckCircle2, AlertCircle, Info, ChevronDown, ChevronUp, UserCheck, ShieldAlert } from 'lucide-react';
+import { Compass, Info, ChevronDown, ChevronUp, UserCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -17,12 +17,21 @@ export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice }) => {
     }`}>
       {/* Header bar that toggles */}
       <div 
+        role="button"
+        tabIndex={0}
+        aria-expanded={isOpen}
         onClick={() => setIsOpen(!isOpen)}
-        className="p-3.5 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100 flex items-center justify-between cursor-pointer select-none"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setIsOpen(!isOpen);
+          }
+        }}
+        className="p-3.5 bg-gradient-to-r from-blue-50 to-indigo-50 border-b border-blue-100 flex items-center justify-between cursor-pointer select-none focus-visible:outline-2 focus-visible:outline-blue-600"
       >
         <div className="flex items-center gap-2">
           <div className="p-1.5 rounded-lg bg-blue-600 text-white">
-            <Compass className="w-4 h-4" />
+            <Compass className="w-4 h-4" aria-hidden="true" />
           </div>
           <div>
             <h3 className="font-bold text-xs md:text-sm text-blue-950">
@@ -36,9 +45,9 @@ export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice }) => {
 
         <div className="flex items-center gap-2">
           <AudioButton text={fullAudio} />
-          <button className="text-slate-500 hover:text-slate-800 p-1">
-            {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-          </button>
+          <span className="text-slate-500 hover:text-slate-800 p-1 flex items-center justify-center">
+            {isOpen ? <ChevronUp className="w-4 h-4" aria-hidden="true" /> : <ChevronDown className="w-4 h-4" aria-hidden="true" />}
+          </span>
         </div>
       </div>
 

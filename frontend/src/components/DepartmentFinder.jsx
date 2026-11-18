@@ -66,16 +66,20 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
       </div>
 
       {/* Search Input */}
-      <div className="relative">
+      <div className="relative" role="search">
+        <label htmlFor="dept-search-input" className="sr-only">
+          {t('search_placeholder')}
+        </label>
         <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-          <Search className="w-5 h-5" />
+          <Search className="w-5 h-5" aria-hidden="true" />
         </div>
         <input
-          type="text"
+          id="dept-search-input"
+          type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('search_placeholder')}
-          className={`w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs ${
+          className={`w-full pl-10 pr-10 py-3 rounded-xl border text-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs min-h-[44px] ${
             highContrast 
               ? 'bg-black text-yellow-300 border-yellow-400 placeholder:text-yellow-600' 
               : 'bg-white text-slate-900 border-slate-300 placeholder:text-slate-400'
@@ -84,7 +88,8 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
         {searchQuery && (
           <button
             onClick={() => setSearchQuery('')}
-            className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-xs text-slate-400 hover:text-slate-600"
+            aria-label="Clear search input"
+            className="absolute inset-y-0 right-0 pr-3.5 flex items-center justify-center min-w-[44px] min-h-[44px] text-xs text-slate-400 hover:text-slate-600 focus-visible:outline-2 focus-visible:outline-blue-600"
           >
             ✕
           </button>
@@ -92,13 +97,18 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
       </div>
 
       {/* Building Filter Pills */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs">
+      <div 
+        role="group" 
+        aria-label="Filter departments by building" 
+        className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs py-1"
+      >
         <button
           onClick={() => setSelectedBuilding('all')}
-          className={`px-3 py-1.5 rounded-full shrink-0 font-medium transition-all ${
+          aria-pressed={selectedBuilding === 'all'}
+          className={`px-3.5 py-2 rounded-full shrink-0 font-medium transition-all min-h-[40px] focus-visible:outline-2 focus-visible:outline-blue-600 ${
             selectedBuilding === 'all'
-              ? 'bg-blue-600 text-white shadow-xs'
-              : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+              ? highContrast ? 'bg-yellow-400 text-black font-bold' : 'bg-blue-600 text-white shadow-xs font-semibold'
+              : highContrast ? 'bg-black text-yellow-300 border border-yellow-400 hover:bg-neutral-900' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
           }`}
         >
           {t('all_buildings')}
@@ -107,10 +117,11 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
           <button
             key={b.id}
             onClick={() => setSelectedBuilding(b.id)}
-            className={`px-3 py-1.5 rounded-full shrink-0 font-medium transition-all ${
+            aria-pressed={selectedBuilding === b.id}
+            className={`px-3.5 py-2 rounded-full shrink-0 font-medium transition-all min-h-[40px] focus-visible:outline-2 focus-visible:outline-blue-600 ${
               selectedBuilding === b.id
-                ? 'bg-blue-600 text-white shadow-xs'
-                : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                ? highContrast ? 'bg-yellow-400 text-black font-bold' : 'bg-blue-600 text-white shadow-xs font-semibold'
+                : highContrast ? 'bg-black text-yellow-300 border border-yellow-400 hover:bg-neutral-900' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
             }`}
           >
             {b.name.split('(')[0].trim()}
@@ -119,7 +130,10 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
       </div>
 
       {/* Results Header */}
-      <div className="flex items-center justify-between text-xs text-slate-500 px-1">
+      <div 
+        aria-live="polite"
+        className="flex items-center justify-between text-xs text-slate-500 px-1"
+      >
         <span>Showing {filteredDepts.length} departments</span>
         <span className="text-[11px] bg-slate-100 px-2 py-0.5 rounded text-slate-600">
           {t('verified_badge')}

@@ -45,7 +45,11 @@ export const translations = {
     disclaimer: "Independent patient navigation aid. Not an official PGIMER publication. Please verify room numbers on-site.",
     feedback_title: "Report Outdated Information",
     feedback_placeholder: "Describe the wrong room number, schedule, or direction (Do not include medical details)...",
-    send_feedback: "Submit Report"
+    send_feedback: "Submit Report",
+    install_pwa_btn: "Install App for Offline Use",
+    install_pwa_title: "Install PGI Saathi App",
+    install_pwa_desc: "Access hospital navigation and visit checklists offline without internet inside PGIMER.",
+    close_btn: "Close"
   },
   hi: {
     app_title: "पीजीआई साथी",
@@ -93,7 +97,11 @@ export const translations = {
     disclaimer: "स्वतंत्र रोगी सहायता मार्गदर्शिका। पीजीआई का आधिकारिक नोटिस नहीं। कमरे और समय अस्पताल पहुंचकर दोबारा जांचें।",
     feedback_title: "गलत जानकारी की रिपोर्ट करें",
     feedback_placeholder: "गलत कमरा नंबर या समय के बारे में बताएं (मरीज का नाम या बीमारी न लिखें)...",
-    send_feedback: "रिपोर्ट भेजें"
+    send_feedback: "रिपोर्ट भेजें",
+    install_pwa_btn: "ऑफलाइन इस्तेमाल के लिए ऐप इंस्टॉल करें",
+    install_pwa_title: "पीजीआई साथी ऐप इंस्टॉल करें",
+    install_pwa_desc: "पीजीआईएमईआर के अंदर इंटरनेट न होने पर भी सभी विभाग और चेकलिस्ट ऑफलाइन देखें।",
+    close_btn: "बंद करें"
   },
   pa: {
     app_title: "ਪੀਜੀਆਈ ਸਾਥੀ",
@@ -141,6 +149,10 @@ export const translations = {
     disclaimer: "ਸੁਤੰਤਰ ਮਰੀਜ਼ ਸਹਾਇਤਾ ਗਾਈਡ। ਪੀਜੀਆਈ ਦਾ ਅਧਿਕਾਰਤ ਨੋਟਿਸ ਨਹੀਂ। ਕਮਰੇ ਅਤੇ ਸਮਾਂ ਹਸਪਤਾਲ ਜਾ ਕੇ ਪੁਸ਼ਟੀ ਕਰੋ।",
     feedback_title: "ਗਲਤ ਜਾਣਕਾਰੀ ਦੀ ਰਿਪੋਰਟ ਕਰੋ",
     feedback_placeholder: "ਗਲਤ ਕਮਰਾ ਨੰਬਰ ਜਾਂ ਸਮੇਂ ਬਾਰੇ ਲਿਖੋ (ਮਰੀਜ਼ ਦਾ ਨਾਂ ਜਾਂ ਬਿਮਾਰੀ ਨਾ ਲਿਖੋ)...",
-    send_feedback: "ਰਿਪੋਰਟ ਭੇਜੋ"
+    send_feedback: "ਰਿਪੋਰਟ ਭੇਜੋ",
+    install_pwa_btn: "ਆਫਲਾਈਨ ਵਰਤੋਂ ਲਈ ਐਪ ਇੰਸਟਾਲ ਕਰੋ",
+    install_pwa_title: "ਪੀਜੀਆਈ ਸਾਥੀ ਐਪ ਇੰਸਟਾਲ ਕਰੋ",
+    install_pwa_desc: "ਪੀਜੀਆਈਐਮਈਆਰ ਦੇ ਅੰਦਰ ਬਿਨਾਂ ਇੰਟਰਨੈੱਟ ਦੇ ਸਾਰੇ ਵਿਭਾਗ ਅਤੇ ਚੈੱਕਲਿਸਟ ਆਫਲਾਈਨ ਦੇਖੋ।",
+    close_btn: "ਬੰਦ ਕਰੋ"
   }
 };

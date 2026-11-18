@@ -14,7 +14,9 @@ export const BottomNav = ({ activeTab, setActiveTab }) => {
   ];
 
   return (
-    <nav className={`fixed bottom-0 left-0 right-0 z-40 border-t transition-colors ${
+    <nav 
+      aria-label="Main Navigation"
+      className={`fixed bottom-0 left-0 right-0 z-40 border-t transition-colors ${
       highContrast 
         ? 'bg-black text-white border-yellow-400' 
         : 'bg-white/95 backdrop-blur-md text-slate-600 border-slate-200'
@@ -27,15 +29,17 @@ export const BottomNav = ({ activeTab, setActiveTab }) => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex flex-col items-center justify-center w-full py-1.5 px-1 transition-all min-h-[50px] ${
+              aria-label={tab.label}
+              aria-current={isActive ? 'page' : undefined}
+              className={`flex flex-col items-center justify-center w-full py-2 px-1 transition-all min-h-[48px] min-w-[48px] touch-manipulation ${
                 isActive 
                   ? highContrast 
                     ? 'text-yellow-400 font-bold scale-105' 
                     : 'text-blue-600 font-semibold' 
-                  : 'hover:text-slate-900'
+                  : 'hover:text-slate-900 focus-visible:outline-2 focus-visible:outline-blue-600'
               }`}
             >
-              <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5px]' : 'stroke-2'}`} />
+              <Icon className={`w-5 h-5 mb-0.5 ${isActive ? 'stroke-[2.5px]' : 'stroke-2'}`} aria-hidden="true" />
               <span className="text-[10px] tracking-tight leading-tight text-center truncate max-w-[68px]">
                 {tab.label}
               </span>

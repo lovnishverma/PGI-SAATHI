@@ -1,5 +1,5 @@
 import React from 'react';
-import { AlertTriangle, Globe, Eye } from 'lucide-react';
+import { AlertTriangle, Eye } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export const Header = ({ onOpenEmergency }) => {
@@ -14,12 +14,13 @@ export const Header = ({ onOpenEmergency }) => {
       {/* Red Emergency Warning Bar */}
       <div className="bg-red-600 text-white px-3 py-1.5 text-xs flex items-center justify-between font-medium">
         <div className="flex items-center gap-1.5 truncate">
-          <AlertTriangle className="w-4 h-4 text-yellow-300 shrink-0 animate-bounce" />
+          <AlertTriangle className="w-4 h-4 text-yellow-300 shrink-0 animate-bounce" aria-hidden="true" />
           <span className="truncate">{t('emergency_banner_desc')}</span>
         </div>
         <button
           onClick={onOpenEmergency}
-          className="ml-2 bg-white text-red-700 px-2 py-0.5 rounded text-[11px] font-bold uppercase tracking-wider shrink-0 hover:bg-yellow-100 transition-colors shadow-sm"
+          aria-label={t('emergency_action_btn')}
+          className="ml-2 bg-white text-red-700 px-3 py-1.5 rounded min-h-[36px] text-xs font-bold uppercase tracking-wider shrink-0 hover:bg-yellow-100 transition-colors shadow-sm focus-visible:outline-2 focus-visible:outline-white"
         >
           {t('emergency_action_btn')}
         </button>
@@ -29,7 +30,7 @@ export const Header = ({ onOpenEmergency }) => {
       <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
         <div>
           <div className="flex items-center gap-2">
-            <span className="text-xl">🏥</span>
+            <span className="text-xl" role="img" aria-label="Hospital">🏥</span>
             <h1 className="font-bold text-lg md:text-xl tracking-tight text-blue-900">
               {t('app_title')}
             </h1>
@@ -43,41 +44,52 @@ export const Header = ({ onOpenEmergency }) => {
         </div>
 
         {/* Controls: Accessibility High Contrast & Language Selector */}
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-2">
           <button
             onClick={() => setHighContrast(!highContrast)}
-            aria-label="Toggle High Contrast"
+            aria-label={highContrast ? "Disable High Contrast Mode" : "Enable High Contrast Mode"}
+            aria-pressed={highContrast}
             title="High Contrast Mode"
-            className={`p-1.5 rounded-lg border text-xs transition-colors ${
+            className={`p-2 rounded-lg border text-xs min-h-[44px] min-w-[44px] flex items-center justify-center transition-colors focus-visible:outline-2 focus-visible:outline-blue-600 ${
               highContrast 
                 ? 'bg-yellow-400 text-black border-yellow-500 font-bold' 
                 : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
             }`}
           >
-            <Eye className="w-4 h-4" />
+            <Eye className="w-5 h-5" aria-hidden="true" />
           </button>
 
-          <div className="flex items-center bg-slate-100 p-0.5 rounded-lg border border-slate-200 text-xs font-semibold">
+          <div 
+            role="group" 
+            aria-label="Language selection" 
+            className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200 text-xs font-semibold"
+          >
             <button
               onClick={() => setLang('hi')}
-              className={`px-2 py-1 rounded-md transition-all ${
-                lang === 'hi' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              aria-label="Hindi language"
+              aria-pressed={lang === 'hi'}
+              className={`px-2.5 py-1.5 rounded-md min-h-[38px] transition-all focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                lang === 'hi' ? 'bg-blue-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               हिन्दी
             </button>
             <button
               onClick={() => setLang('pa')}
-              className={`px-2 py-1 rounded-md transition-all ${
-                lang === 'pa' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              aria-label="Punjabi language"
+              aria-pressed={lang === 'pa'}
+              className={`px-2.5 py-1.5 rounded-md min-h-[38px] transition-all focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                lang === 'pa' ? 'bg-blue-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               ਪੰਜਾਬੀ
             </button>
             <button
               onClick={() => setLang('en')}
-              className={`px-2 py-1 rounded-md transition-all ${
-                lang === 'en' ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'
+              aria-label="English language"
+              aria-pressed={lang === 'en'}
+              className={`px-2.5 py-1.5 rounded-md min-h-[38px] transition-all focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                lang === 'en' ? 'bg-blue-600 text-white shadow-xs font-bold' : 'text-slate-600 hover:text-slate-900'
               }`}
             >
               EN

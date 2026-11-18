@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck, AlertCircle } from 'lucide-react';
+import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 

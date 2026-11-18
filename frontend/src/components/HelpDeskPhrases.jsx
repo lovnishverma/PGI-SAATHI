@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, MessageSquare, Send, CheckCircle2, Phone, ExternalLink, ShieldCheck } from 'lucide-react';
+import { HelpCircle, MessageSquare, Send, CheckCircle2, Phone, ExternalLink } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 import { dataService } from '../services/dataService';
@@ -104,7 +104,8 @@ export const HelpDeskPhrases = ({ phrases, numbers, officialLinks }) => {
               </div>
               <a
                 href={`tel:${n.phone.split('/')[0].trim()}`}
-                className="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-semibold px-2 py-1 rounded-lg text-xs"
+                aria-label={`Call ${n.service} at ${n.phone}`}
+                className="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-semibold px-3 py-1.5 rounded-lg text-xs min-h-[38px] min-w-[48px] flex items-center justify-center focus-visible:outline-2 focus-visible:outline-emerald-600"
               >
                 Call
               </a>
@@ -185,9 +186,10 @@ export const HelpDeskPhrases = ({ phrases, numbers, officialLinks }) => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2.5 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-colors active:scale-98"
+            aria-label={loading ? "Submitting feedback" : t('send_feedback')}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-3 px-4 rounded-xl flex items-center justify-center gap-1.5 transition-colors active:scale-98 min-h-[44px] focus-visible:outline-2 focus-visible:outline-blue-600"
           >
-            <Send className="w-3.5 h-3.5" />
+            <Send className="w-3.5 h-3.5" aria-hidden="true" />
             <span>{loading ? "Submitting..." : t('send_feedback')}</span>
           </button>
         </form>
