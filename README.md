@@ -4,7 +4,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Frontend: React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-61dafb.svg)](https://react.dev/)
-[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github)](https://lovnishverma.github.io/PGI-SAATHI/)
+[![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github)](https://www.lovnishverma.in/PGI-SAATHI/)
 [![Backend: Firebase Spark Plan](https://img.shields.io/badge/Backend-Firebase%20Spark%20Plan%20(Free%20Forever)-FFA611.svg)](https://firebase.google.com/)
 [![Architecture: Serverless](https://img.shields.io/badge/Architecture-100%25%20Serverless-green.svg)](ARCHITECTURE.md)
 [![Status: MVP Development](https://img.shields.io/badge/Status-MVP%20Development-orange.svg)](ROADMAP.md)
@@ -154,7 +154,7 @@ The backend provides a REST API with Firebase Admin SDK integration and automati
 
 The React PWA frontend is configured to automatically deploy to **GitHub Pages** on every push to `main` via [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
 
-### 🔗 Live URL: [https://lovnishverma.github.io/PGI-SAATHI/](https://lovnishverma.github.io/PGI-SAATHI/)
+### 🔗 Live URL: [https://www.lovnishverma.in/PGI-SAATHI/](https://www.lovnishverma.in/PGI-SAATHI/)
 
 ### One-Time Setup in GitHub Repository Settings:
 To enable automated deployments for your repository:
