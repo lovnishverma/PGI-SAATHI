@@ -8,6 +8,7 @@ import { VisitChecklist } from './components/VisitChecklist';
 import { LabTestGuide } from './components/LabTestGuide';
 import { HelpDeskPhrases } from './components/HelpDeskPhrases';
 import { EmergencyModal } from './components/EmergencyModal';
+import { GoldenRules } from './components/GoldenRules';
 import { dataService } from './services/dataService';
 
 function MainApp() {
@@ -17,7 +18,14 @@ function MainApp() {
   const [buildings, setBuildings] = useState([]);
   const [schedule, setSchedule] = useState(null);
   const [protocols, setProtocols] = useState([]);
+  const [fourQuestions, setFourQuestions] = useState([]);
   const [phrases, setPhrases] = useState([]);
+  const [goldenRules, setGoldenRules] = useState([]);
+  const [cardProcess, setCardProcess] = useState(null);
+  const [checklistItems, setChecklistItems] = useState([]);
+  const [importantNumbers, setImportantNumbers] = useState([]);
+  const [officialLinks, setOfficialLinks] = useState([]);
+  const [lostAdvice, setLostAdvice] = useState('');
   const [emergencyData, setEmergencyData] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -26,19 +34,35 @@ function MainApp() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [depts, blds, sched, protos, phrs, emerg] = await Promise.all([
+        const [
+          depts, blds, sched, protos, fourQs, phrs, rules, cardProc, items, numbers, links, advice, emerg
+        ] = await Promise.all([
           dataService.getDepartments(),
           dataService.getBuildings(),
           dataService.getOPDSchedule(),
           dataService.getSampleProtocols(),
+          dataService.getSampleFourQuestions(),
           dataService.getHelpDeskPhrases(),
+          dataService.getGoldenRules(),
+          dataService.getCardMakingProcess(),
+          dataService.getChecklistItems(),
+          dataService.getImportantNumbers(),
+          dataService.getOfficialLinks(),
+          dataService.getLostAdvice(),
           dataService.getEmergencyGuidance()
         ]);
         setDepartments(depts);
         setBuildings(blds);
         setSchedule(sched);
         setProtocols(protos);
+        setFourQuestions(fourQs);
         setPhrases(phrs);
+        setGoldenRules(rules);
+        setCardProcess(cardProc);
+        setChecklistItems(items);
+        setImportantNumbers(numbers);
+        setOfficialLinks(links);
+        setLostAdvice(advice);
         setEmergencyData(emerg);
       } catch (err) {
         console.error("Error loading PGI Saathi data:", err);
@@ -57,7 +81,7 @@ function MainApp() {
       <Header onOpenEmergency={() => setIsEmergencyOpen(true)} />
 
       {/* Main Container */}
-      <main className="flex-1 max-w-xl w-full mx-auto p-4">
+      <main className="flex-1 max-w-xl w-full mx-auto p-4 space-y-4">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-3">
             <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
@@ -67,6 +91,15 @@ function MainApp() {
           </div>
         ) : (
           <>
+            {/* 5 Golden Rules banner displayed across views */}
+            {goldenRules.length > 0 && (
+              <GoldenRules
+                goldenRules={goldenRules}
+                cardProcess={cardProcess}
+                lostAdvice={lostAdvice}
+              />
+            )}
+
             {activeTab === 'finder' && (
               <DepartmentFinder
                 departments={departments}
@@ -78,13 +111,17 @@ function MainApp() {
               <BuildingsGuide buildings={buildings} />
             )}
             {activeTab === 'checklist' && (
-              <VisitChecklist />
+              <VisitChecklist checklistItems={checklistItems} />
             )}
             {activeTab === 'tests' && (
-              <LabTestGuide protocols={protocols} />
+              <LabTestGuide protocols={protocols} fourQuestions={fourQuestions} />
             )}
             {activeTab === 'help' && (
-              <HelpDeskPhrases phrases={phrases} />
+              <HelpDeskPhrases
+                phrases={phrases}
+                numbers={importantNumbers}
+                officialLinks={officialLinks}
+              />
             )}
           </>
         )}

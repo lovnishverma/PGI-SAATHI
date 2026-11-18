@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck } from 'lucide-react';
+import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
-export const VisitChecklist = () => {
-  const { t, highContrast } = useLanguage();
+export const VisitChecklist = ({ checklistItems }) => {
+  const { lang, t, highContrast } = useLanguage();
   const [patientType, setPatientType] = useState('new'); // 'new' or 'returning'
   const [checkedItems, setCheckedItems] = useState(() => {
     try {
@@ -19,7 +19,17 @@ export const VisitChecklist = () => {
     localStorage.setItem('pgi_saathi_checklist', JSON.stringify(checkedItems));
   }, [checkedItems]);
 
-  const items = t('checklist_items') || [];
+  const items = checklistItems || [
+    { id: "id_proof", text: "ID proof (Aadhaar / Voter ID / Driving License)" },
+    { id: "old_card", text: "Purana CR / OPD card (पुराना कार्ड व पर्ची)" },
+    { id: "old_prescription", text: "Doctor ki purani parchi (Old prescription)" },
+    { id: "reports", text: "Blood / X-ray / MRI / CT scan reports (जांच रिपोर्टें)" },
+    { id: "discharge_summary", text: "Discharge summary (अगर पहले अस्पताल में भर्ती हुए थे)" },
+    { id: "referral_letter", text: "Referral letter (अगर किसी दूसरे अस्पताल से भेजा गया है)" },
+    { id: "medicines_list", text: "Medicines list (चल रही दवाइयों की पूरी सूची या पत्ते)" },
+    { id: "registered_mobile", text: "Registered mobile phone (SMS व OTP के लिए चालू फोन)" },
+    { id: "online_confirmation", text: "Online pre-registration confirmation slip (अगर ऑनलाइन भरी है)" }
+  ];
 
   const toggleItem = (id) => {
     setCheckedItems(prev => ({
@@ -36,7 +46,6 @@ export const VisitChecklist = () => {
 
   const checkedCount = Object.values(checkedItems).filter(Boolean).length;
   const progressPercent = items.length > 0 ? Math.round((checkedCount / items.length) * 100) : 0;
-
   const audioSummary = items.map(item => item.text).join(". ");
 
   return (
@@ -46,10 +55,10 @@ export const VisitChecklist = () => {
         <div className="flex items-start justify-between">
           <div>
             <h2 className="font-bold text-base md:text-lg">
-              {t('checklist_title')}
+              {lang === 'hi' ? 'साथ क्या लेकर आना है? (चेकलिस्ट)' : t('checklist_title')}
             </h2>
             <p className="text-xs text-emerald-100 mt-1 max-w-sm">
-              {t('checklist_desc')}
+              {lang === 'hi' ? 'घर से निकलने से पहले यह कागजात जरूर साथ रख लें ताकि लाइन में लगकर लौटना न पड़े।' : t('checklist_desc')}
             </p>
           </div>
           <AudioButton text={audioSummary} className="bg-white/20 text-white border-white/30" />
@@ -58,7 +67,7 @@ export const VisitChecklist = () => {
         {/* Progress bar */}
         <div className="mt-4">
           <div className="flex justify-between text-xs text-emerald-100 mb-1 font-medium">
-            <span>Prepared: {checkedCount} of {items.length} items</span>
+            <span>{lang === 'hi' ? 'तैयार सामग्री:' : 'Prepared:'} {checkedCount} of {items.length} items</span>
             <span>{progressPercent}%</span>
           </div>
           <div className="w-full bg-emerald-950/40 rounded-full h-2">
@@ -79,7 +88,7 @@ export const VisitChecklist = () => {
           }`}
         >
           <UserCheck className="w-4 h-4" />
-          <span>{t('new_patient')}</span>
+          <span>{lang === 'hi' ? 'नया मरीज (First Visit)' : t('new_patient')}</span>
         </button>
         <button
           onClick={() => setPatientType('returning')}
@@ -88,7 +97,7 @@ export const VisitChecklist = () => {
           }`}
         >
           <RotateCcw className="w-4 h-4" />
-          <span>{t('returning_patient')}</span>
+          <span>{lang === 'hi' ? 'पुराना मरीज (Follow-up)' : t('returning_patient')}</span>
         </button>
       </div>
 
@@ -98,7 +107,7 @@ export const VisitChecklist = () => {
           const isChecked = Boolean(checkedItems[item.id]);
 
           // Filter recommendation based on patient type
-          if (patientType === 'new' && item.id === 'old_card') return null;
+          if (patientType === 'new' && (item.id === 'old_card' || item.id === 'discharge_summary')) return null;
 
           return (
             <div
@@ -129,7 +138,7 @@ export const VisitChecklist = () => {
       <div className="flex items-center justify-between pt-2">
         <span className="text-[11px] text-slate-400 flex items-center gap-1">
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-          <span>Stored locally on device</span>
+          <span>{lang === 'hi' ? 'डेटा फोन में ही सुरक्षित रहता है' : 'Stored locally on device'}</span>
         </span>
         <button
           onClick={handleReset}

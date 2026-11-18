@@ -1,10 +1,10 @@
 import React from 'react';
-import { FlaskConical, AlertTriangle, CheckCircle2, MapPin, Pill } from 'lucide-react';
+import { FlaskConical, AlertTriangle, CheckCircle2, MapPin, Pill, HelpCircle, FileText } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
-export const LabTestGuide = ({ protocols }) => {
-  const { t, highContrast } = useLanguage();
+export const LabTestGuide = ({ protocols, fourQuestions }) => {
+  const { lang, t, highContrast } = useLanguage();
 
   return (
     <div className="space-y-4 pb-20">
@@ -14,41 +14,50 @@ export const LabTestGuide = ({ protocols }) => {
           <AlertTriangle className="w-5 h-5 text-red-600 shrink-0 mt-0.5" />
           <div>
             <h4 className="font-bold text-sm text-red-950">
-              Golden Rule: Check Doctor's Test Slip First!
+              {lang === 'hi' ? 'सबसे जरूरी नियम: डॉक्टर की टेस्ट पर्ची देखें' : 'Golden Rule: Check Doctor\'s Test Slip First!'}
             </h4>
             <p className="mt-1 leading-relaxed text-red-800">
-              Never assume all tests take place in one room. Every investigation (blood, urine, stool, biopsy, X-Ray) 
-              has specific counters printed or stamped on your doctor's test requisition slip.
+              {lang === 'hi'
+                ? 'हर टेस्ट एक ही कमरे में नहीं होता। डॉक्टर की पर्ची पर जो लैब/काउंटर लिखा हो, वही फॉलो करें। रूम 127 और रूम 25 संदर्भ नंबर हैं, अस्पताल पहुंचकर स्टाफ से दोबारा जांचें।'
+                : 'Never assume all tests take place in one room. Every investigation (blood, urine, stool, biopsy, X-Ray) has specific counters stamped on your doctor\'s test requisition slip.'}
             </p>
           </div>
         </div>
       </div>
 
-      {/* Fasting Notice */}
-      <div className="bg-blue-50 border border-blue-200 rounded-2xl p-4 text-xs text-blue-900 shadow-xs">
-        <div className="flex items-start gap-2.5">
-          <Pill className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-          <div>
-            <h4 className="font-bold text-sm text-blue-950">
-              Important: Fasting & Regular Medicines
-            </h4>
-            <ul className="mt-1.5 space-y-1 list-disc list-inside text-blue-800">
-              <li>Not every blood test requires an empty stomach (fasting).</li>
-              <li><strong>Do not stop</strong> routine blood pressure or heart medications without specific doctor orders.</li>
-              <li>Ask the lab counter: <em>"Kya yeh test khali pet hoga?"</em></li>
-            </ul>
+      {/* 4 Questions Before Giving Sample */}
+      {fourQuestions && (
+        <div className="bg-gradient-to-r from-teal-900 to-emerald-900 text-white rounded-2xl p-4 shadow-sm">
+          <div className="flex items-center gap-2 mb-2 font-semibold text-sm">
+            <HelpCircle className="w-4 h-4 text-emerald-300" />
+            <span>
+              {lang === 'hi' ? 'सैंपल देने से पहले यह 4 बातें पूछें' : lang === 'pa' ? 'ਸੈਂਪਲ ਦੇਣ ਤੋਂ ਪਹਿਲਾਂ ਇਹ 4 ਗੱਲਾਂ ਪੁੱਛੋ' : '4 Questions to Ask Before Giving Samples'}
+            </span>
+          </div>
+          <div className="space-y-2 mt-3">
+            {fourQuestions.map((q, idx) => (
+              <div key={idx} className="bg-white/10 rounded-xl p-2.5 backdrop-blur-xs text-xs">
+                <p className="font-bold text-white">
+                  {idx + 1}. {lang === 'hi' ? q.hindi : lang === 'pa' ? q.punjabi : q.q}
+                </p>
+                <p className="text-[11px] text-emerald-200 mt-0.5">
+                  👉 {q.note}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
-      </div>
+      )}
 
       {/* Published Sample Collection Rooms */}
       <div className="space-y-3">
-        <h3 className="font-bold text-sm text-slate-800 px-1">
-          Published Sample Collection Reference Counters
+        <h3 className="font-bold text-sm text-slate-800 px-1 flex items-center justify-between">
+          <span>{lang === 'hi' ? 'प्रकाशित सैंपल कलेक्शन काउंटर (दिशानिर्देश)' : 'Published Sample Collection Reference Counters'}</span>
         </h3>
 
         {protocols && protocols.map((proto, idx) => {
-          const speechText = `${proto.type}. Location: ${proto.published_location}. ${proto.verification_warning || ''}`;
+          const typeName = lang === 'hi' && proto.hindi_type ? proto.hindi_type : proto.type;
+          const speechText = `${typeName}. Location: ${proto.published_location}. ${proto.verification_warning || ''}`;
 
           return (
             <div
@@ -66,8 +75,11 @@ export const LabTestGuide = ({ protocols }) => {
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-slate-900">
-                      {proto.type}
+                      {typeName}
                     </h4>
+                    <p className="text-[11px] text-slate-500 font-medium">
+                      {proto.type}
+                    </p>
                   </div>
                 </div>
                 <AudioButton text={speechText} />
@@ -77,7 +89,9 @@ export const LabTestGuide = ({ protocols }) => {
               <div className="mt-3 bg-slate-50 border border-slate-200 rounded-xl p-2.5 flex items-start gap-2 text-xs">
                 <MapPin className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-900">Published Location: </span>
+                  <span className="font-bold text-slate-900">
+                    {lang === 'hi' ? 'प्रकाशित स्थान: ' : 'Location: '}
+                  </span>
                   <span className="text-slate-700 font-medium">{proto.published_location}</span>
                 </div>
               </div>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { HelpCircle, MessageSquare, Send, CheckCircle2 } from 'lucide-react';
+import { HelpCircle, MessageSquare, Send, CheckCircle2, Phone, ExternalLink, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 import { dataService } from '../services/dataService';
 
-export const HelpDeskPhrases = ({ phrases }) => {
+export const HelpDeskPhrases = ({ phrases, numbers, officialLinks }) => {
   const { lang, t, highContrast } = useLanguage();
   const [feedbackCategory, setFeedbackCategory] = useState('incorrect_room');
   const [feedbackMsg, setFeedbackMsg] = useState('');
@@ -38,11 +38,13 @@ export const HelpDeskPhrases = ({ phrases }) => {
         <div className="flex items-center gap-2 mb-1">
           <HelpCircle className="w-5 h-5 text-blue-300" />
           <h2 className="font-bold text-base md:text-lg">
-            {t('phrases_title')}
+            {lang === 'hi' ? 'हेल्प डेस्क पर क्या बोलना है? (गाइड)' : t('phrases_title')}
           </h2>
         </div>
         <p className="text-xs text-blue-100 leading-relaxed">
-          {t('phrases_desc')}
+          {lang === 'hi' 
+            ? 'अस्पताल हेल्प डेस्क या काउंटर पर अगर रास्ता न समझ आए, तो यह वाक्य बोलें या कर्मचारियों को दिखाएं:'
+            : t('phrases_desc')}
         </p>
       </div>
 
@@ -81,8 +83,66 @@ export const HelpDeskPhrases = ({ phrases }) => {
         })}
       </div>
 
+      {/* Important Reception Contact Numbers (Section 11) */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3">
+        <div className="flex items-center gap-2">
+          <Phone className="w-4 h-4 text-emerald-600" />
+          <h3 className="font-bold text-sm text-slate-900">
+            {lang === 'hi' ? 'महत्वपूर्ण रिसेप्शन फोन नंबर (सत्यापित सूची)' : 'Important Reception Contact Numbers'}
+          </h3>
+        </div>
+        <p className="text-xs text-slate-500">
+          Reconfirm on-site. Tap any number to call directly:
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+          {numbers && numbers.map((n, idx) => (
+            <div key={idx} className="bg-slate-50 p-2.5 rounded-xl border border-slate-100 flex items-center justify-between">
+              <div>
+                <p className="font-bold text-slate-800 text-xs">{n.service}</p>
+                <p className="text-[11px] text-slate-500">{n.phone}</p>
+              </div>
+              <a
+                href={`tel:${n.phone.split('/')[0].trim()}`}
+                className="bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-semibold px-2 py-1 rounded-lg text-xs"
+              >
+                Call
+              </a>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Official Links (Section 12) */}
+      <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs space-y-3">
+        <div className="flex items-center gap-2">
+          <ExternalLink className="w-4 h-4 text-blue-600" />
+          <h3 className="font-bold text-sm text-slate-900">
+            {lang === 'hi' ? 'आधिकारिक पीजीआई लिंक्स — जाने से पहले चेक करें' : 'Official PGIMER Links & Resources'}
+          </h3>
+        </div>
+
+        <div className="space-y-2">
+          {officialLinks && officialLinks.map((link, idx) => (
+            <a
+              key={idx}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block p-3 rounded-xl border border-slate-100 bg-slate-50/80 hover:bg-blue-50/60 hover:border-blue-200 transition-all text-xs"
+            >
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-blue-900">{link.title}</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
+              </div>
+              <p className="text-[11px] text-slate-500 mt-0.5">{link.desc}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
       {/* Anonymous Feedback Form */}
-      <div className="bg-slate-100 rounded-2xl p-4 border border-slate-200 mt-6">
+      <div className="bg-slate-100 rounded-2xl p-4 border border-slate-200">
         <div className="flex items-center gap-2 mb-2">
           <MessageSquare className="w-4 h-4 text-slate-700" />
           <h3 className="font-bold text-sm text-slate-900">

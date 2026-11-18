@@ -1,17 +1,60 @@
 export const localSeedData = {
   metadata: {
-    source: "PGIMER Patient Help Guide (November 2026) & PGI Saathi SRS v2.0",
-    version: "2.0.0",
+    source: "PGIMER Chandigarh Patient Help Guide (November 2026) & PGI Saathi SRS v2.0",
+    version: "2.1.0",
     verified_at: "2026-11-18",
-    status: "baseline_seed"
+    status: "baseline_seed",
+    disclaimer: "Independent patient navigation aid. Not an official PGIMER publication. Room, counter, OPD days and timings can change. Reconfirm at hospital help desk, signage, or test slip."
   },
+  golden_rules: [
+    {
+      num: 1,
+      title: "Identify Patient Concern First",
+      hindi_title: "मरीज की तकलीफ के हिसाब से विभाग चुनें",
+      punjabi_title: "ਮਰੀਜ਼ ਦੀ ਤਕਲੀਫ਼ ਅਨੁਸਾਰ ਵਿਭਾਗ ਚੁਣੋ",
+      desc: "Do not guess the room. Pick the initial department based on the primary symptom.",
+      hindi_desc: "कमरा नंबर का अंदाज़ा न लगाएं। मुख्य लक्षण के आधार पर ही प्राथमिक विभाग का चयन करें।"
+    },
+    {
+      num: 2,
+      title: "Not Everyone Goes to New OPD",
+      hindi_title: "हर मरीज को New OPD नहीं जाना",
+      punjabi_title: "ਹਰ ਮਰੀਜ਼ ਨੂੰ ਨਿਊ ਓਪੀਡੀ ਨਹੀਂ ਜਾਣਾ",
+      desc: "Heart, Eye, and Children clinics are housed in separate dedicated buildings across the campus.",
+      hindi_desc: "दिल (ACC), आंख (AEC) और बच्चों (APC) के लिए परिसर में अलग विशेष इमारतें हैं।"
+    },
+    {
+      num: 3,
+      title: "New Patient: Correct Token & CR Card",
+      hindi_title: "नया मरीज: सही काउंटर से टोकन और CR कार्ड बनवाएं",
+      punjabi_title: "ਨਵਾਂ ਮਰੀਜ਼: ਸਹੀ ਕਾਊਂਟਰ ਤੋਂ ਟੋਕਨ ਤੇ ਕਾਰਡ ਬਣਵਾਓ",
+      desc: "Take a token at the correct registration counter. Get your permanent CR card before proceeding to the clinic.",
+      hindi_desc: "सही काउंटर से टोकन लें। पहले अपना पक्का सीआर नंबर / ओपीडी कार्ड बनवाएं फिर संबंधित डॉक्टर के पास जाएं।"
+    },
+    {
+      num: 4,
+      title: "Returning Patient: Never Make a Duplicate Card",
+      hindi_title: "पुराना मरीज: पुराना कार्ड व रिपोर्ट लाएं, नया कार्ड न बनवाएं",
+      punjabi_title: "ਪੁਰਾਣਾ ਮਰੀਜ਼: ਪੁਰਾਣਾ ਕਾਰਡ ਲਿਆਓ, ਨਵਾਂ ਕਾਰਡ ਨਾ ਬਣਵਾਓ",
+      desc: "Always bring your existing CR number, prior doctor slips, and test reports. Never generate a second CR number for the same patient.",
+      hindi_desc: "पुराना सीआर नंबर, डॉक्टर की पुरानी पर्ची और रिपोर्ट जरूर साथ लाएं। एक ही मरीज का बिना पूछे नया सीआर कार्ड न बनवाएं।"
+    },
+    {
+      num: 5,
+      title: "Test Slips Rule: Follow Doctor's Stamped Counter",
+      hindi_title: "टेस्ट पर्ची का नियम: पर्ची पर लिखा काउंटर ही मान्य है",
+      punjabi_title: "ਟੈਸਟ ਪਰਚੀ ਦਾ ਨਿਯਮ: ਪਰਚੀ ਵਾਲਾ ਕਾਊਂਟਰ ਹੀ ਦੇਖੋ",
+      desc: "Every blood, urine, stool, culture, and X-ray test has specific counters. Follow what is stamped on your test slip.",
+      hindi_desc: "सभी टेस्ट एक ही कमरे में नहीं होते। डॉक्टर द्वारा दी गई पर्ची पर जो लैब/काउंटर लिखा हो, वही जाएं।"
+    }
+  ],
   buildings: [
     {
       id: "new_opd",
       name: "New OPD Block",
       hindi_name: "न्यू ओपीडी ब्लॉक",
       punjabi_name: "ਨਿਊ ਓਪੀਡੀ ਬਲਾਕ",
-      description: "Main outpatient registration and general clinic consultations across multiple specialty departments.",
+      description: "General registration counters and multiple Medicine, Surgery & specialty clinics across various floors and blocks.",
       reception_phone: ["0172-2756969", "0172-2756868"],
       landmark: "Near Gate No. 1 / Main roundabout",
       is_separate_building: false,
@@ -22,9 +65,9 @@ export const localSeedData = {
       name: "Advanced Cardiac Centre (ACC)",
       hindi_name: "एडवांस्ड कार्डिएक सेंटर (ACC)",
       punjabi_name: "ਐਡਵਾਂਸਡ ਕਾਰਡੀਅਕ ਸੈਂਟਰ (ACC)",
-      description: "Dedicated specialty hospital for cardiology and heart operations. Do not search inside New OPD.",
+      description: "Dedicated specialty hospital for heart diseases and surgery. Reception & separate OPD registration.",
       reception_phone: ["0172-2755353"],
-      landmark: "Separate specialized building near Nehru Hospital",
+      landmark: "Separate building near Nehru Hospital",
       is_separate_building: true,
       color: "red"
     },
@@ -33,7 +76,7 @@ export const localSeedData = {
       name: "Advanced Paediatric Centre (APC)",
       hindi_name: "एडवांस्ड पीडियाट्रिक सेंटर (APC)",
       punjabi_name: "ਐਡਵਾਂਸਡ ਪੀਡੀਆਟ੍ਰਿਕ ਸੈਂਟਰ (APC)",
-      description: "Dedicated specialty building for newborn, infant, and child medical care.",
+      description: "Dedicated children's specialty OPD and inpatient hospital. Separate registration.",
       reception_phone: ["0172-2755858"],
       landmark: "Separate building next to Advanced Eye Centre",
       is_separate_building: true,
@@ -44,7 +87,7 @@ export const localSeedData = {
       name: "Advanced Eye Centre (AEC)",
       hindi_name: "एडवांस्ड आई सेंटर (AEC)",
       punjabi_name: "ਐਡਵਾਂਸਡ ਆਈ ਸੈਂਟਰ (AEC)",
-      description: "Dedicated ophthalmology hospital for eye conditions, retinal care, and eye surgery.",
+      description: "Dedicated ophthalmology building for eye treatments, retina checkups, and surgery.",
       reception_phone: ["0172-2755252"],
       landmark: "Separate building near APC",
       is_separate_building: true,
@@ -55,7 +98,7 @@ export const localSeedData = {
       name: "Advanced Trauma Centre (ATC)",
       hindi_name: "एडवांस्ड ट्रॉमा सेंटर (ATC)",
       punjabi_name: "ਐਡਵਾਂਸਡ ਟ੍ਰੋਮਾ ਸੈਂਟਰ (ATC)",
-      description: "24/7 dedicated acute emergency trauma care facility for accidents and major critical trauma.",
+      description: "24/7 dedicated acute emergency trauma care facility for severe accidents and urgent polytrauma.",
       reception_phone: ["0172-2755454"],
       landmark: "Emergency sector road",
       is_separate_building: true,
@@ -66,7 +109,7 @@ export const localSeedData = {
       name: "Nehru Hospital / Emergency Block",
       hindi_name: "नेहरू हॉस्पिटल / इमरजेंसी ब्लॉक",
       punjabi_name: "ਨਹਿਰੂ ਹਸਪਤਾਲ / ਐਮਰਜੈਂਸੀ ਬਲਾਕ",
-      description: "Main indoor hospital complex and 24/7 emergency triage services.",
+      description: "Emergency hospital. Immediate triage care. Routine OPD card is NOT required to enter emergency.",
       reception_phone: ["0172-2755555"],
       landmark: "Central hospital complex",
       is_separate_building: true,
@@ -76,22 +119,22 @@ export const localSeedData = {
   departments: [
     {
       id: "internal_medicine",
-      name: "Internal Medicine / General Medicine",
+      name: "Medicine / Internal Medicine",
       hindi_name: "इंटरनल मेडिसिन / सामान्य चिकित्सा",
       punjabi_name: "ਜਨਰਲ ਮੈਡੀਸਨ",
       building_id: "new_opd",
       concerns: ["fever", "bukhar", "weakness", "kamzori", "diabetes", "sugar", "blood pressure", "bp", "chhati mein jalan", "general illness"],
-      notes: "Primary starting point for adult general symptoms without a pre-existing subspecialty card.",
+      notes: "Primary starting point in New OPD for adult patients.",
       referral_needed: false
     },
     {
       id: "pulmonary_medicine",
-      name: "Pulmonary Medicine / Chest Clinic",
+      name: "Pulmonary Medicine (Chest & Breathing)",
       hindi_name: "पल्मोनरी मेडिसिन / छाती एवं सांस विभाग",
       punjabi_name: "ਛਾਤੀ ਅਤੇ ਸਾਹ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["cough", "purani khansi", "asthma", "copd", "saans phoolna", "chest congestion", "tb"],
-      notes: "Ask at New OPD Help Desk for chest clinic room or whether General Medicine referral is required.",
+      concerns: ["cough", "purani khansi", "asthma", "copd", "saans ki dikkat", "saans phoolna", "tb", "chest allergy"],
+      notes: "New OPD block. Ask at help desk if Medicine referral is needed.",
       referral_needed: false
     },
     {
@@ -100,18 +143,18 @@ export const localSeedData = {
       hindi_name: "हृदय रोग विभाग (कार्डियोलॉजी)",
       punjabi_name: "ਦਿਲ ਦਾ ਰੋਗ ਵਿਭਾਗ",
       building_id: "acc",
-      concerns: ["heart disease", "dil ki bimari", "heart attack follow-up", "palpitations", "dil ki dhadkan", "angioplasty check"],
-      notes: "Located in the separate Advanced Cardiac Centre (ACC) building. Do not look in New OPD.",
+      concerns: ["dil ki bimari", "heart follow-up", "chest pain follow-up", "palpitations", "dil ki dhadkan", "angioplasty check", "valve problem"],
+      notes: "Advanced Cardiac Centre (ACC) — ALAG BUILDING. Do not look inside New OPD.",
       referral_needed: false
     },
     {
       id: "neurology",
-      name: "Neurology (Brain & Nerves)",
-      hindi_name: "न्यूरोलॉजी (तंत्रिका रोग)",
+      name: "Neurology / Medicine (Nerve & Brain)",
+      hindi_name: "न्यूरोलॉजी (तंत्रिका व दिमाग)",
       punjabi_name: "ਦਿਮਾਗ ਅਤੇ ਨਸਾਂ ਦਾ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["epilepsy", "mirgi", "seizures", "daura", "nerve pain", "haath kaanpna", "tremors", "numbness", "paralysis check"],
-      notes: "New OPD building. Inquire at ground floor token counter.",
+      concerns: ["mirgi", "epilepsy", "seizures", "nerve", "haath kaanpna", "tremors", "numbness", "paralysis check"],
+      notes: "Confirm OPD location and clinic room at New OPD ground floor desk.",
       referral_needed: false
     },
     {
@@ -120,8 +163,8 @@ export const localSeedData = {
       hindi_name: "हड्डी एवं जोड़ रोग (ऑर्थोपेडिक्स)",
       punjabi_name: "ਹੱਡੀਆਂ ਅਤੇ ਜੋੜਾਂ ਦਾ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["fracture", "joint pain", "ghutne ka dard", "knee pain", "kamar dard", "back pain", "haddi ki dikkat", "spine"],
-      notes: "Confirm clinic room and counter with OPD reception staff.",
+      concerns: ["haddi", "joint", "ghutne", "kamar ki dikkat", "knee pain", "back pain", "fracture check", "arthritis"],
+      notes: "Confirm room from New OPD help desk upon arrival.",
       referral_needed: false
     },
     {
@@ -130,88 +173,88 @@ export const localSeedData = {
       hindi_name: "जनरल सर्जरी (शल्य चिकित्सा)",
       punjabi_name: "ਜਨਰਲ ਸਰਜਰੀ",
       building_id: "new_opd",
-      concerns: ["hernia", "gallbladder stones", "pitta ki pathri", "swelling", "gilti", "lump", "operation assessment"],
+      concerns: ["hernia", "gallbladder", "operation wali dikkat", "pitta ki pathri", "gilti", "swelling", "lump"],
       notes: "New OPD block.",
       referral_needed: false
     },
     {
       id: "gastroenterology",
-      name: "Gastroenterology (Stomach & Liver)",
-      hindi_name: "गैस्ट्रोएंटरोलॉजी (पेट एवं लिवर)",
+      name: "Gastroenterology / Medicine (Liver & Stomach)",
+      hindi_name: "गैस्ट्रोएंटरोलॉजी (लिवर एवं पेट)",
       punjabi_name: "ਪੇਟ ਅਤੇ ਲਿਵਰ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["jaundice", "piliya", "liver problem", "stomach pain", "pet ki dikkat", "hepatitis", "cirrhosis", "ulcer"],
-      notes: "Super-specialty clinic. Patients often require initial referral from General Medicine.",
+      concerns: ["liver", "pet ki purani problem", "jaundice", "piliya", "hepatitis", "cirrhosis", "stomach burning"],
+      notes: "Ask at help desk if internal referral from Medicine is needed first.",
       referral_needed: true
     },
     {
       id: "nephrology",
-      name: "Nephrology (Kidney)",
+      name: "Nephrology / Medicine (Kidney)",
       hindi_name: "नेफ्रोलॉजी (गुर्दा रोग)",
       punjabi_name: "ਗੁਰਦੇ ਦਾ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["kidney problem", "gurda", "high creatinine", "dialysis", "swelling on face", "swelling legs"],
-      notes: "May require prior consultation in Medicine or doctor referral letter.",
+      concerns: ["kidney ki bimari", "gurda", "high creatinine", "dialysis", "swelling legs", "swelling face"],
+      notes: "Ask at reception if initial Medicine referral is required.",
       referral_needed: true
     },
     {
       id: "urology",
       name: "Urology (Urinary & Prostate)",
-      hindi_name: "यूरोलॉजी (मूत्र रोग)",
+      hindi_name: "यूरोलॉजी (पेशाब व प्रोस्टेट)",
       punjabi_name: "ਯੂਰੋਲੋਜੀ",
       building_id: "new_opd",
-      concerns: ["kidney stones", "peshab ki pathri", "prostate", "difficulty urinating", "peshab mein dikkat", "burning urination"],
-      notes: "New OPD specialty clinic.",
+      concerns: ["peshab ki pathri", "prostate", "kidney stone", "difficulty urinating", "peshab mein dard"],
+      notes: "New OPD specialty; confirm clinic room on registration.",
       referral_needed: false
     },
     {
       id: "obs_gynae",
-      name: "Obstetrics & Gynaecology (Women)",
+      name: "Obstetrics & Gynaecology (Women's Health)",
       hindi_name: "प्रसूति एवं स्त्री रोग विभाग",
       punjabi_name: "ਇਸਤਰੀ ਰੋਗ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["pregnancy", "garbhvastha", "irregular periods", "mahila rog", "women health", "fibroid", "pcos"],
-      notes: "Dedicated female registration counters and examination floors in New OPD.",
+      concerns: ["pregnancy", "periods", "mahila rog", "garbhvastha", "women health", "pcos"],
+      notes: "Confirm clinic location and female registration counter in New OPD.",
       referral_needed: false
     },
     {
       id: "paediatrics",
-      name: "Paediatrics (Children & Infants)",
+      name: "Paediatrics (Children)",
       hindi_name: "बाल रोग विभाग (पीडियाट्रिक्स)",
       punjabi_name: "ਬੱਚਿਆਂ ਦਾ ਵਿਭਾਗ",
       building_id: "apc",
-      concerns: ["child illness", "bachche ki bimari", "infant fever", "growth issues", "pediatric checkup", "child vaccination"],
-      notes: "Located exclusively in the separate Advanced Paediatric Centre (APC) building.",
+      concerns: ["bachche ki bimari", "child illness", "infant fever", "child development", "vaccination"],
+      notes: "Advanced Paediatric Centre (APC) — ALAG BUILDING. Located near Advanced Eye Centre.",
       referral_needed: false
     },
     {
       id: "ophthalmology",
-      name: "Ophthalmology (Eye)",
-      hindi_name: "नेत्र रोग विभाग (आंखों का विभाग)",
+      name: "Eye / Ophthalmology",
+      hindi_name: "नेत्र रोग विभाग (आंखों की ओपीडी)",
       punjabi_name: "ਅੱਖਾਂ ਦਾ ਵਿਭਾਗ",
       building_id: "aec",
-      concerns: ["eye problem", "aankh ka dard", "dim vision", "dhundhla dikhna", "cataract", "motiyabind", "chashma", "glaucoma"],
-      notes: "Located exclusively in the separate Advanced Eye Centre (AEC) building.",
+      concerns: ["aankhon ki problem", "eye problem", "dhundhla dikhna", "motiyabind", "cataract", "chashma", "glaucoma"],
+      notes: "Advanced Eye Centre (AEC) — ALAG BUILDING. Do not look in New OPD.",
       referral_needed: false
     },
     {
       id: "ent",
-      name: "Otolaryngology / ENT (Ear, Nose, Throat)",
+      name: "ENT (Ear, Nose, Throat)",
       hindi_name: "ईएनटी (कान, नाक, गला)",
       punjabi_name: "ਕੰਨ, ਨੱਕ, ਗਲਾ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["ear pain", "kaan ka behna", "nose bleeding", "throat pain", "gale mein dard", "hearing loss", "tonsils"],
-      notes: "New OPD block; check reception display for room assignment.",
+      concerns: ["kaan", "naak", "gala", "ear pain", "throat infection", "nose bleed", "hearing problem"],
+      notes: "Confirm room from New OPD help desk.",
       referral_needed: false
     },
     {
       id: "dermatology",
-      name: "Dermatology (Skin)",
-      hindi_name: "चर्म रोग विभाग (त्वचा)",
+      name: "Dermatology (Skin & Allergy)",
+      hindi_name: "चर्म रोग विभाग (त्वचा व एलर्जी)",
       punjabi_name: "ਚਮੜੀ ਦੇ ਰੋਗ",
       building_id: "new_opd",
-      concerns: ["itching", "khujli", "rashes", "daane", "skin allergy", "vitiligo", "fungal infection", "eczema"],
-      notes: "New OPD block.",
+      concerns: ["khujli", "daane", "skin allergy", "rashes", "eczema", "fungal", "safed daag"],
+      notes: "New OPD location confirm.",
       referral_needed: false
     },
     {
@@ -220,83 +263,202 @@ export const localSeedData = {
       hindi_name: "मनोचिकित्सा विभाग (मानसिक स्वास्थ्य)",
       punjabi_name: "ਮਾਨਸਿਕ ਸਿਹਤ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["depression", "anxiety", "ghabrahat", "neend na aana", "insomnia", "stress", "tension", "bipolar"],
-      notes: "New OPD block.",
+      concerns: ["depression", "anxiety", "mental health", "ghabrahat", "neend na aana", "insomnia", "stress"],
+      notes: "New OPD location confirm.",
       referral_needed: false
     },
     {
       id: "oral_health",
       name: "Oral Health Sciences (Dental)",
-      hindi_name: "दंत चिकित्सा विभाग",
+      hindi_name: "दंत चिकित्सा विभाग (दांत व मुंह)",
       punjabi_name: "ਦੰਦਾਂ ਦਾ ਵਿਭਾਗ",
       building_id: "new_opd",
-      concerns: ["tooth pain", "daant ka dard", "gum bleeding", "cavity", "jaw pain", "root canal"],
-      notes: "Department reception in New OPD block.",
+      concerns: ["daant", "munh ki problem", "tooth pain", "gum bleeding", "cavity", "jaw pain"],
+      notes: "Oral Health Sciences department reception in New OPD block.",
       referral_needed: false
+    },
+    {
+      id: "haematology",
+      name: "Medicine / Clinical Haematology (Blood Diseases)",
+      hindi_name: "हेमेटोलॉजी (रक्त विकार व ल्यूकेमिया)",
+      punjabi_name: "ਖੂਨ ਦੇ ਰੋਗ (ਹੀਮੈਟੋਲੋਜੀ)",
+      building_id: "new_opd",
+      concerns: ["khoon ki bimari", "leukemia", "anemia", "low platelets", "blood cancer", "bleeding disorders"],
+      notes: "Referral zaroori ho sakta hai. Inquire at Medicine registration desk first.",
+      referral_needed: true
+    },
+    {
+      id: "oncology",
+      name: "Oncology (Cancer Specialty)",
+      hindi_name: "ऑन्कोलॉजी (कैंसर चिकित्सा)",
+      punjabi_name: "ਕੈਂਸਰ ਵਿਭਾਗ",
+      building_id: "new_opd",
+      concerns: ["cancer ki dikkat", "tumor", "chemotherapy follow-up", "radiotherapy", "biopsy follow-up"],
+      notes: "Specialty determined by cancer type; confirm referral at Central Help Desk.",
+      referral_needed: true
     }
   ],
   opd_schedule: {
     weekdays: {
       days: "Monday – Friday",
       registration_timings: "8:00 AM – 11:00 AM",
-      notes: "Registration counters close strictly at 11:00 AM."
+      notes: "Registration counters close strictly at 11:00 AM. Special clinics have separate days."
     },
     saturday_and_holidays: {
       days: "Saturday / Gazetted Holidays",
       registration_timings: "8:00 AM – 10:30 AM",
       notes: "Closed on Sundays. Emergency remains open 24/7."
-    }
+    },
+    special_clinics_note: "Special clinics ke din aur timing alag ho sakte hain. Registration time aur doctor consultation time ek jaise nahi hote."
   },
   sample_collection: [
     {
-      type: "Routine Blood & Urine Collection",
+      type: "Routine OPD Blood & Urine Collection",
+      hindi_type: "सामान्य खून व पेशाब जांच",
       published_location: "New OPD, Block-C, 1st Floor, Room 127",
-      verification_warning: "Reference location from published guide. Always verify the exact room number printed on the doctor's test slip.",
-      fasting_guidance: "Fasting is not required for every blood test. Do not stop regular blood pressure or heart medications without doctor advice."
+      verification_warning: "Published directory reference. Current counter aur test eligibility zaroor confirm karein. Slip par doosra room ho to slip follow karein.",
+      fasting_guidance: "Har blood test mein fasting (khali pet) nahi hoti. Bina doctor ki salah ke regular medicines band mat karo."
     },
     {
       type: "Therapeutic Drug Monitoring (TDM)",
+      hindi_type: "दवा स्तर जांच (TDM)",
       published_location: "New OPD, Ground Floor, Room 25",
-      verification_warning: "For specialized drug concentration monitoring, not standard routine blood tests."
+      verification_warning: "Special drug-level testing ke published instructions. Routine blood tests ke liye nahi."
     },
     {
-      type: "Microbiology / Stool / Sputum / Culture",
-      published_location: "Department of Microbiology / Designated Lab Counters",
-      verification_warning: "Ask the lab token desk near Room 127 or verify on doctor's requisition form."
+      type: "Stool / Sputum / Culture",
+      hindi_type: "मल, बलगम और कल्चर जांच",
+      published_location: "Department of Microbiology / Designated Lab Help Desk",
+      verification_warning: "Exact current counter verified nahi; test slip aur microbiology/lab help desk se poochhein."
+    },
+    {
+      type: "Biopsy / Special Hormone Tests",
+      hindi_type: "बायोप्सी एवं विशेष हार्मोन जांच",
+      published_location: "Respective Department Specific Laboratories",
+      verification_warning: "Department-specific instructions follow karein; direct Room 127 assume na karein."
     },
     {
       type: "Radiology (X-Ray / Ultrasound / CT / MRI)",
-      published_location: "Radiology Department Counters (Ground & Basement levels)",
-      verification_warning: "Ultrasound and CT scans usually require advance token appointment."
+      hindi_type: "रेडियोलॉजी (एक्स-रे, सीटी, एमआरआई, अल्ट्रासाउंड)",
+      published_location: "Radiology Department (Test slip ke hisaab se)",
+      verification_warning: "Exact room aur appointment counter confirm karein. CT aur Ultrasound ke liye pehle token/appointment zaroori hai."
+    },
+    {
+      type: "Report Collection (रिपोर्ट लेना)",
+      hindi_type: "जांच रिपोर्ट प्राप्त करना",
+      published_location: "Designated Report Collection Counters",
+      verification_warning: "Receipt, CR number aur lab instructions dekhein; report collection counter se samay poochhein."
+    }
+  ],
+  sample_four_questions: [
+    {
+      q: "Kya test khaali pet (fasting) karwana hai?",
+      hindi: "क्या टेस्ट खाली पेट (fasting) करवाना है?",
+      punjabi: "ਕੀ ਟੈਸਟ ਖਾਲੀ ਪੇਟ (ਫਾਸਟਿੰਗ) ਕਰਵਾਉਣਾ ਹੈ?",
+      note: "Har blood test mein fasting nahi hoti. Bina wajah bhookhe na rahein."
+    },
+    {
+      q: "Dawai khani hai ya rokni hai?",
+      hindi: "दवाई खानी है या रोकनी है?",
+      punjabi: "ਦਵਾਈ ਖਾਣੀ ਹੈ ਜਾਂ ਰੋਕਣੀ ਹੈ?",
+      note: "Bina doctor ki salah ke regular BP ya heart ki medicines band mat karo."
+    },
+    {
+      q: "Urine/stool ka dabba kahan milega, sample kitna aur kaise dena hai?",
+      hindi: "पेशाब/मल का डिब्बा कहां मिलेगा और सैंपल कैसे देना है?",
+      punjabi: "ਯੂਰੀਨ/ਸਟੂਲ ਦਾ ਡੱਬਾ ਕਿੱਥੋਂ ਮਿਲੇਗਾ ਅਤੇ ਸੈਂਪਲ ਕਿਵੇਂ ਦੇਣਾ ਹੈ?",
+      note: "Lab counter se sahi container aur timing confirm karein."
+    },
+    {
+      q: "Report kab aur kahan milegi?",
+      hindi: "रिपोर्ट कब और कहां मिलेगी?",
+      punjabi: "ਰਿਪੋਰਟ ਕਦੋਂ ਅਤੇ ਕਿੱਥੇ ਮਿਲੇਗੀ?",
+      note: "Receipt aur cash slip ko sambhal kar rakhein."
     }
   ],
   emergency_warning_signs: [
-    "Severe central chest pain, pressure, or tightness radiating to left arm or neck",
-    "Extreme shortness of breath or sudden gasping for air",
-    "Sudden loss of consciousness or unresponsiveness",
-    "Sudden facial drooping, arm weakness, or slurred speech (Stroke warning)",
-    "Uncontrolled severe bleeding, heavy trauma, or acute road traffic accidents",
-    "Continuous seizures without regaining consciousness"
+    "Tez seene ka dard (Severe central chest pain / pressure)",
+    "Bahut saans phoolna (Extreme shortness of breath / gasping)",
+    "Behoshi (Loss of consciousness / fainting)",
+    "Ek taraf achanak kamzori ya paralysis (Sudden one-sided weakness / stroke sign)",
+    "Bahut bleeding ya badi chot (Severe bleeding, major road trauma)",
+    "Fit / daure ke baad hosh na aana (Unresponsive after a seizure)"
   ],
-  emergency_instruction: "DO NOT WAIT IN ROUTINE OPD REGISTRATION QUEUES. Proceed directly to Emergency / Nehru Hospital or Advanced Trauma Centre (ATC) immediately.",
+  emergency_instruction: "Turant Emergency staff ko batao. Routine OPD registration card ka wait mat karo!",
+  card_making_process: {
+    new_patient: {
+      step: "Naya Patient (First Visit)",
+      instruction: "Hospital help desk par bolo: 'Mujhe pehli baar dikhana hai, patient ko ___ ki dikkat hai. Card kahan banega?' Registration ke baad CR number milega. Card lekar allotted OPD mein jao."
+    },
+    returning_patient: {
+      step: "Purana Patient (Follow-up)",
+      instruction: "Pehle se bana CR number/card lekar aao. Same patient ke liye bina poochhe naya CR number na banwao."
+    },
+    online_pre_registration: {
+      step: "Online Pre-Registration",
+      instruction: "Ghar se details bhar sakte ho, lekin isse kisi particular doctor ki confirmed appointment nahi hoti. Registration counter par jakar formal card verify karwana hota hai."
+    }
+  },
+  checklist_items: [
+    { id: "id_proof", text: "ID proof (Aadhaar / Voter ID)" },
+    { id: "old_card", text: "Purana CR / OPD card (agar purana patient ho)" },
+    { id: "old_prescription", text: "Doctor ki purani parchi (old prescription)" },
+    { id: "reports", text: "Blood / X-ray / MRI / CT scan reports" },
+    { id: "discharge_summary", text: "Discharge summary (agar pehle bharti hue the)" },
+    { id: "referral_letter", text: "Referral letter (agar kisi doosre hospital se refer kiya hai)" },
+    { id: "medicines_list", text: "Medicines ki list (jo dawa abhi chal rahi hai)" },
+    { id: "registered_mobile", text: "Registered mobile phone (SMS aur OTP ke liye)" },
+    { id: "online_confirmation", text: "Online registration confirmation slip (agar online details bhari hain)" }
+  ],
   help_desk_phrases: [
     {
-      situation: "First Visit / New Patient",
-      english: "I am visiting for the first time. The patient has [problem]. Where should I get the registration card made?",
-      hindi: "नमस्ते, हम पहली बार आए हैं। मरीज को [समस्या] की दिक्कत है। ओपीडी कार्ड किस काउंटर पर बनेगा?",
-      punjabi: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਅਸੀਂ ਪਹਿਲੀ ਵਾਰ ਆਏ ਹਾਂ। ਮਰੀਜ਼ ਨੂੰ [ਤਕਲੀਫ਼] ਹੈ। ਕਾਰਡ ਕਿਹੜੇ ਕਾਊਂਟਰ 'ਤੇ ਬਣੇਗਾ?"
+      situation: "Pehli Baar Aane Par (First Visit)",
+      hindi: "नमस्ते जी, पेशेंट को ___ की दिक्कत है। हम पहली बार आए हैं। कार्ड काउंटर, बिल्डिंग और कमरा कहां है?",
+      punjabi: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਮਰੀਜ਼ ਨੂੰ ___ ਦੀ ਦਿੱਕਤ ਹੈ। ਅਸੀਂ ਪਹਿਲੀ ਵਾਰ ਆਏ ਹਾਂ। ਕਾਰਡ ਕਾਊਂਟਰ, ਇਮਾਰਤ ਤੇ ਕਮਰਾ ਕਿੱਥੇ ਹੈ?",
+      english: "Hello, the patient is experiencing [problem]. We are here for the first time. Where is the card registration counter, building, and room?"
     },
     {
-      situation: "Lab Sample / Blood Test",
-      english: "The doctor prescribed a blood/urine test. Which counter/room should I deposit the sample at?",
-      hindi: "डॉक्टर ने खून/पेशाब का टेस्ट लिखा है। यह सैंपल किस कमरे या काउंटर पर जमा होगा?",
-      punjabi: "ਡਾਕਟਰ ਨੇ ਖੂਨ/ਪਿਸ਼ਾਬ ਦਾ ਟੈਸਟ ਲਿਖਿਆ ਹੈ। ਇਹ ਸੈਂਪਲ ਕਿਸ ਕਮਰੇ ਜਾਂ ਕਾਊਂਟਰ 'ਤੇ ਦੇਣਾ ਪਵੇਗਾ?"
+      situation: "Specialty / Referral Poochhna",
+      hindi: "नमस्ते जी, मरीज को किडनी/लिवर की दिक्कत है। कौन सी बिल्डिंग और रूम में जाना है? क्या पहले Medicine से रेफरल चाहिए?",
+      punjabi: "ਸਤਿ ਸ੍ਰੀ ਅਕਾਲ ਜੀ, ਮਰੀਜ਼ ਨੂੰ ਗੁਰਦੇ/ਲਿਵਰ ਦੀ ਦਿੱਕਤ ਹੈ। ਕਿਹੜੀ ਬਿਲਡਿੰਗ ਜਾਣਾ ਹੈ? ਕੀ ਪਹਿਲਾਂ ਮੈਡੀਸਨ ਤੋਂ ਰੈਫਰਲ ਚਾਹੀਦਾ ਹੈ?",
+      english: "The patient has kidney/liver issues. Which building and room should we visit? Do we need a referral from Medicine first?"
     },
     {
-      situation: "Sub-specialty Referral",
-      english: "Does the patient require a referral from General Medicine before visiting this specialty clinic?",
-      hindi: "क्या इस स्पेशल ओपीडी में दिखाने से पहले इंटरनल मेडिसिन से रेफरल पर्ची चाहिए?",
-      punjabi: "ਕੀ ਇਸ ਸਪੈਸ਼ਲ ਓਪੀਡੀ ਲਈ ਪਹਿਲਾਂ ਜਨਰਲ ਮੈਡੀਸਨ ਤੋਂ ਰੈਫਰਲ ਦੀ ਲੋੜ ਹੈ?"
+      situation: "Doctor ki Test Slip Par (Lab Test)",
+      hindi: "डॉक्टर ने खून और पेशाब टेस्ट लिखा है। यह टेस्ट किस काउंटर पर होगा? रिपोर्ट कब और कहां मिलेगी?",
+      punjabi: "ਡਾਕਟਰ ਨੇ ਖੂਨ ਅਤੇ ਪਿਸ਼ਾਬ ਦਾ ਟੈਸਟ ਲਿਖਿਆ ਹੈ। ਇਹ ਟੈਸਟ ਕਿਸ ਕਾਊਂਟਰ 'ਤੇ ਹੋਵੇਗਾ? ਰਿਪੋਰਟ ਕਦੋਂ ਤੇ ਕਿੱਥੇ ਮਿਲੇਗੀ?",
+      english: "The doctor prescribed blood and urine tests. Which counter will collect the sample? When and where will the report be available?"
     }
-  ]
+  ],
+  important_numbers: [
+    { service: "New OPD Reception", phone: "0172-2756969 / 0172-2756868" },
+    { service: "Advanced Cardiac Centre (ACC)", phone: "0172-2755353" },
+    { service: "Advanced Paediatric Centre (APC)", phone: "0172-2755858" },
+    { service: "Advanced Eye Centre (AEC)", phone: "0172-2755252" },
+    { service: "Advanced Trauma Centre (ATC)", phone: "0172-2755454" },
+    { service: "Nehru Hospital Emergency", phone: "0172-2755555" }
+  ],
+  official_links: [
+    {
+      title: "PGIMER Official Portal",
+      url: "https://pgimer.edu.in",
+      desc: "Official institutional website for announcements and hospital information."
+    },
+    {
+      title: "Official OPD Schedule",
+      url: "https://pgimer.edu.in/PGIMER_PORTAL/PGIMERPORTAL/Department/PatientCare/JSP/OPD_Schedule.jsp",
+      desc: "Live official schedule of department clinics and doctors."
+    },
+    {
+      title: "Online Pre-Registration Portal",
+      url: "https://www.pgimer.edu.in/PGIMER_PORTAL/PGIMERPORTAL/GlobalPages/JSP/portal_pre_registration.jsp",
+      desc: "Fill patient details online before arrival (does not guarantee confirmed appointment)."
+    },
+    {
+      title: "SARATHI Patient-Help Toolkit (PDF)",
+      url: "https://pgimer.edu.in/PGIMER_PORTAL/PGIMERPORTAL/Sarathi/simages/SarathiToolkit.pdf",
+      desc: "Official patient welfare guidelines and assistance document."
+    }
+  ],
+  lost_patient_advice: "Patient ke liye aakhri baat: Agar rasta samajh nahi aaye, kisi bhi reception/help desk par CR card aur parchi dikhao. Galat building mein ghoomne se achha hai pehle sahi jagah confirm karna."
 };

@@ -39,6 +39,10 @@ export const dataService = {
     return localSeedData.sample_collection;
   },
 
+  async getSampleFourQuestions() {
+    return localSeedData.sample_four_questions;
+  },
+
   async getEmergencyGuidance() {
     return {
       warning_signs: localSeedData.emergency_warning_signs,
@@ -48,6 +52,30 @@ export const dataService = {
 
   async getHelpDeskPhrases() {
     return localSeedData.help_desk_phrases;
+  },
+
+  async getGoldenRules() {
+    return localSeedData.golden_rules;
+  },
+
+  async getCardMakingProcess() {
+    return localSeedData.card_making_process;
+  },
+
+  async getChecklistItems() {
+    return localSeedData.checklist_items;
+  },
+
+  async getImportantNumbers() {
+    return localSeedData.important_numbers;
+  },
+
+  async getOfficialLinks() {
+    return localSeedData.official_links;
+  },
+
+  async getLostAdvice() {
+    return localSeedData.lost_patient_advice;
   },
 
   async submitFeedback({ category, message }) {
