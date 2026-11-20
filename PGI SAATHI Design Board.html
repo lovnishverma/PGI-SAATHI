@@ -1,0 +1,1132 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>PGI SAATHI Design Board</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Noto+Sans+Gurmukhi:wght@400;500;600;700&display=swap">
+<style>
+/* Layout concept: a review board. Hero with the live prototype, then Brand, Design system, Screens, Specs, SRS review. */
+:root{
+  --bg:#EEF2F7; --panel:#FFFFFF; --fg:#1B2838; --muted:#56667A; --line:#D9E1EC; --soft:#E6ECF4;
+  --accent:#174A78; --accent-fg:#FFFFFF; --teal:#0B7A72; --code:#F1F5F9; --warn-bg:#FBF1DC; --warn-fg:#6F470A;
+  --font:'Inter','Noto Sans Devanagari','Noto Sans Gurmukhi',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1620; --panel:#16212E; --fg:#E6EDF5; --muted:#9FB0C4; --line:#2A3A4D; --soft:#1E2C3C;
+  --accent:#7DB3E8; --accent-fg:#0E1620; --teal:#4FD1C5; --code:#0F1822; --warn-bg:#3A2D12; --warn-fg:#F2D49B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1620; --panel:#16212E; --fg:#E6EDF5; --muted:#9FB0C4; --line:#2A3A4D; --soft:#1E2C3C;
+  --accent:#7DB3E8; --accent-fg:#0E1620; --teal:#4FD1C5; --code:#0F1822; --warn-bg:#3A2D12; --warn-fg:#F2D49B; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:16px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wrap{max-width:1180px;margin:0 auto}
+h1,h2,h3,h4{text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid #2F7FD1;outline-offset:2px}
+.muted{color:var(--muted)}
+.eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--teal)}
+section.bsec{padding-block:56px 8px;border-top:1px solid var(--line);margin-top:48px}
+section.bsec>header{display:grid;gap:8px;margin-bottom:28px;max-width:760px}
+section.bsec>header h2{font-size:30px;font-weight:800;letter-spacing:-.01em}
+section.bsec>header p{color:var(--muted);font-size:17px}
+h3.sub{font-size:19px;font-weight:700;margin:36px 0 6px}
+.sub-note{color:var(--muted);margin-bottom:16px;max-width:720px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:560px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--soft);font-weight:700}
+tr:last-child td{border-bottom:0}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:var(--code);padding:1px 6px;border-radius:5px}
+pre{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:16px;overflow-x:auto;font-size:13px;line-height:1.55;margin:0}
+.tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;padding:3px 9px;border-radius:6px;background:var(--soft);color:var(--muted)}
+.tag.ok{background:#E4F3EC;color:#1D6B4A}
+.tag.warn{background:var(--warn-bg);color:var(--warn-fg)}
+.tag.no{background:#FBEAEB;color:#8E2A30}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.ok{background:#16382B;color:#8FE0B8}:root:not([data-theme="light"]) .tag.no{background:#3E1A1D;color:#FFB3B8}}
+:root[data-theme="dark"] .tag.ok{background:#16382B;color:#8FE0B8}
+:root[data-theme="dark"] .tag.no{background:#3E1A1D;color:#FFB3B8}
+
+/* top bar + hero */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:16px;flex-wrap:wrap}
+.topbar nav{display:flex;gap:6px;flex-wrap:wrap}
+.topbar nav a{font-size:14px;font-weight:600;text-decoration:none;color:var(--muted);padding:8px 12px;border-radius:8px;min-height:40px;display:inline-flex;align-items:center}
+.topbar nav a:hover{background:var(--soft);color:var(--fg)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 386px;gap:56px;align-items:start;padding-block:24px 24px}
+.hero .hero-title{font-size:clamp(36px,5.4vw,60px);font-weight:800;letter-spacing:-.02em;margin:10px 0 14px}
+.hero .lede{font-size:19px;color:var(--muted);max-width:560px}
+.notice{margin-top:20px;padding:14px 16px;border-radius:12px;background:var(--warn-bg);color:var(--warn-fg);font-size:14.5px;max-width:560px}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.try{margin-top:24px;display:grid;gap:10px;max-width:560px}
+.try li{margin-left:18px}
+.try ul{margin:0;padding:0;display:grid;gap:8px}
+@media (max-width:900px){.hero{grid-template-columns:minmax(0,1fr)}.hero .protocol{justify-self:center}}
+.protocol{display:grid;gap:14px;justify-items:center;width:min(100%,386px)}
+.ctrl{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:center;width:100%}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel)}
+.seg button{font:inherit;font-size:14px;font-weight:600;padding:0 12px;min-height:40px;border:0;background:transparent;color:var(--fg);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-fg)}
+.ctrl label{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.05em;text-transform:uppercase;display:flex;gap:8px;align-items:center}
+.btn-b{font:inherit;font-size:14px;font-weight:600;min-height:40px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer}
+.btn-b:hover{background:var(--soft)}
+
+/* phone frame */
+.fig{width:min(100%,var(--fw));display:grid;gap:10px;justify-items:start}
+.fig .fit{position:relative;width:100%}
+.phone{position:absolute;left:0;top:0;transform-origin:0 0;background:#1B2430;border-radius:36px;padding:7px;box-shadow:0 18px 40px rgba(15,29,46,.22),0 2px 6px rgba(15,29,46,.2)}
+.phone .screen{border-radius:29px;overflow:hidden;position:relative;background:#F5F8FC}
+.cap{font-size:14.5px;line-height:1.4}
+.cap b{display:block;font-size:15px}
+.cap span{color:var(--muted)}
+.frames{display:flex;flex-wrap:wrap;gap:36px 28px;align-items:flex-start}
+
+/* logo board */
+.lt{border-radius:14px;border:1px solid var(--line);display:grid;place-items:center;padding:28px;min-height:220px;text-align:center;gap:10px;position:relative}
+.lt .lbl{position:absolute;left:14px;top:12px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+.lt.light{background:#FFFFFF;color:#233244}
+.lt.bg{background:#F5F8FC;color:#233244}
+.lt.dark{background:#0E3354;color:#fff;border-color:#0E3354}
+.lt.navy{background:#174A78;color:#fff;border-color:#174A78}
+.wm{font-family:'Inter',system-ui,sans-serif;font-weight:800;letter-spacing:.05em;line-height:1;white-space:nowrap}
+.wm .a{color:#174A78}.wm .b{color:#0B7A72}
+.wm.on-dark .a{color:#fff}.wm.on-dark .b{color:#5EE0D3}
+.wm.mono .a,.wm.mono .b{color:inherit}
+.tagline{font-weight:500;letter-spacing:.01em;line-height:1.3}
+.stack{display:grid;justify-items:center;gap:12px}
+.hz{display:flex;align-items:center;gap:12px}
+.hz .t{display:grid;gap:5px;text-align:left}
+.sizes{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap;justify-content:center}
+.sizes figure{margin:0;display:grid;justify-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.mask-demo{display:flex;gap:18px;flex-wrap:wrap;justify-content:center}
+.mask-demo div{overflow:hidden;background:#174A78;display:grid;place-items:center}
+
+/* swatches */
+.sw{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel);display:grid}
+.sw .chip{height:76px}
+.sw .meta{padding:10px 12px;display:grid;gap:2px;font-size:13.5px}
+.sw .meta b{font-size:14.5px}
+.sw .ratio{font-size:12.5px;color:var(--muted)}
+.spec-row{display:grid;grid-template-columns:150px minmax(0,1fr);gap:8px 20px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.spec-row:last-child{border-bottom:0}
+.spec-row .k{font-size:13px;color:var(--muted);font-weight:600}
+@media (max-width:560px){.spec-row{grid-template-columns:1fr}}
+.bar{display:flex;align-items:center;gap:12px;font-size:13.5px;margin-block:6px}
+.bar i{display:block;height:14px;background:var(--accent);border-radius:3px}
+.icons{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:12px}
+.icons div{border:1px solid var(--line);border-radius:12px;background:var(--panel);display:grid;justify-items:center;gap:8px;padding:14px 6px;font-size:13px;color:var(--fg)}
+.icons .ic{color:#174A78}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .icons .ic{color:#9CC7F2}}
+:root[data-theme="dark"] .icons .ic{color:#9CC7F2}
+.checks{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.checks li{display:grid;grid-template-columns:22px minmax(0,1fr);gap:10px}
+.checks .mk{color:#1D6B4A;font-weight:800}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .checks .mk{color:#8FE0B8}}
+:root[data-theme="dark"] .checks .mk{color:#8FE0B8}
+.comp-stage{background:#F5F8FC;border:1px solid var(--line);border-radius:14px;padding:20px;display:grid;gap:16px}
+.comp-title{font-size:12.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#56667A;margin-bottom:2px}
+footer.end{padding-block:48px 64px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);margin-top:56px}
+
+/* ============ APP (mobile UI) — tokens are fixed: the product UI is a light theme ============ */
+.app{
+  --a-primary:#174A78;--a-primary-deep:#0E3354;--a-primary-tint:#E8F0F8;
+  --a-secondary:#159B91;--a-secondary-text:#0B7A72;--a-secondary-tint:#E3F4F2;
+  --a-bg:#F5F8FC;--a-surface:#FFFFFF;--a-text:#233244;--a-text2:#56667A;
+  --a-success:#25845B;--a-success-text:#1D6B4A;--a-success-tint:#E4F3EC;
+  --a-warning:#B7791F;--a-warning-text:#8F5C0E;--a-warning-tint:#FBF1DC;
+  --a-emerg:#C43D43;--a-emerg-text:#A12F35;--a-emerg-tint:#FBEAEB;
+  --a-border:#E2E8F0;--a-border-strong:#7C8CA1;--a-neutral-tint:#EEF2F7;--a-neutral-text:#475569;
+  --sh1:0 1px 2px rgba(23,74,120,.06),0 1px 3px rgba(23,74,120,.08);
+  --sh2:0 4px 14px rgba(23,74,120,.10),0 1px 3px rgba(23,74,120,.08);
+  --r-sm:8px;--r-md:12px;--r-lg:16px;
+  --ts:1;--m:20px;--lha:0;
+  --fs-h1:calc(26px*min(var(--ts),1.4));--fs-h2:calc(20px*min(var(--ts),1.4));--fs-title:calc(17px*var(--ts));
+  --fs-body:calc(16px*var(--ts));--fs-sec:calc(15px*var(--ts));--fs-meta:calc(13px*var(--ts));
+  --fs-nav:calc(13px*min(var(--ts),1.1));
+  font-family:'Inter','Noto Sans Devanagari','Noto Sans Gurmukhi',system-ui,sans-serif;color:var(--a-text);background:var(--a-bg);
+  color-scheme:light;font-size:var(--fs-body);line-height:calc(1.5 + var(--lha));
+  -webkit-font-smoothing:antialiased;text-align:left;
+}
+.app *{box-sizing:border-box}
+.app.lang-hi{--lha:.1}.app.lang-pa{--lha:.08}
+:where(.app) button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.app :focus-visible{outline:3px solid #2F7FD1;outline-offset:2px}
+.app svg.ic{flex:none;display:block}
+.screen.app{container-type:inline-size;display:flex;flex-direction:column}
+@container (max-width:339px){.app-root{--m:16px}}
+.a-root{display:flex;flex-direction:column;height:100%;position:relative;--m:20px}
+@container (max-width:339px){.a-root{--m:16px}}
+.a-status{height:24px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:12px;font-weight:600;color:var(--a-text);background:transparent}
+.a-status .r{display:flex;gap:5px;align-items:center}
+.a-status.on-red{color:#fff}
+.a-body{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;display:flex;flex-direction:column}
+.a-body::-webkit-scrollbar{display:none}
+.a-pad{padding:0 var(--m) 28px}
+.a-gest{height:18px;flex:none;display:grid;place-items:center;background:var(--a-surface)}
+.a-gest i{width:104px;height:4px;border-radius:2px;background:#233244;opacity:.28}
+
+/* header */
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px var(--m) 8px;min-height:56px;flex:none}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.brand .wm{font-size:calc(18px*min(var(--ts),1.25))}
+.langchip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;border-radius:var(--r-md);border:1.5px solid var(--a-border-strong);background:var(--a-surface);font-size:var(--fs-sec);font-weight:600;color:var(--a-primary);white-space:nowrap}
+.hdr .brand .wm{flex:none}
+@container (max-width:339px){.hdr .brand .wm{font-size:16px}.langchip{padding:0 8px;gap:4px}}
+
+/* typography utils */
+.t-h1{font-size:var(--fs-h1);font-weight:700;line-height:calc(1.25 + var(--lha));letter-spacing:-.005em;color:var(--a-text)}
+.t-h2{font-size:var(--fs-h2);font-weight:600;line-height:calc(1.3 + var(--lha));color:var(--a-text)}
+.t-title{font-size:var(--fs-title);font-weight:600;line-height:calc(1.3 + var(--lha))}
+.t-body{font-size:var(--fs-body)}
+.t-sec{font-size:var(--fs-sec);color:var(--a-text2);line-height:calc(1.45 + var(--lha))}
+.t-meta{font-size:var(--fs-meta);font-weight:500;color:var(--a-text2);line-height:calc(1.4 + var(--lha))}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:56px;padding:12px 20px;border-radius:var(--r-md);border:1.5px solid transparent;font-size:var(--fs-body);font-weight:600;text-align:center;line-height:1.3}
+.btn-primary{background:var(--a-primary);color:#fff;box-shadow:var(--sh1)}
+.btn-primary:active{background:var(--a-primary-deep)}
+.btn-secondary{background:var(--a-surface);color:var(--a-primary);border-color:var(--a-primary)}
+.btn-text{background:transparent;color:var(--a-primary);min-height:48px;padding:10px 12px}
+.btn-emerg{background:var(--a-emerg);color:#fff}
+.btn[disabled]{background:#E2E8F0;color:#64748B;border-color:transparent;box-shadow:none;cursor:not-allowed}
+.btn.block{width:100%}
+
+/* search */
+.search{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:0 16px;border-radius:var(--r-md);border:1.5px solid var(--a-border-strong);background:var(--a-surface);box-shadow:var(--sh1);text-align:left;color:var(--a-text2);font-size:var(--fs-body)}
+.search .ic{color:var(--a-primary)}
+.search span{flex:1;min-width:0}
+.search{min-width:0}.search input{flex:1;width:0;min-width:0;border:0;outline:0;background:transparent;font:inherit;color:var(--a-text);height:52px}
+.search input::placeholder{color:var(--a-text2);opacity:1}
+.search.focus{border-color:var(--a-primary);box-shadow:0 0 0 3px rgba(23,74,120,.18)}
+.search .clear{min-width:44px;min-height:44px;margin-right:-10px;border:0;background:transparent;display:grid;place-items:center;color:var(--a-text2);border-radius:var(--r-md)}
+
+/* feature cards */
+.sec-h{margin:26px 0 12px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fcard{display:flex;flex-direction:column;gap:12px;text-align:left;padding:16px;border-radius:var(--r-lg);border:1px solid var(--a-border);background:var(--a-surface);box-shadow:var(--sh1);min-height:148px;width:100%}
+.fcard .tile{width:44px;height:44px;border-radius:var(--r-md);display:grid;place-items:center;background:var(--a-primary-tint);color:var(--a-primary);flex:none;min-height:0;padding:0;border:0}
+.fcard .tx{display:grid;gap:4px;min-width:0}
+.fcard .t-sec{font-size:var(--fs-sec)}
+.fcard.wide{grid-column:1/-1;flex-direction:row;align-items:center;gap:14px;min-height:96px}
+.fcard.wide .tx{flex:1}
+.fcard.wide .go{flex:none;color:var(--a-text2)}
+.fcard.feat{background:var(--a-primary);border-color:var(--a-primary);box-shadow:var(--sh2)}
+.fcard.feat .tile{background:rgba(255,255,255,.15);color:#fff}
+.fcard.feat .t-title{color:#fff}
+.fcard.feat .t-sec{color:#D6E4F2}
+.fcard.feat .go{color:#fff}
+.fcard.emg{background:var(--a-emerg-tint);border:1.5px solid var(--a-emerg)}
+.fcard.emg .tile{background:var(--a-emerg);color:#fff}
+.fcard.emg .t-title{color:var(--a-emerg-text)}
+.fcard.emg .t-sec{color:#5E2428}
+.fcard.emg .go{color:var(--a-emerg-text)}
+.fcard.feat,.fcard.emg{grid-column:1/-1;flex-direction:row;align-items:center;min-height:96px}
+.fcard.feat .tx,.fcard.emg .tx{flex:1}
+@container (max-width:339px){.cards{grid-template-columns:1fr}.fcard:not(.wide):not(.feat):not(.emg){flex-direction:row;align-items:center;min-height:88px}}
+.app.ts-big .cards{grid-template-columns:1fr}
+.app.ts-big .fcard:not(.wide):not(.feat):not(.emg){flex-direction:row;align-items:center;min-height:88px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:28px;padding:3px 10px 3px 8px;border-radius:8px;font-size:var(--fs-meta);font-weight:600;line-height:1.25;white-space:normal}
+.chip.verified{background:var(--a-success-tint);color:var(--a-success-text)}
+.chip.confirm{background:var(--a-warning-tint);color:var(--a-warning-text)}
+.chip.outdated{background:var(--a-emerg-tint);color:var(--a-emerg-text)}
+.chip.offline{background:var(--a-neutral-tint);color:var(--a-neutral-text)}
+.chip.proto{background:#EDE9FE;color:#4C2A9A;border-radius:6px;padding:2px 8px;min-height:0;font-size:calc(12px*min(var(--ts),1.2));letter-spacing:.02em}
+
+/* panels */
+.card{background:var(--a-surface);border:1px solid var(--a-border);border-radius:var(--r-lg);box-shadow:var(--sh1)}
+.stat-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:14px 16px}
+.stat-row+.stat-row{border-top:1px solid var(--a-border)}
+.stat-row .tx{display:grid;gap:2px;min-width:0}
+.stat-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 4px;flex-wrap:wrap}
+.info-list{display:grid}
+.info-item{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;padding:14px 16px;align-items:start;font-size:var(--fs-body);line-height:calc(1.45 + var(--lha))}
+.info-item+.info-item{border-top:1px solid var(--a-border)}
+.info-item .ic{color:var(--a-primary);margin-top:1px}
+.banner{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;padding:14px 16px;border-radius:var(--r-md);background:var(--a-primary-tint);color:var(--a-text);font-size:var(--fs-sec);line-height:calc(1.45 + var(--lha));border:1px solid #C9DBEC}
+.banner .ic{color:var(--a-primary)}
+.banner.warn{background:var(--a-warning-tint);border-color:#EBD5A4}.banner.warn .ic{color:var(--a-warning-text)}
+.banner.offline{background:var(--a-neutral-tint);border:0;border-bottom:1px solid #CBD5E1;border-radius:0;padding:10px var(--m);color:var(--a-neutral-text)}
+.banner.offline .ic{color:var(--a-neutral-text)}
+.banner.offline b{color:#1E293B}
+.legal{margin-top:20px;font-size:var(--fs-meta);color:var(--a-text2);line-height:calc(1.5 + var(--lha));display:flex;gap:8px}
+
+/* emergency bar */
+.ebar-wrap{flex:none;padding:8px var(--m) 8px;background:var(--a-bg)}
+.ebar{display:flex;align-items:center;gap:10px;width:100%;min-height:48px;padding:6px 14px;border:0;border-radius:var(--r-md);background:var(--a-emerg);color:#fff;font-size:calc(15px*min(var(--ts),1.25));font-weight:700;box-shadow:0 2px 8px rgba(196,61,67,.35);text-align:left}
+.ebar span{flex:1;min-width:0}
+
+/* nav */
+.nav{flex:none;display:grid;grid-template-columns:repeat(4,1fr);background:var(--a-surface);border-top:1px solid var(--a-border);box-shadow:0 -2px 8px rgba(23,74,120,.05)}
+.nav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-height:64px;padding:6px 2px;border:0;background:transparent;color:var(--a-text2);font-size:var(--fs-nav);font-weight:600;line-height:1.2;min-width:0}
+.nav button .pill{display:grid;place-items:center;width:56px;height:30px;border-radius:15px}
+.nav button[aria-current="page"]{color:var(--a-primary);font-weight:700}
+.nav button[aria-current="page"] .pill{background:var(--a-primary-tint)}
+.nav button span.l{max-width:100%;text-align:center;white-space:nowrap}
+.app.ts-big .nav button{padding-inline:0}.app.ts-big{--fs-nav:13.5px}
+@container (max-width:339px){.nav button{--fs-nav:12px}.nav button .pill{width:48px}}
+
+/* top bar (secondary screens) */
+.tbar{display:flex;align-items:center;gap:4px;padding:4px calc(var(--m) - 8px) 8px;min-height:56px;flex:none}
+.tbar .back{min-width:48px;min-height:48px;border:0;background:transparent;border-radius:var(--r-md);display:grid;place-items:center;color:var(--a-primary)}
+.tbar h1{margin:0;font-size:var(--fs-h2);font-weight:600;line-height:calc(1.3 + var(--lha))}
+.tbar.red{background:var(--a-emerg-tint)}
+.tbar.red h1{color:var(--a-emerg-text)}
+.tbar.red .back{color:var(--a-emerg-text)}
+
+/* language selection */
+.lang-card{display:flex;align-items:center;gap:16px;width:100%;min-height:88px;padding:14px 18px;text-align:left;background:var(--a-surface);border:1.5px solid var(--a-border-strong);border-radius:var(--r-lg);box-shadow:var(--sh1)}
+.lang-card .nm{font-size:calc(26px*min(var(--ts),1.3));font-weight:600;line-height:calc(1.25 + var(--lha));color:var(--a-text)}
+.lang-card .sb{font-size:var(--fs-body);color:var(--a-text2);line-height:calc(1.3 + var(--lha))}
+.lang-card .tx{flex:1;min-width:0;display:grid;gap:2px}
+.lang-card .radio{width:28px;height:28px;border-radius:50%;border:2px solid var(--a-border-strong);flex:none;display:grid;place-items:center;color:transparent;background:#fff}
+.lang-card[aria-checked="true"]{border:2.5px solid var(--a-primary);background:var(--a-primary-tint);box-shadow:var(--sh2);padding:13px 17px}
+.lang-card[aria-checked="true"] .radio{background:var(--a-primary);border-color:var(--a-primary);color:#fff}
+.lang-card[aria-checked="true"] .nm{color:var(--a-primary)}
+.lang-card.compact{min-height:64px;padding:10px 16px}
+.lang-card.compact[aria-checked="true"]{padding:9px 15px}
+.lang-card.compact .nm{font-size:calc(21px*min(var(--ts),1.3))}
+.lang-stack{display:grid;gap:12px}
+
+/* search results */
+.res-h{display:flex;align-items:center;gap:8px;margin:20px 0 8px;font-size:var(--fs-meta);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--a-text2)}
+.res{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;width:100%;text-align:left;padding:14px 14px;background:var(--a-surface);border:1px solid var(--a-border);border-radius:var(--r-md);min-height:72px}
+.res+.res{margin-top:8px}
+.res .tile{width:44px;height:44px;border-radius:var(--r-md);background:var(--a-primary-tint);color:var(--a-primary);display:grid;place-items:center}
+.res .tx{display:grid;gap:6px;min-width:0;justify-items:start}
+.sugg{display:flex;flex-wrap:wrap;gap:8px}
+.sugg button{min-height:44px;padding:0 14px;border-radius:22px;border:1.5px solid var(--a-border-strong);background:var(--a-surface);font-size:var(--fs-sec);font-weight:500;color:var(--a-text)}
+.empty{display:grid;justify-items:center;text-align:center;gap:10px;padding:36px 8px}
+.empty .tile{width:56px;height:56px;border-radius:50%;background:var(--a-neutral-tint);display:grid;place-items:center;color:var(--a-neutral-text)}
+
+/* sheet */
+.scrim{position:absolute;inset:0;background:rgba(15,23,34,.5);z-index:5;display:flex;align-items:flex-end}
+.sheet{width:100%;background:var(--a-surface);border-radius:20px 20px 0 0;padding:10px var(--m) 22px;box-shadow:0 -8px 28px rgba(0,0,0,.2);display:grid;gap:14px}
+.sheet .grab{width:44px;height:5px;border-radius:3px;background:#CBD5E1;justify-self:center}
+.sheet .head{display:flex;align-items:center;justify-content:space-between}
+.sheet .x{min-width:48px;min-height:48px;margin-right:-10px;border:0;background:transparent;display:grid;place-items:center;border-radius:var(--r-md);color:var(--a-text2)}
+
+/* placeholder + emergency screens */
+.ph{border:2px dashed var(--a-border-strong);border-radius:var(--r-lg);padding:24px 20px;display:grid;gap:14px;justify-items:start;background:var(--a-surface)}
+.ph .tile{width:48px;height:48px;border-radius:var(--r-md);background:var(--a-primary-tint);color:var(--a-primary);display:grid;place-items:center}
+.emg-hero{background:var(--a-emerg);color:#fff;border-radius:var(--r-lg);padding:18px;display:grid;gap:10px;box-shadow:var(--sh2)}
+.emg-hero .row{display:flex;gap:12px;align-items:center}
+.emg-hero .big{font-size:var(--fs-h2);font-weight:700;line-height:calc(1.25 + var(--lha))}
+.emg-hero p{font-size:var(--fs-body);line-height:calc(1.5 + var(--lha))}
+.ph-line{display:grid;grid-template-columns:24px minmax(0,1fr);gap:12px;padding:14px 16px;align-items:start;font-size:var(--fs-sec);color:var(--a-text2)}
+.ph-line+.ph-line{border-top:1px solid var(--a-border)}
+.ph-line .ic{color:var(--a-emerg-text)}
+.list-row{display:flex;align-items:center;gap:14px;width:100%;min-height:64px;padding:12px 16px;border:0;background:transparent;text-align:left}
+.list-row+.list-row{border-top:1px solid var(--a-border)}
+.list-row .tile{width:40px;height:40px;border-radius:10px;background:var(--a-primary-tint);color:var(--a-primary);display:grid;place-items:center;flex:none}
+.list-row .tx{flex:1;display:grid;gap:1px;min-width:0}
+.list-row .go{color:var(--a-text2);flex:none}
+
+/* splash */
+.splash{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:var(--a-bg)}
+.splash .bgart{position:absolute;inset:0;width:100%;height:100%}
+.splash .center{position:relative;display:grid;justify-items:center;gap:14px;margin-top:-40px}
+.splash .wm{font-size:34px;letter-spacing:.06em}
+.splash .tagline{font-size:17px;color:var(--a-text2)}
+.splash .load{position:absolute;bottom:64px;display:grid;justify-items:center;gap:10px;color:var(--a-text2);font-size:13px;font-weight:500}
+.spin{animation:spin 1.1s linear infinite;transform-origin:50% 50%}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.app .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.hint-top{margin:0 0 8px}
+</style>
+
+<div class="wrap">
+  <div class="topbar">
+    <div class="hz" aria-label="PGI SAATHI"><span data-logo="mark" data-size="30"></span><span class="wm" style="font-size:18px"><span class="a">PGI</span> <span class="b">SAATHI</span></span></div>
+    <nav aria-label="Sections">
+      <a href="#brand">Brand</a><a href="#system">Design system</a><a href="#screens">Screens</a><a href="#specs">Specs</a><a href="#review">SRS review</a>
+    </nav>
+  </div>
+
+  <div class="hero" id="top">
+    <div>
+      <div class="eyebrow">Iteration 01 · Brand + first three screens</div>
+      <h1 class="hero-title">PGI SAATHI</h1>
+      <p class="lede">Patient navigation and visit assistance for PGIMER Chandigarh. This board holds the brand identity, the design system, and a working prototype of the splash, language and home screens.</p>
+      <div class="notice"><b>Independent concept.</b> PGI SAATHI is not an official PGIMER application. The logo, wording and visuals are original and carry no PGIMER branding. All hospital content on screen is labelled sample data.</div>
+      <div class="facts">
+        <span class="tag">SRS PGIS-SRS-001 v1.0</span><span class="tag">Android-first, portrait</span><span class="tag">English · हिन्दी · ਪੰਜਾਬੀ</span><span class="tag">Web prototype, Flutter comes later</span>
+      </div>
+      <div class="try"><b>Try the prototype</b>
+        <ul>
+          <li>Pick a language, tap Continue. Your choice is saved on this device only.</li>
+          <li>On Home, tap the search bar and type <code>heart</code>, <code>kidney</code> or <code>blood</code>.</li>
+          <li>Tap any feature card or tab. Unbuilt screens open as labelled placeholders.</li>
+          <li>Tap the red Emergency bar. It works from every main screen without any permission.</li>
+          <li>Use the controls under the phone to switch language, text size and offline state.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="protocol" id="hero-proto">
+      <div class="fig" style="--fw:386px"><div class="fit" id="hero-fit"></div></div>
+      <div class="ctrl" id="hero-ctrl">
+        <label>Language <span class="seg" id="c-lang"><button data-v="en">EN</button><button data-v="hi" lang="hi">हिं</button><button data-v="pa" lang="pa">ਪੰ</button></span></label>
+        <label>Text <span class="seg" id="c-ts"><button data-v="1">100%</button><button data-v="1.3">130%</button><button data-v="1.6">160%</button></span></label>
+        <label>Network <span class="seg" id="c-net"><button data-v="on">Online</button><button data-v="off">Offline</button></span></label>
+        <button class="btn-b" id="c-restart">Restart prototype</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= BRAND ================= -->
+  <section class="bsec" id="brand">
+    <header><div class="eyebrow">Step 2 · Brand identity</div><h2>A pin that is also a cross, held by a hand</h2>
+      <p>One shape carries the four ideas in the brief. The map pin is navigation. The cross cut out of it is care. The cupped arc below it is a supporting hand and also the path you walk. No red, no building, no gradients.</p></header>
+
+    <div class="grid g2">
+      <div class="lt light" style="min-height:340px"><span class="lbl">Primary logo</span><div data-logo="stacked" data-variant="color" data-size="112"></div></div>
+      <div class="lt bg" style="min-height:340px"><span class="lbl">Application icon</span>
+        <div class="sizes" style="align-items:center"><span data-logo="icon" data-size="144"></span>
+          <div style="display:grid;gap:14px;justify-items:center">
+            <div class="mask-demo" style="gap:12px">
+              <div style="width:72px;height:72px;border-radius:50%"><span data-logo="mark" data-variant="dark" data-size="46"></span></div>
+              <div style="width:72px;height:72px;border-radius:20px"><span data-logo="mark" data-variant="dark" data-size="46"></span></div>
+              <div style="width:72px;height:72px;border-radius:26px 26px 26px 10px"><span data-logo="mark" data-variant="dark" data-size="46"></span></div>
+            </div>
+            <span class="muted" style="font-size:12.5px">Adaptive icon masks. Mark stays inside the safe zone.</span>
+          </div>
+        </div>
+      </div>
+      <div class="lt light"><span class="lbl">Horizontal lockup · light</span><div data-logo="horizontal" data-variant="color" data-size="52"></div></div>
+      <div class="lt dark"><span class="lbl">Horizontal lockup · dark</span><div data-logo="horizontal" data-variant="dark" data-size="52"></div></div>
+      <div class="lt dark" style="min-height:260px"><span class="lbl">Primary logo · dark</span><div data-logo="stacked" data-variant="dark" data-size="84"></div></div>
+      <div class="lt light" style="min-height:260px"><span class="lbl">Monochrome</span>
+        <div class="sizes" style="align-items:center;gap:28px">
+          <div data-logo="stacked" data-variant="mono-navy" data-size="64"></div>
+          <div data-logo="stacked" data-variant="mono-black" data-size="64"></div>
+        </div></div>
+      <div class="lt navy"><span class="lbl">Monochrome · reversed</span><div data-logo="horizontal" data-variant="mono-white" data-size="48"></div></div>
+      <div class="lt light"><span class="lbl">Small-size test</span>
+        <div class="sizes"><figure><span data-logo="icon" data-size="96"></span>96</figure><figure><span data-logo="icon" data-size="64"></span>64</figure><figure><span data-logo="icon" data-size="48"></span>48 dp</figure><figure><span data-logo="icon" data-size="32"></span>32</figure><figure><span data-logo="icon" data-size="24"></span>24</figure><figure><span data-logo="icon" data-size="16"></span>16</figure></div>
+      </div>
+    </div>
+
+    <h3 class="sub">Logo rationale and rules</h3>
+    <div class="grid g3">
+      <div class="panel"><h4>What each part says</h4><p class="muted" style="margin-top:8px"><b>Pin:</b> guidance, a destination. <b>Cross cut-out:</b> healthcare, drawn as empty space so it never reads as a red medical cross. <b>Cupped arc:</b> a companion's hands and the route underfoot, in teal. <b>Rounded corners:</b> approachable for first-time users.</p></div>
+      <div class="panel"><h4>Use</h4><p class="muted" style="margin-top:8px">Clear space equals the width of the cross arm on all sides. Minimum size: 24 dp for the mark, 120 dp wide for the horizontal lockup. Below 24 dp use the mark alone. The words read exactly <b>PGI SAATHI</b>, with the tagline <b>Your Companion at Every Step.</b> in the lockups and on the splash. The tagline never sits beside the mark alone and is not used in the app header.</p></div>
+      <div class="panel"><h4>Do not</h4><p class="muted" style="margin-top:8px">Do not recolor the cross, add gradients or shadows, place the mark on busy photos, add the PGIMER name, seal or logo, or add any line implying approval by an institution. Wordmark is Inter ExtraBold. Convert it to outlines before store submission.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= DESIGN SYSTEM ================= -->
+  <section class="bsec" id="system">
+    <header><div class="eyebrow">Step 3 · Design system</div><h2>Tokens, type, components</h2>
+      <p>The proposed palette is kept. Where a proposed colour fails text contrast, the original stays for fills and icons and a darker text variant is added. Every change is listed below.</p></header>
+
+    <h3 class="sub" style="margin-top:0">Colour</h3>
+    <div class="grid g4" id="swatches"></div>
+
+    <h3 class="sub">Changes to the proposed palette</h3>
+    <div class="tbl"><table>
+      <thead><tr><th>Token</th><th>Proposed</th><th>Now</th><th>Reason</th></tr></thead>
+      <tbody id="changes"></tbody></table></div>
+
+    <h3 class="sub">Colour usage</h3>
+    <div class="grid g2">
+      <div class="panel"><ul class="checks">
+        <li><span class="mk">✓</span><span><b>Primary</b> for the main button, headings accents, selected states, the featured card and navigation.</span></li>
+        <li><span class="mk">✓</span><span><b>Secondary teal</b> for the logo arc, small accents and tints. Text on teal fill is not allowed (3.4:1). Teal text uses the darker variant.</span></li>
+        <li><span class="mk">✓</span><span><b>Emergency red</b> only for emergency entry points and the “outdated” status. Never decorative.</span></li>
+      </ul></div>
+      <div class="panel"><ul class="checks">
+        <li><span class="mk">✓</span><span><b>Status colours always travel with an icon and a word.</b> Colour alone never carries meaning.</span></li>
+        <li><span class="mk">✓</span><span><b>Borders:</b> light border for dividers, strong border for anything the user must find and tap (inputs, language cards), at least 3:1 against the surface.</span></li>
+        <li><span class="mk">✓</span><span>Product UI is light only in this iteration. Dark theme is not designed yet.</span></li>
+      </ul></div>
+    </div>
+
+    <h3 class="sub">Typography</h3>
+    <p class="sub-note">Inter for English, Noto Sans Devanagari for Hindi, Noto Sans Gurmukhi for Punjabi. Hindi and Punjabi get 8–10% more line height so matras and vowel signs are never clipped. All sizes scale with the Android font-size setting.</p>
+    <div class="panel" id="typespec"></div>
+
+    <h3 class="sub">Spacing, radius, elevation, touch</h3>
+    <div class="grid g3">
+      <div class="panel"><h4>Spacing scale (dp)</h4><div id="spacing" style="margin-top:10px"></div><p class="muted" style="font-size:14px;margin-top:8px">Screen margin 20 dp (16 dp under 340 dp wide). Gap between cards 12. Section gap 24–28.</p></div>
+      <div class="panel"><h4>Radius</h4>
+        <div style="display:flex;gap:14px;margin-top:12px;flex-wrap:wrap" id="radii"></div>
+        <p class="muted" style="font-size:14px;margin-top:12px">Only three radii. Pills are used for the suggestion chips and nothing else.</p></div>
+      <div class="panel"><h4>Elevation</h4>
+        <div class="app" style="background:none;display:grid;gap:12px;margin-top:12px;font-size:13px">
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--sh1);border:1px solid var(--a-border)">Level 1 · cards, fields</div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--sh2)">Level 2 · selected card, featured card, sheets</div></div></div>
+    </div>
+    <div class="panel" style="margin-top:16px"><div class="spec-row"><div class="k">Touch targets</div><div>48 × 48 dp minimum for every control (SRS asks for 44). Buttons 56 dp tall. Bottom navigation items 64 dp tall. Language cards 88 dp tall.</div></div>
+      <div class="spec-row"><div class="k">Icon grid</div><div>24 dp, 1.8 dp stroke, round caps and joins, outline only. Sits in a 44 dp tinted tile in cards and lists.</div></div>
+      <div class="spec-row"><div class="k">Motion</div><div>Only the splash spinner. It stops under reduced-motion. No page transitions are specified yet.</div></div></div>
+
+    <h3 class="sub">Iconography direction</h3>
+    <p class="sub-note">One outline family. Icons name the thing, not the feeling. Every icon has a visible text label next to it, so none is left to be guessed.</p>
+    <div class="icons" id="iconset"></div>
+
+    <h3 class="sub">Component inventory</h3>
+    <p class="sub-note">Rendered with the same CSS as the screens. Eleven reusable components are specified in this iteration.</p>
+    <div class="grid g2" id="comps"></div>
+
+    <h3 class="sub">Flutter token handoff</h3>
+    <p class="sub-note">Tokens are centralised so the Flutter build can mirror them one to one. This is a specification sample, not shipped code.</p>
+<pre>// lib/core/design/app_colors.dart  (spec sample)
+abstract class AppColors {
+  static const primary        = Color(0xFF174A78);
+  static const primaryDeep    = Color(0xFF0E3354);
+  static const primaryTint    = Color(0xFFE8F0F8);
+  static const secondary      = Color(0xFF159B91);  // fills, icons only
+  static const secondaryText  = Color(0xFF0B7A72);  // text-safe teal
+  static const secondaryTint  = Color(0xFFE3F4F2);
+  static const background     = Color(0xFFF5F8FC);
+  static const surface        = Color(0xFFFFFFFF);
+  static const text           = Color(0xFF233244);
+  static const textSecondary  = Color(0xFF56667A);  // was 0xFF64748B
+  static const success        = Color(0xFF25845B);  static const successText = Color(0xFF1D6B4A);
+  static const warning        = Color(0xFFB7791F);  static const warningText = Color(0xFF8F5C0E);
+  static const emergency      = Color(0xFFC43D43);  static const emergencyText = Color(0xFFA12F35);
+  static const border         = Color(0xFFE2E8F0);
+  static const borderStrong   = Color(0xFF7C8CA1);
+}
+// Spacing: 4 8 12 16 20 24 32 40 48.  Radius: 8 12 16.  Min tap target: 48.</pre>
+  </section>
+
+  <!-- ================= SCREENS ================= -->
+  <section class="bsec" id="screens">
+    <header><div class="eyebrow">Steps 4 to 7 · Screens</div><h2>Splash, language, home and their states</h2>
+      <p>Every frame below is the real prototype running in a fixed state, 360 × 800 dp unless noted. The Hindi and Punjabi text is prototype translation and needs human review before release (SRS FR-001, NFR-011).</p></header>
+
+    <h3 class="sub" style="margin-top:0">Core flow</h3>
+    <div class="frames" id="f-core"></div>
+
+    <h3 class="sub">Required states</h3>
+    <div class="frames" id="f-states"></div>
+
+    <h3 class="sub">Home in Hindi and Punjabi</h3>
+    <p class="sub-note">Longer Hindi and Punjabi strings wrap to more lines. Cards grow, nothing is clipped or truncated.</p>
+    <div class="frames" id="f-lang"></div>
+
+    <h3 class="sub">Responsive behaviour</h3>
+    <p class="sub-note">Below 340 dp wide the grid becomes one column and margins drop to 16 dp. At 130% text and above the grid is also one column.</p>
+    <div class="frames" id="f-resp"></div>
+
+    <h3 class="sub">Home, full length</h3>
+    <p class="sub-note">The whole scroll in one frame, for layout review.</p>
+    <div class="frames" id="f-full"></div>
+  </section>
+
+  <!-- ================= SPECS ================= -->
+  <section class="bsec" id="specs">
+    <header><div class="eyebrow">Documentation</div><h2>Dimensions and accessibility</h2><p>Reference values for design review and the Flutter build.</p></header>
+    <div class="tbl"><table>
+      <thead><tr><th>Screen class</th><th>Size (dp)</th><th>Margin</th><th>Cards</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Small</td><td>320 × 640</td><td>16</td><td>1 column</td><td>Smallest supported width. Header wordmark steps down to 16 dp.</td></tr>
+        <tr><td>Baseline</td><td>360 × 800</td><td>20</td><td>Featured, 2 × 2, emergency</td><td>Primary design target.</td></tr>
+        <tr><td>Large</td><td>412 × 915</td><td>20</td><td>Same as baseline</td><td>Cards widen, content does not stretch past layout.</td></tr>
+        <tr><td>Enlarged text</td><td>360 × 800 at 130–160%</td><td>20</td><td>1 column</td><td>Controls reflow, labels wrap, nothing is clipped.</td></tr>
+        <tr><td>Chrome</td><td colspan="4">Status bar 24 · header 56 · emergency bar 64 (48 + 16 padding) · bottom navigation 64 · gesture area 18.</td></tr>
+      </tbody></table></div>
+
+    <h3 class="sub">Accessibility considerations</h3>
+    <div class="grid g2">
+      <div class="panel"><ul class="checks">
+        <li><span class="mk">✓</span><span><b>Contrast.</b> Body text on background 12.2:1. Secondary text 5.5:1. All status text at least 4.5:1. Strong borders at least 3:1.</span></li>
+        <li><span class="mk">✓</span><span><b>Not colour alone.</b> Status chips carry icon plus word. Selected language card has a thicker border, a filled check and a tint. The active tab has a pill and bold label.</span></li>
+        <li><span class="mk">✓</span><span><b>Targets.</b> 48 dp minimum, 56 dp for primary actions.</span></li>
+        <li><span class="mk">✓</span><span><b>Scalable text.</b> Whole UI follows the text scale. Try 160% in the controls.</span></li>
+      </ul></div>
+      <div class="panel"><ul class="checks">
+        <li><span class="mk">✓</span><span><b>Screen reader.</b> Cards are buttons with the title and description as one label. Language cards are a radio group with checked state. Nav marks the current tab. Icons are hidden from the reader.</span></li>
+        <li><span class="mk">✓</span><span><b>Plain language.</b> Short sentences, no hospital jargon in labels. “OPD” is kept because it is the term signs use.</span></li>
+        <li><span class="mk">✓</span><span><b>Language.</b> Each screen sets its language so readers use the right voice. A three-script hint on the language screen helps people who cannot read English.</span></li>
+        <li><span class="mk">✓</span><span><b>Reduced motion.</b> The only animation stops.</span></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEW ================= -->
+  <section class="bsec" id="review">
+    <header><div class="eyebrow">Steps 8 and 9 · Review</div><h2>Check against the SRS</h2><p>The board was reviewed screen by screen before this handoff. Findings and fixes are listed after the table.</p></header>
+    <div class="tbl"><table>
+      <thead><tr><th>SRS item</th><th>How this iteration meets it</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>FR-001 Language</td><td>Three large cards, saved on the device only, switchable from the Home header and More. Strings are external to the screens.</td><td><span class="tag ok">Met</span></td></tr>
+        <tr><td>FR-008 Emergency</td><td>Red bar docked on every main screen plus a card on Home. Opens with no login, location or questionnaire. Includes “not an emergency service” note.</td><td><span class="tag ok">Met</span></td></tr>
+        <tr><td>FR-009 / NFR-012 Freshness</td><td>Reusable status chip: Verified, Needs confirmation, Information outdated, Offline. Last verified shows “sample date”, never a made-up time.</td><td><span class="tag ok">Met</span></td></tr>
+        <tr><td>FR-011 Offline</td><td>Offline banner with last-synced line. Core cards stay usable.</td><td><span class="tag ok">Designed</span></td></tr>
+        <tr><td>FR-016 / NFR-019 No invented facts</td><td>No rooms, queue, wait times or phone numbers shown. Unknown content is a labelled placeholder.</td><td><span class="tag ok">Met</span></td></tr>
+        <tr><td>FR-003 / FR-020 Search</td><td>Search finds departments, buildings and guidance by name or common word (heart, kidney). It never infers a diagnosis and says so.</td><td><span class="tag ok">Designed</span></td></tr>
+        <tr><td>SRS 6.1 Home</td><td>Search, department finder, OPD guide, test guide, emergency and language are on Home. No account, location, mic or photo request anywhere.</td><td><span class="tag ok">Met</span></td></tr>
+        <tr><td>NFR-010 / FR-018 Accessibility</td><td>See Specs. Real TalkBack and device testing is still to do on the Flutter build.</td><td><span class="tag warn">Partly, needs device test</span></td></tr>
+        <tr><td>SRS 2.4 Out of scope</td><td>No booking, queue, waiting time, beds, reports, uploads, CR or Aadhaar fields, indoor navigation, chatbot, QR or account.</td><td><span class="tag ok">Clear</span></td></tr>
+        <tr><td>Independence</td><td>No PGIMER logo or seal. An independence line appears on Language, Home and More.</td><td><span class="tag ok">Met</span></td></tr>
+      </tbody></table></div>
+
+    <h3 class="sub">Review findings</h3>
+    <div class="panel" id="findings"></div>
+
+    <h3 class="sub">Decisions needed before Iteration 02</h3>
+    <div class="panel"><ul class="checks">
+      <li><span class="mk">1</span><span><b>Translations.</b> Hindi and Punjabi strings are my drafts. A human reviewer must approve them (SRS FR-001).</span></li>
+      <li><span class="mk">2</span><span><b>Emergency content.</b> The warning-sign list and any emergency number are left as placeholders because the SRS requires reviewed, verified content. Who signs this off?</span></li>
+      <li><span class="mk">3</span><span><b>Logo check.</b> Run a trademark and similarity search before public use. Outline the wordmark for store assets.</span></li>
+      <li><span class="mk">4</span><span><b>Fonts.</b> Bundle Inter and both Noto fonts inside the app so text renders offline.</span></li>
+      <li><span class="mk">5</span><span><b>Language card second line.</b> The brief repeats the same word on both lines (हिंदी / हिन्दी). I kept it as written. Say if you want an English name there instead.</span></li>
+    </ul></div>
+  </section>
+
+  <footer class="end">PGI SAATHI · Iteration 01 · Design prototype built as a web page. The production app will be Flutter. Independent concept, not an official PGIMER application. Next iteration has not been started.</footer>
+</div>
+
+<script>
+/* =========================================================
+   ICONS
+   ========================================================= */
+const ICON={
+ search:'<circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2"/>',
+ globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.6 2.7 3.9 5.7 3.9 9s-1.3 6.3-3.9 9c-2.6-2.7-3.9-5.7-3.9-9S9.4 5.7 12 3z"/>',
+ down:'<path d="M6 9l6 6 6-6"/>',
+ right:'<path d="M9 6l6 6-6 6"/>',
+ back:'<path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/>',
+ close:'<path d="M6 6l12 12"/><path d="M18 6L6 18"/>',
+ check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+ dept:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M10.5 7.5v6"/><path d="M7.5 10.5h6"/><path d="M20 20l-4.9-4.9"/>',
+ dir:'<path d="M4 21V5a1 1 0 011-1h9a1 1 0 011 1v16"/><path d="M15 9.5h4a1 1 0 011 1V21"/><path d="M2.5 21h19"/><path d="M8 8h3"/><path d="M8 12h3"/><path d="M8 16h3"/>',
+ opd:'<rect x="5" y="4.5" width="14" height="16.5" rx="2"/><rect x="9" y="2.5" width="6" height="4" rx="1"/><path d="M9 11.5h6"/><path d="M9 15.5h4"/>',
+ tests:'<path d="M7.5 3h5"/><path d="M8.5 3v14.5a2 2 0 004 0V3"/><path d="M8.5 11h4"/><path d="M18 13.5c1.2 1.5 2 2.5 2 3.7a2 2 0 01-4 0c0-1.2.8-2.2 2-3.7z"/>',
+ alert:'<path d="M21.7 18l-8-14a2 2 0 00-3.5 0l-8 14A2 2 0 004 21h16a2 2 0 001.7-3z"/><path d="M12 9v4"/><path d="M12 17h.01"/>',
+ list:'<path d="M3 17l2 2 4-4"/><path d="M3 7l2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/>',
+ home:'<path d="M3 11l9-8 9 8"/><path d="M5 9.5V20h5v-6h4v6h5V9.5"/>',
+ grid:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+ more:'<circle cx="5" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="19" cy="12" r="1.5" fill="currentColor"/>',
+ verified:'<path d="M12 3l7.5 3v5.5c0 4.6-3.1 8.2-7.5 9.5-4.4-1.3-7.5-4.9-7.5-9.5V6L12 3z"/><path d="M8.8 12l2.4 2.4 4.2-4.6"/>',
+ help:'<circle cx="12" cy="12" r="9"/><path d="M9.6 9.6a2.5 2.5 0 114 2c-.9.6-1.6 1.1-1.6 2.2"/><path d="M12 17h.01"/>',
+ expired:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M8 3v4"/><path d="M16 3v4"/><path d="M10 14l4 4"/><path d="M14 14l-4 4"/>',
+ wifioff:'<path d="M2 8.8a15 15 0 014.2-2.7"/><path d="M22 8.8a15 15 0 00-8.9-3.7"/><path d="M5 12.9a10 10 0 015.2-2.8"/><path d="M19 12.9a10 10 0 00-2.9-2.2"/><path d="M8.5 16.4a5 5 0 017 0"/><path d="M12 20h.01"/><path d="M2 2l20 20"/>',
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5"/><path d="M12 7.8h.01"/>',
+ phone:'<rect x="7" y="2.5" width="10" height="19" rx="2"/><path d="M11 18.5h2"/>',
+ link:'<path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3A4 4 0 0011 18.7l1-1"/>',
+ flag:'<path d="M5 21V4"/><path d="M5 4h12l-2 4 2 4H5"/>',
+ access:'<circle cx="12" cy="4.5" r="1.8"/><path d="M5 8.5l7 1.5 7-1.5"/><path d="M12 10v5"/><path d="M9 21l3-6 3 6"/>'
+};
+const ic=(n,s=24)=>`<svg class="ic" width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${ICON[n]||''}</svg>`;
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+let _m=0;
+const PIN='M32 52C32 52 15 38.5 15 26a17 17 0 0134 0C49 38.5 32 52 32 52Z';
+const VAR={
+  'color':{pin:'#174A78',arc:'#159B91',wm:'',tg:'#56667A'},
+  'dark':{pin:'#FFFFFF',arc:'#36C9BD',wm:'on-dark',tg:'#C9D8E8'},
+  'mono-navy':{pin:'#174A78',arc:'#174A78',wm:'mono',tg:'#174A78',c:'#174A78'},
+  'mono-black':{pin:'#111827',arc:'#111827',wm:'mono',tg:'#111827',c:'#111827'},
+  'mono-white':{pin:'#FFFFFF',arc:'#FFFFFF',wm:'mono',tg:'#FFFFFF',c:'#FFFFFF'}
+};
+function markSVG(size,v='color',inner=false){
+  const id='mk'+(++_m),o=VAR[v];
+  return `<svg width="${size}" height="${size}" viewBox="0 0 64 64" role="img" aria-label="PGI SAATHI logo mark" style="display:block"><defs><mask id="${id}"><rect width="64" height="64" fill="#fff"/><rect x="28.5" y="16.5" width="7" height="19" rx="2" fill="#000"/><rect x="22.5" y="22.5" width="19" height="7" rx="2" fill="#000"/></mask></defs><path d="${PIN}" fill="${o.pin}" mask="url(#${id})"/><path d="M13 50.5Q32 64 51 50.5" fill="none" stroke="${o.arc}" stroke-width="4.5" stroke-linecap="round"/></svg>`;
+}
+function iconSVG(size){
+  const r=size*0.22;
+  return `<span style="display:block;width:${size}px;height:${size}px;border-radius:${r}px;background:#174A78;display:grid;place-items:center;box-shadow:0 1px 3px rgba(0,0,0,.25)">${markSVG(Math.round(size*.64),'dark')}</span>`;
+}
+const wm=(px,v='color')=>`<span class="wm ${VAR[v].wm}" style="font-size:${px}px;${VAR[v].c?'color:'+VAR[v].c:''}"><span class="a">PGI</span> <span class="b">SAATHI</span></span>`;
+function stacked(size,v){return `<div class="stack"><div style="display:block">${markSVG(size,v)}</div>${wm(Math.round(size*.34),v)}<div class="tagline" style="font-size:${Math.max(12,Math.round(size*.15))}px;color:${VAR[v].tg}">Your Companion at Every Step.</div></div>`}
+function horizontal(size,v){return `<div class="hz" style="gap:${Math.round(size*.26)}px">${markSVG(size,v)}<div class="t">${wm(Math.round(size*.43),v)}<div class="tagline" style="font-size:${Math.max(11,Math.round(size*.2))}px;color:${VAR[v].tg}">Your Companion at Every Step.</div></div></div>`}
+function mountLogos(root=document){
+  root.querySelectorAll('[data-logo]').forEach(el=>{
+    const k=el.dataset.logo,s=+el.dataset.size||48,v=el.dataset.variant||'color';
+    el.innerHTML=k==='mark'?markSVG(s,v):k==='icon'?iconSVG(s):k==='stacked'?stacked(s,v):horizontal(s,v);
+    el.removeAttribute('data-logo');
+  });
+}
+
+/* =========================================================
+   STRINGS  (prototype translations, pending human review)
+   ========================================================= */
+const T={
+en:{
+ langName:'English',chooseT:'Choose Your Language',chooseS:'Select your preferred language to continue.',hint:'अपनी भाषा चुनें · ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ',cont:'Continue',
+ noLogin:'No login needed. Your choice is saved only on this device.',
+ indep:'PGI SAATHI is an independent patient-help app. It is not an official PGIMER application and does not replace hospital staff or emergency services.',
+ welcome:'Welcome to PGI SAATHI',welcomeS:'Find your way, prepare for your visit and access important hospital information.',
+ search:'What are you looking for?',searchLbl:'Search departments, buildings and guidance',
+ todo:'What would you like to do?',
+ dept:['Find a Department','Search and explore hospital departments.'],
+ dir:['Hospital Directory','Explore available building and location information.'],
+ opd:['OPD Visit Guide','Understand new and returning patient preparation.'],
+ tests:['Tests & Samples','General guidance about tests and sample collection.'],
+ emerg:['Emergency Information','Warning signs and important instructions.'],
+ check:['Patient Checklist','Prepare documents and items before visiting.'],
+ ebar:'Emergency information',
+ status:'Information status',proto:'Prototype data',s1:'Department directory',s1s:'Last verified: sample date',s2:'OPD timings',s2s:'Please check with hospital staff',
+ st:{verified:'Verified',confirm:'Needs confirmation',outdated:'Information outdated',offline:'Offline'},
+ imp:'Important information',
+ i1:'Follow your doctor’s test slip for the sample collection counter.',
+ i2:'Online pre-registration is not a confirmed appointment.',
+ i3:'Rooms, counters and timings can change. Please confirm with hospital staff.',
+ i4:'No content update notices in this prototype.',
+ offT:'Offline. Showing saved information.',offS:'Last synced: sample date (prototype)',
+ nav:['Home','Departments','Directory','More'],
+ back:'Back',lang:'Language',chLang:'Change language',
+ phT:'Prototype placeholder',phB:'This screen has not been designed yet. It arrives in a later iteration.',phPlan:'Planned requirement',toHome:'Back to Home',
+ emT:'Emergency Information',emH:'Go to hospital emergency services now',emB:'If you or someone with you has urgent warning signs, go to hospital emergency services now. Do not wait in the routine OPD queue.',
+ emW:'Warning signs',emW1:'Warning-sign list goes here. Content pending clinical review.',emW2:'Where to go and who to ask. Content pending verification.',emAvail:'Available without login, location or any permission.',
+ emN:'This app does not provide emergency response. It does not replace hospital emergency services.',
+ sTitle:'Search',sCommon:'Common searches',sNote:'Search finds departments, buildings and guidance. It does not diagnose.',
+ sDept:'Departments',sBld:'Buildings',sGuide:'Guidance',sNone:'No results found',sNoneB:'Try another word, or ask at a hospital help desk.',sClear:'Clear search',sample:'Sample',
+ moreT:'More',m:['Language','Accessibility settings','Official PGIMER links','Report incorrect information','About PGI SAATHI'],
+ deptT:'Departments',dirT:'Directory'
+},
+hi:{
+ langName:'हिन्दी',chooseT:'अपनी भाषा चुनें',chooseS:'जारी रखने के लिए अपनी पसंदीदा भाषा चुनें।',hint:'Choose Your Language · ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ',cont:'जारी रखें',
+ noLogin:'लॉगिन की आवश्यकता नहीं। आपकी पसंद केवल इस डिवाइस पर सहेजी जाती है।',
+ indep:'PGI SAATHI एक स्वतंत्र मरीज़-सहायता ऐप है। यह PGIMER का आधिकारिक ऐप नहीं है और अस्पताल कर्मचारियों या आपातकालीन सेवाओं का विकल्प नहीं है।',
+ welcome:'PGI SAATHI में आपका स्वागत है',welcomeS:'अपना रास्ता खोजें, अपनी यात्रा की तैयारी करें और अस्पताल की महत्वपूर्ण जानकारी पाएँ।',
+ search:'आप क्या खोज रहे हैं?',searchLbl:'विभाग, भवन और मार्गदर्शन खोजें',
+ todo:'आप क्या करना चाहते हैं?',
+ dept:['विभाग खोजें','विभागों को खोजें और देखें।'],
+ dir:['अस्पताल निर्देशिका','उपलब्ध भवन और स्थान की जानकारी देखें।'],
+ opd:['OPD यात्रा गाइड','नए और पुराने मरीज़ों की तैयारी समझें।'],
+ tests:['जाँच और नमूने','जाँच और नमूना संग्रह की सामान्य जानकारी।'],
+ emerg:['आपातकालीन जानकारी','चेतावनी के संकेत और ज़रूरी निर्देश।'],
+ check:['मरीज़ चेकलिस्ट','आने से पहले दस्तावेज़ और सामान तैयार करें।'],
+ ebar:'आपातकालीन जानकारी',
+ status:'जानकारी की स्थिति',proto:'प्रोटोटाइप डेटा',s1:'विभाग निर्देशिका',s1s:'अंतिम सत्यापन: नमूना तिथि',s2:'OPD समय',s2s:'कृपया अस्पताल कर्मचारियों से पूछें',
+ st:{verified:'सत्यापित',confirm:'पुष्टि आवश्यक',outdated:'जानकारी पुरानी',offline:'ऑफ़लाइन'},
+ imp:'महत्वपूर्ण जानकारी',
+ i1:'नमूना संग्रह काउंटर के लिए अपने डॉक्टर की जाँच पर्ची का पालन करें।',
+ i2:'ऑनलाइन पूर्व-पंजीकरण पक्की अपॉइंटमेंट नहीं है।',
+ i3:'कमरे, काउंटर और समय बदल सकते हैं। कृपया अस्पताल कर्मचारियों से पुष्टि करें।',
+ i4:'इस प्रोटोटाइप में कोई सामग्री अपडेट सूचना नहीं है।',
+ offT:'ऑफ़लाइन। सहेजी गई जानकारी दिखाई जा रही है।',offS:'अंतिम सिंक: नमूना तिथि (प्रोटोटाइप)',
+ nav:['होम','विभाग','निर्देशिका','और'],
+ back:'वापस',lang:'भाषा',chLang:'भाषा बदलें',
+ phT:'प्रोटोटाइप प्लेसहोल्डर',phB:'यह स्क्रीन अभी डिज़ाइन नहीं की गई है। यह बाद के चरण में आएगी।',phPlan:'नियोजित आवश्यकता',toHome:'होम पर वापस जाएँ',
+ emT:'आपातकालीन जानकारी',emH:'तुरंत अस्पताल की आपातकालीन सेवा में जाएँ',emB:'यदि आपको या आपके साथ किसी को गंभीर चेतावनी के संकेत हैं, तो तुरंत अस्पताल की आपातकालीन सेवा में जाएँ। सामान्य OPD कतार में प्रतीक्षा न करें।',
+ emW:'चेतावनी के संकेत',emW1:'चेतावनी के संकेतों की सूची यहाँ आएगी। सामग्री चिकित्सकीय समीक्षा की प्रतीक्षा में है।',emW2:'कहाँ जाएँ और किससे पूछें। सामग्री सत्यापन की प्रतीक्षा में है।',emAvail:'लॉगिन, लोकेशन या किसी अनुमति के बिना उपलब्ध।',
+ emN:'यह ऐप आपातकालीन सहायता प्रदान नहीं करता और अस्पताल की आपातकालीन सेवाओं का विकल्प नहीं है।',
+ sTitle:'खोज',sCommon:'आम खोजें',sNote:'खोज विभाग, भवन और मार्गदर्शन ढूँढती है। यह निदान नहीं करती।',
+ sDept:'विभाग',sBld:'भवन',sGuide:'मार्गदर्शन',sNone:'कोई परिणाम नहीं मिला',sNoneB:'कोई दूसरा शब्द आज़माएँ या अस्पताल के सहायता डेस्क पर पूछें।',sClear:'खोज मिटाएँ',sample:'नमूना',
+ moreT:'और',m:['भाषा','पहुँच-योग्यता सेटिंग्स','PGIMER के आधिकारिक लिंक','ग़लत जानकारी की सूचना दें','PGI SAATHI के बारे में'],
+ deptT:'विभाग',dirT:'निर्देशिका'
+},
+pa:{
+ langName:'ਪੰਜਾਬੀ',chooseT:'ਆਪਣੀ ਭਾਸ਼ਾ ਚੁਣੋ',chooseS:'ਜਾਰੀ ਰੱਖਣ ਲਈ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਚੁਣੋ।',hint:'Choose Your Language · अपनी भाषा चुनें',cont:'ਜਾਰੀ ਰੱਖੋ',
+ noLogin:'ਲੌਗਇਨ ਦੀ ਲੋੜ ਨਹੀਂ। ਤੁਹਾਡੀ ਚੋਣ ਸਿਰਫ਼ ਇਸ ਡਿਵਾਈਸ ’ਤੇ ਸੰਭਾਲੀ ਜਾਂਦੀ ਹੈ।',
+ indep:'PGI SAATHI ਇੱਕ ਸੁਤੰਤਰ ਮਰੀਜ਼-ਸਹਾਇਤਾ ਐਪ ਹੈ। ਇਹ PGIMER ਦੀ ਅਧਿਕਾਰਤ ਐਪ ਨਹੀਂ ਹੈ ਅਤੇ ਹਸਪਤਾਲ ਦੇ ਸਟਾਫ਼ ਜਾਂ ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ।',
+ welcome:'PGI SAATHI ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ',welcomeS:'ਆਪਣਾ ਰਾਹ ਲੱਭੋ, ਆਪਣੀ ਫੇਰੀ ਦੀ ਤਿਆਰੀ ਕਰੋ ਅਤੇ ਹਸਪਤਾਲ ਦੀ ਜ਼ਰੂਰੀ ਜਾਣਕਾਰੀ ਪਾਓ।',
+ search:'ਤੁਸੀਂ ਕੀ ਲੱਭ ਰਹੇ ਹੋ?',searchLbl:'ਵਿਭਾਗ, ਇਮਾਰਤਾਂ ਅਤੇ ਮਾਰਗਦਰਸ਼ਨ ਲੱਭੋ',
+ todo:'ਤੁਸੀਂ ਕੀ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?',
+ dept:['ਵਿਭਾਗ ਲੱਭੋ','ਹਸਪਤਾਲ ਦੇ ਵਿਭਾਗ ਲੱਭੋ ਅਤੇ ਦੇਖੋ।'],
+ dir:['ਹਸਪਤਾਲ ਡਾਇਰੈਕਟਰੀ','ਉਪਲਬਧ ਇਮਾਰਤਾਂ ਅਤੇ ਥਾਵਾਂ ਦੀ ਜਾਣਕਾਰੀ ਦੇਖੋ।'],
+ opd:['OPD ਫੇਰੀ ਗਾਈਡ','ਨਵੇਂ ਅਤੇ ਪੁਰਾਣੇ ਮਰੀਜ਼ਾਂ ਦੀ ਤਿਆਰੀ ਸਮਝੋ।'],
+ tests:['ਜਾਂਚ ਅਤੇ ਨਮੂਨੇ','ਜਾਂਚਾਂ ਅਤੇ ਨਮੂਨਾ ਲੈਣ ਬਾਰੇ ਆਮ ਜਾਣਕਾਰੀ।'],
+ emerg:['ਐਮਰਜੈਂਸੀ ਜਾਣਕਾਰੀ','ਚੇਤਾਵਨੀ ਦੇ ਸੰਕੇਤ ਅਤੇ ਜ਼ਰੂਰੀ ਹਦਾਇਤਾਂ।'],
+ check:['ਮਰੀਜ਼ ਚੈੱਕਲਿਸਟ','ਆਉਣ ਤੋਂ ਪਹਿਲਾਂ ਦਸਤਾਵੇਜ਼ ਅਤੇ ਸਮਾਨ ਤਿਆਰ ਕਰੋ।'],
+ ebar:'ਐਮਰਜੈਂਸੀ ਜਾਣਕਾਰੀ',
+ status:'ਜਾਣਕਾਰੀ ਦੀ ਸਥਿਤੀ',proto:'ਪ੍ਰੋਟੋਟਾਈਪ ਡੇਟਾ',s1:'ਵਿਭਾਗ ਡਾਇਰੈਕਟਰੀ',s1s:'ਆਖ਼ਰੀ ਪੁਸ਼ਟੀ: ਨਮੂਨਾ ਮਿਤੀ',s2:'OPD ਸਮਾਂ',s2s:'ਕਿਰਪਾ ਕਰਕੇ ਹਸਪਤਾਲ ਸਟਾਫ਼ ਤੋਂ ਪੁੱਛੋ',
+ st:{verified:'ਪ੍ਰਮਾਣਿਤ',confirm:'ਪੁਸ਼ਟੀ ਲੋੜੀਂਦੀ',outdated:'ਜਾਣਕਾਰੀ ਪੁਰਾਣੀ',offline:'ਔਫਲਾਈਨ'},
+ imp:'ਜ਼ਰੂਰੀ ਜਾਣਕਾਰੀ',
+ i1:'ਨਮੂਨਾ ਲੈਣ ਵਾਲੇ ਕਾਊਂਟਰ ਲਈ ਆਪਣੇ ਡਾਕਟਰ ਦੀ ਜਾਂਚ ਪਰਚੀ ਦੀ ਪਾਲਣਾ ਕਰੋ।',
+ i2:'ਆਨਲਾਈਨ ਪੂਰਵ-ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਪੱਕੀ ਅਪਾਇੰਟਮੈਂਟ ਨਹੀਂ ਹੈ।',
+ i3:'ਕਮਰੇ, ਕਾਊਂਟਰ ਅਤੇ ਸਮੇਂ ਬਦਲ ਸਕਦੇ ਹਨ। ਕਿਰਪਾ ਕਰਕੇ ਹਸਪਤਾਲ ਦੇ ਸਟਾਫ਼ ਤੋਂ ਪੁਸ਼ਟੀ ਕਰੋ।',
+ i4:'ਇਸ ਪ੍ਰੋਟੋਟਾਈਪ ਵਿੱਚ ਕੋਈ ਸਮੱਗਰੀ ਅੱਪਡੇਟ ਸੂਚਨਾ ਨਹੀਂ ਹੈ।',
+ offT:'ਔਫਲਾਈਨ। ਸੰਭਾਲੀ ਹੋਈ ਜਾਣਕਾਰੀ ਦਿਖਾਈ ਜਾ ਰਹੀ ਹੈ।',offS:'ਆਖ਼ਰੀ ਸਿੰਕ: ਨਮੂਨਾ ਮਿਤੀ (ਪ੍ਰੋਟੋਟਾਈਪ)',
+ nav:['ਹੋਮ','ਵਿਭਾਗ','ਡਾਇਰੈਕਟਰੀ','ਹੋਰ'],
+ back:'ਵਾਪਸ',lang:'ਭਾਸ਼ਾ',chLang:'ਭਾਸ਼ਾ ਬਦਲੋ',
+ phT:'ਪ੍ਰੋਟੋਟਾਈਪ ਪਲੇਸਹੋਲਡਰ',phB:'ਇਹ ਸਕ੍ਰੀਨ ਅਜੇ ਡਿਜ਼ਾਈਨ ਨਹੀਂ ਕੀਤੀ ਗਈ। ਇਹ ਅਗਲੇ ਪੜਾਅ ਵਿੱਚ ਆਵੇਗੀ।',phPlan:'ਯੋਜਨਾਬੱਧ ਲੋੜ',toHome:'ਹੋਮ ’ਤੇ ਵਾਪਸ ਜਾਓ',
+ emT:'ਐਮਰਜੈਂਸੀ ਜਾਣਕਾਰੀ',emH:'ਤੁਰੰਤ ਹਸਪਤਾਲ ਦੀ ਐਮਰਜੈਂਸੀ ਸੇਵਾ ਵਿੱਚ ਜਾਓ',emB:'ਜੇ ਤੁਹਾਨੂੰ ਜਾਂ ਤੁਹਾਡੇ ਨਾਲ ਕਿਸੇ ਨੂੰ ਗੰਭੀਰ ਚੇਤਾਵਨੀ ਦੇ ਸੰਕੇਤ ਹਨ, ਤਾਂ ਤੁਰੰਤ ਹਸਪਤਾਲ ਦੀ ਐਮਰਜੈਂਸੀ ਸੇਵਾ ਵਿੱਚ ਜਾਓ। ਆਮ OPD ਕਤਾਰ ਵਿੱਚ ਉਡੀਕ ਨਾ ਕਰੋ।',
+ emW:'ਚੇਤਾਵਨੀ ਦੇ ਸੰਕੇਤ',emW1:'ਚੇਤਾਵਨੀ ਦੇ ਸੰਕੇਤਾਂ ਦੀ ਸੂਚੀ ਇੱਥੇ ਆਵੇਗੀ। ਸਮੱਗਰੀ ਡਾਕਟਰੀ ਸਮੀਖਿਆ ਦੀ ਉਡੀਕ ਵਿੱਚ ਹੈ।',emW2:'ਕਿੱਥੇ ਜਾਣਾ ਹੈ ਅਤੇ ਕਿਸ ਤੋਂ ਪੁੱਛਣਾ ਹੈ। ਸਮੱਗਰੀ ਪੁਸ਼ਟੀ ਦੀ ਉਡੀਕ ਵਿੱਚ ਹੈ।',emAvail:'ਲੌਗਇਨ, ਲੋਕੇਸ਼ਨ ਜਾਂ ਕਿਸੇ ਇਜਾਜ਼ਤ ਤੋਂ ਬਿਨਾਂ ਉਪਲਬਧ।',
+ emN:'ਇਹ ਐਪ ਐਮਰਜੈਂਸੀ ਸਹਾਇਤਾ ਨਹੀਂ ਦਿੰਦੀ ਅਤੇ ਹਸਪਤਾਲ ਦੀਆਂ ਐਮਰਜੈਂਸੀ ਸੇਵਾਵਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ।',
+ sTitle:'ਖੋਜ',sCommon:'ਆਮ ਖੋਜਾਂ',sNote:'ਖੋਜ ਵਿਭਾਗ, ਇਮਾਰਤਾਂ ਅਤੇ ਮਾਰਗਦਰਸ਼ਨ ਲੱਭਦੀ ਹੈ। ਇਹ ਨਿਦਾਨ ਨਹੀਂ ਕਰਦੀ।',
+ sDept:'ਵਿਭਾਗ',sBld:'ਇਮਾਰਤਾਂ',sGuide:'ਮਾਰਗਦਰਸ਼ਨ',sNone:'ਕੋਈ ਨਤੀਜਾ ਨਹੀਂ ਮਿਲਿਆ',sNoneB:'ਕੋਈ ਹੋਰ ਸ਼ਬਦ ਵਰਤੋ ਜਾਂ ਹਸਪਤਾਲ ਦੇ ਸਹਾਇਤਾ ਡੈਸਕ ਤੋਂ ਪੁੱਛੋ।',sClear:'ਖੋਜ ਮਿਟਾਓ',sample:'ਨਮੂਨਾ',
+ moreT:'ਹੋਰ',m:['ਭਾਸ਼ਾ','ਪਹੁੰਚਯੋਗਤਾ ਸੈਟਿੰਗਾਂ','PGIMER ਦੇ ਅਧਿਕਾਰਤ ਲਿੰਕ','ਗਲਤ ਜਾਣਕਾਰੀ ਦੀ ਸੂਚਨਾ ਦਿਓ','PGI SAATHI ਬਾਰੇ'],
+ deptT:'ਵਿਭਾਗ',dirT:'ਡਾਇਰੈਕਟਰੀ'
+}};
+const LANGS=[{k:'en',name:'English',sub:'English',tag:'en'},{k:'hi',name:'हिंदी',sub:'हिन्दी',tag:'hi'},{k:'pa',name:'ਪੰਜਾਬੀ',sub:'ਪੰਜਾਬੀ',tag:'pa'}];
+const PLAN={dept:'FR-002 · FR-003',dir:'FR-002 · FR-004',opd:'FR-005',tests:'FR-007',check:'FR-006',deptT:'FR-002',dirT:'FR-004',m1:'FR-018',m2:'FR-010',m3:'FR-012',m4:'SRS 6.1'};
+
+/* search data: names in three scripts + common/transliterated terms (illustrative sample data) */
+const SD=[
+ {g:'d',n:{en:'Cardiology',hi:'कार्डियोलॉजी',pa:'ਕਾਰਡੀਓਲੋਜੀ'},t:['heart','cardio','हृदय','दिल','ਦਿਲ','dil'],s:'confirm'},
+ {g:'d',n:{en:'Nephrology',hi:'नेफ्रोलॉजी',pa:'ਨੈਫਰੋਲੋਜੀ'},t:['kidney','गुर्दा','किडनी','ਗੁਰਦਾ','ਕਿਡਨੀ'],s:'outdated'},
+ {g:'d',n:{en:'Orthopaedics',hi:'ऑर्थोपेडिक्स',pa:'ਆਰਥੋਪੈਡਿਕਸ'},t:['bone','ortho','हड्डी','ਹੱਡੀ'],s:'confirm'},
+ {g:'d',n:{en:'Paediatrics',hi:'बाल रोग विभाग',pa:'ਬਾਲ ਰੋਗ ਵਿਭਾਗ'},t:['child','children','kids','बच्चा','बच्चों','ਬੱਚਾ','ਬੱਚਿਆਂ'],s:'confirm'},
+ {g:'d',n:{en:'Ophthalmology',hi:'नेत्र विज्ञान',pa:'ਨੇਤਰ ਵਿਗਿਆਨ'},t:['eye','eyes','आँख','आंख','ਅੱਖ','ਅੱਖਾਂ'],s:'confirm'},
+ {g:'b',n:{en:'Main hospital block (sample)',hi:'मुख्य अस्पताल ब्लॉक (नमूना)',pa:'ਮੁੱਖ ਹਸਪਤਾਲ ਬਲਾਕ (ਨਮੂਨਾ)'},t:['building','block','main','भवन','ਇਮਾਰਤ'],s:'confirm'},
+ {g:'b',n:{en:'OPD block (sample)',hi:'OPD ब्लॉक (नमूना)',pa:'OPD ਬਲਾਕ (ਨਮੂਨਾ)'},t:['opd','building','block','भवन','ਇਮਾਰਤ'],s:'confirm'},
+ {g:'g',n:{en:'New patient registration',hi:'नए मरीज़ का पंजीकरण',pa:'ਨਵੇਂ ਮਰੀਜ਼ ਦੀ ਰਜਿਸਟ੍ਰੇਸ਼ਨ'},t:['registration','register','new patient','पंजीकरण','ਰਜਿਸਟ੍ਰੇਸ਼ਨ','opd'],s:'verified'},
+ {g:'g',n:{en:'Test slip and sample collection',hi:'जाँच पर्ची और नमूना संग्रह',pa:'ਜਾਂਚ ਪਰਚੀ ਅਤੇ ਨਮੂਨਾ ਲੈਣਾ'},t:['blood','sample','test','slip','जाँच','ਜਾਂਚ','lab'],s:'confirm'},
+ {g:'g',n:{en:'What to carry',hi:'क्या साथ लाएँ',pa:'ਕੀ ਨਾਲ ਲਿਆਉਣਾ ਹੈ'},t:['documents','carry','checklist','दस्तावेज़','ਦਸਤਾਵੇਜ਼','papers'],s:'verified'}
+];
+const COMMON={en:['OPD registration','Blood test','Heart','Documents'],hi:['OPD पंजीकरण','जाँच','दिल','दस्तावेज़'],pa:['OPD ਰਜਿਸਟ੍ਰੇਸ਼ਨ','ਜਾਂਚ','ਦਿਲ','ਦਸਤਾਵੇਜ਼']};
+const COMMONQ={en:['registration','blood','heart','documents'],hi:['पंजीकरण','जाँच','दिल','दस्तावेज़'],pa:['ਰਜਿਸਟ੍ਰੇਸ਼ਨ','ਜਾਂਚ','ਦਿਲ','ਦਸਤਾਵੇਜ਼']};
+function runSearch(q){
+  q=q.trim().toLowerCase(); if(!q) return [];
+  return SD.filter(x=>Object.values(x.n).some(v=>v.toLowerCase().includes(q))||x.t.some(t=>t.toLowerCase().includes(q)||(q.length>2&&q.includes(t.toLowerCase()))));
+}
+const GICON={d:'dept',b:'dir',g:'opd'};
+
+/* =========================================================
+   APP
+   ========================================================= */
+const chip=(k,L)=>`<span class="chip ${k}">${ic({verified:'verified',confirm:'help',outdated:'expired',offline:'wifioff'}[k],16)}${T[L].st[k]}</span>`;
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+
+function createApp(root,o={}){
+  const S=Object.assign({screen:'splash',lang:'en',offline:false,ts:1,q:'',sheet:false,ph:null,tab:'home',prev:'home',persist:false,auto:false,noFocus:true,onChange:null},o);
+  root.classList.add('app');
+  let timer=null;
+  const L=()=>T[S.lang];
+  const tag=()=>S.lang;
+  const status=(dark)=>`<div class="a-status ${dark?'on-red':''}" aria-hidden="true"><span>10:30</span><span class="r">${S.offline?'':`<svg width="14" height="12" viewBox="0 0 14 12" fill="currentColor"><path d="M7 11.5L.5 3.2a9.7 9.7 0 0113 0z"/></svg>`}<svg width="16" height="12" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="1" y="2.5" width="12" height="7" rx="1.6"/><rect x="2.6" y="4" width="7" height="4" rx=".6" fill="currentColor" stroke="none"/><path d="M14.5 5v2" stroke-linecap="round"/></svg></span></div>`;
+  const gest=`<div class="a-gest" aria-hidden="true"><i></i></div>`;
+  const navHTML=()=>{
+    const k=['home','dept','dir','more'],i=['home','grid','dir','more'];
+    return `<nav class="nav" aria-label="Main">${k.map((x,n)=>`<button data-act="nav" data-v="${x}" ${S.tab===x?'aria-current="page"':''}><span class="pill">${ic(i[n],24)}</span><span class="l">${L().nav[n]}</span></button>`).join('')}</nav>`;
+  };
+  const ebar=()=>`<div class="ebar-wrap"><button class="ebar" data-act="emergency" aria-label="${L().ebar}">${ic('alert',24)}<span>${L().ebar}</span>${ic('right',22)}</button></div>`;
+  const legal=()=>`<p class="legal">${ic('info',18)}<span>${L().indep}</span></p>`;
+
+  function splash(){
+    return `<div class="splash" role="img" aria-label="PGI SAATHI. ${T.en.chooseT}">
+      <svg class="bgart" viewBox="0 0 360 800" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <g fill="none" stroke="#174A78"><circle cx="180" cy="352" r="96" stroke-opacity=".07"/><circle cx="180" cy="352" r="160" stroke-opacity=".06"/><circle cx="180" cy="352" r="236" stroke-opacity=".05"/><circle cx="180" cy="352" r="330" stroke-opacity=".04"/></g>
+        <path d="M-10 640C70 600 90 700 180 668S300 590 372 628" fill="none" stroke="#159B91" stroke-opacity=".35" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round"/>
+        <g fill="#159B91" fill-opacity=".14"><rect x="38" y="120" width="4" height="14" rx="1"/><rect x="33" y="125" width="14" height="4" rx="1"/><rect x="306" y="196" width="4" height="14" rx="1"/><rect x="301" y="201" width="14" height="4" rx="1"/><rect x="62" y="560" width="4" height="14" rx="1"/><rect x="57" y="565" width="14" height="4" rx="1"/></g>
+      </svg>
+      <div class="center">${markSVG(108,'color')}${wm(34,'color')}<div class="tagline">Your Companion at Every Step.</div></div>
+      <div class="load"><svg class="spin" width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="11" fill="none" stroke="#E2E8F0" stroke-width="3"/><path d="M14 3a11 11 0 0111 11" fill="none" stroke="#159B91" stroke-width="3" stroke-linecap="round"/></svg><span>Loading</span></div>
+    </div>`;
+  }
+  function langScreen(){
+    const l=L();
+    return `<div class="a-root">${status()}<div class="a-body"><div class="a-pad" style="display:flex;flex-direction:column;flex:1">
+      <div class="brand" style="padding:10px 0 22px">${markSVG(34)}${wm(18)}</div>
+      <h1 class="t-h1" style="font-size:calc(28px*var(--ts))" lang="${tag()}">${l.chooseT}</h1>
+      <p class="t-sec" style="font-size:var(--fs-body);margin-top:8px" lang="${tag()}">${l.chooseS}</p>
+      <p class="t-meta" style="margin-top:6px" aria-hidden="true">${l.hint}</p>
+      <div class="lang-stack" role="radiogroup" aria-label="${l.chooseT}" style="margin-top:22px">
+        ${LANGS.map(x=>`<button class="lang-card" role="radio" aria-checked="${S.lang===x.k}" data-act="pick" data-v="${x.k}" lang="${x.tag}"><span class="radio">${ic('check',18)}</span><span class="tx"><span class="nm">${x.name}</span><span class="sb">${x.sub}</span></span></button>`).join('')}
+      </div>
+      <div style="flex:1;min-height:20px"></div>
+      <p class="t-meta" style="display:flex;gap:8px;align-items:flex-start;margin-bottom:14px" lang="${tag()}">${ic('phone',18)}<span>${l.noLogin}</span></p>
+      <button class="btn btn-primary block" data-act="continue" lang="${tag()}">${l.cont}${ic('right',20)}</button>
+      <p class="t-meta" style="margin-top:14px;text-align:center" lang="${tag()}">${l.indep}</p>
+    </div></div>${gest}</div>`;
+  }
+  function home(){
+    const l=L(),c=(k,cls,icon)=>`<button class="fcard ${cls}" data-act="card" data-v="${k}" aria-label="${l[k][0]}. ${l[k][1]}"><span class="tile">${ic(icon,24)}</span><span class="tx"><span class="t-title">${l[k][0]}</span><span class="t-sec">${l[k][1]}</span></span>${/feat|emg/.test(cls)?`<span class="go">${ic('right',24)}</span>`:''}</button>`;
+    return `<div class="a-root" lang="${tag()}">${status()}
+      <header class="hdr"><div class="brand">${markSVG(34)}${wm(18)}</div>
+        <button class="langchip" data-act="sheet" aria-label="${l.chLang}: ${l.langName}">${ic('globe',20)}<span>${l.langName}</span>${ic('down',18)}</button></header>
+      ${S.offline?`<div class="banner offline" role="status">${ic('wifioff',24)}<div><b>${l.offT}</b><div class="t-meta" style="color:var(--a-neutral-text)">${l.offS}</div></div></div>`:''}
+      <div class="a-body"><div class="a-pad">
+        <h1 class="t-h1" style="margin-top:12px">${l.welcome}</h1>
+        <p class="t-sec" style="margin-top:6px;font-size:var(--fs-body)">${l.welcomeS}</p>
+        <button class="search" data-act="search" style="margin-top:16px" aria-label="${l.searchLbl}">${ic('search',24)}<span>${l.search}</span></button>
+        <h2 class="t-h2 sec-h">${l.todo}</h2>
+        <div class="cards">
+          ${c('dept','feat','dept')}${c('dir','','dir')}${c('opd','','opd')}${c('tests','','tests')}${c('check','','list')}${c('emerg','emg','alert')}
+        </div>
+        <h2 class="t-h2 sec-h" style="margin-top:30px">${l.status}</h2>
+        <div class="card">
+          <div class="stat-head"><span class="chip proto">${l.proto}</span></div>
+          <div class="stat-row"><div class="tx"><span class="t-title" style="font-size:var(--fs-body)">${l.s1}</span><span class="t-meta">${l.s1s}</span></div>${S.offline?chip('offline',S.lang):chip('verified',S.lang)}</div>
+          <div class="stat-row"><div class="tx"><span class="t-title" style="font-size:var(--fs-body)">${l.s2}</span><span class="t-meta">${l.s2s}</span></div>${chip('confirm',S.lang)}</div>
+        </div>
+        <h2 class="t-h2 sec-h" style="margin-top:30px">${l.imp}</h2>
+        <div class="card info-list">
+          <div class="info-item">${ic('tests',24)}<span>${l.i1}</span></div>
+          <div class="info-item">${ic('opd',24)}<span>${l.i2}</span></div>
+          <div class="info-item">${ic('help',24)}<span>${l.i3}</span></div>
+          <div class="info-item" style="color:var(--a-text2)">${ic('info',24)}<span>${l.i4}</span></div>
+        </div>
+        ${legal()}
+      </div></div>
+      ${ebar()}${navHTML()}${gest}${S.sheet?sheet():''}</div>`;
+  }
+  function sheet(){
+    const l=L();
+    return `<div class="scrim" data-act="sheet-close"><div class="sheet" role="dialog" aria-modal="true" aria-label="${l.lang}" data-stop="1"><div class="grab"></div>
+      <div class="head"><h2 class="t-h2" lang="${tag()}">${l.lang}</h2><button class="x" data-act="sheet-close" aria-label="${l.back}">${ic('close',24)}</button></div>
+      <div class="lang-stack" role="radiogroup" aria-label="${l.lang}">${LANGS.map(x=>`<button class="lang-card compact" role="radio" aria-checked="${S.lang===x.k}" data-act="sheet-pick" data-v="${x.k}" lang="${x.tag}"><span class="radio">${ic('check',18)}</span><span class="tx"><span class="nm">${x.name}</span></span></button>`).join('')}</div></div></div>`;
+  }
+  function searchScreen(){
+    const l=L(),q=S.q,res=runSearch(q);
+    return `<div class="a-root" lang="${tag()}">${status()}
+      <div class="tbar" style="padding-right:var(--m)"><button class="back" data-act="search-back" aria-label="${l.back}">${ic('back',24)}</button>
+        <div class="search focus" style="flex:1;width:auto;padding-right:8px" role="search">${ic('search',24)}<input id="q-${root.id||'x'}" type="search" value="${q.replace(/"/g,'&quot;')}" placeholder="${l.search}" aria-label="${l.searchLbl}" autocomplete="off" lang="${tag()}" data-q="1">${q?`<button class="clear" data-act="clear" aria-label="${l.sClear}">${ic('close',20)}</button>`:''}</div></div>
+      <div class="a-body"><div class="a-pad" data-results="1">${resultsHTML()}</div></div>${gest}</div>`;
+  }
+  function resultsHTML(){
+    const l=L(),q=S.q.trim(),res=runSearch(q);
+    if(!q) return `<p class="t-meta" style="margin:8px 0 0;display:flex;gap:8px">${ic('info',18)}<span>${l.sNote}</span></p>
+      <div class="res-h" style="margin-top:22px">${l.sCommon}</div><div class="sugg">${COMMON[S.lang].map((c,i)=>`<button data-act="sugg" data-v="${COMMONQ[S.lang][i]}">${c}</button>`).join('')}</div>`;
+    if(!res.length) return `<div class="empty"><span class="tile">${ic('search',28)}</span><h2 class="t-h2">${l.sNone}</h2><p class="t-sec" style="font-size:var(--fs-body)">${l.sNoneB}</p></div>`;
+    const groups=[['d',l.sDept],['b',l.sBld],['g',l.sGuide]];
+    return `<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px"><span class="chip proto">${l.proto}</span></div>`+groups.map(([g,h])=>{const r=res.filter(x=>x.g===g);return r.length?`<div class="res-h">${h}</div>`+r.map(x=>`<button class="res" data-act="card" data-v="${g==='g'?'opd':g==='b'?'dir':'dept'}"><span class="tile">${ic(GICON[g],24)}</span><span class="tx"><span class="t-title" style="font-size:var(--fs-body)">${x.n[S.lang]}</span>${chip(x.s,S.lang)}</span></button>`).join(''):''}).join('')+`<p class="t-meta" style="margin-top:18px;display:flex;gap:8px">${ic('info',18)}<span>${l.sNote}</span></p>`;
+  }
+  function placeholder(){
+    const l=L(),p=S.ph||{};
+    return `<div class="a-root" lang="${tag()}">${status()}
+      <div class="tbar"><button class="back" data-act="ph-back" aria-label="${l.back}">${ic('back',24)}</button><h1>${p.title||''}</h1></div>
+      <div class="a-body"><div class="a-pad" style="padding-top:12px">
+        <div class="ph"><span class="tile">${ic('info',26)}</span><span class="chip proto">${l.phT}</span><h2 class="t-h2">${p.title||''}</h2><p class="t-sec" style="font-size:var(--fs-body)">${l.phB}</p>
+          <p class="t-meta">${l.phPlan}: <b>${p.plan||''}</b></p>
+          <button class="btn btn-secondary" data-act="goHome" style="margin-top:4px">${ic('home',20)}${l.toHome}</button></div>
+      </div></div>${ebar()}${navHTML()}${gest}</div>`;
+  }
+  function more(){
+    const l=L(),ic2=['globe','access','link','flag','info'];
+    return `<div class="a-root" lang="${tag()}">${status()}
+      <div class="tbar"><div style="width:12px"></div><h1>${l.moreT}</h1></div>
+      <div class="a-body"><div class="a-pad" style="padding-top:8px">
+        <div class="card" style="overflow:hidden">
+          ${l.m.map((m,i)=>`<button class="list-row" data-act="${i===0?'sheet':'ph'}" data-v="${i}"><span class="tile">${ic(ic2[i],22)}</span><span class="tx"><span class="t-title" style="font-size:var(--fs-body)">${m}</span>${i===0?`<span class="t-meta">${l.langName}</span>`:''}</span><span class="go">${ic('right',22)}</span></button>`).join('')}
+        </div>${legal()}
+      </div></div>${ebar()}${navHTML()}${gest}${S.sheet?sheet():''}</div>`;
+  }
+  function emergency(){
+    const l=L();
+    return `<div class="a-root" lang="${tag()}">${status()}
+      <div class="tbar red"><button class="back" data-act="em-back" aria-label="${l.back}">${ic('back',24)}</button><h1>${l.emT}</h1></div>
+      <div class="a-body"><div class="a-pad" style="padding-top:16px;display:grid;gap:16px;align-content:start">
+        <div class="emg-hero" role="alert"><div class="row">${ic('alert',32)}<div class="big">${l.emH}</div></div><p>${l.emB}</p></div>
+        <div class="card"><div class="stat-head" style="padding-bottom:10px"><h2 class="t-h2" style="font-size:var(--fs-title)">${l.emW}</h2><span class="chip proto">${l.proto}</span></div>
+          <div class="ph-line">${ic('alert',22)}<span>${l.emW1}</span></div><div class="ph-line">${ic('dir',22)}<span>${l.emW2}</span></div></div>
+        <div class="banner">${ic('info',24)}<span>${l.emN}</span></div>
+        <p class="t-meta" style="display:flex;gap:8px">${ic('check',18)}<span>${l.emAvail}</span></p>
+      </div></div>${gest}</div>`;
+  }
+  function body(){
+    switch(S.screen){case'splash':return splash();case'lang':return langScreen();case'home':return home();case'search':return searchScreen();case'ph':return placeholder();case'more':return more();case'emergency':return emergency();}
+    return '';
+  }
+  function render(){
+    root.className='screen app lang-'+S.lang+(S.ts>1.2?' ts-big':'');
+    root.style.setProperty('--ts',S.ts);
+    root.lang=S.lang;
+    root.innerHTML=body();
+    if(S.screen==='search'&&!S.noFocus){const i=root.querySelector('input');i&&i.focus({preventScroll:true});}
+    S.onChange&&S.onChange(S);
+  }
+  const go=(s,extra={})=>{clearTimeout(timer);Object.assign(S,extra,{screen:s,sheet:false});render();};
+  function openPh(title,plan,from){S.ph={title,plan};S.prev=from||S.screen;go('ph');}
+  function afterSplash(){const saved=S.persist?store.get('pgi.lang'):null;if(saved&&T[saved]){S.lang=saved;go('home');}else go('lang');}
+
+  root.addEventListener('click',e=>{
+    const b=e.target.closest('[data-act]'); if(!b||!root.contains(b))return;
+    const a=b.dataset.act,v=b.dataset.v,l=L();
+    if(a==='sheet-close'&&e.target.closest('[data-stop]')&&b.classList.contains('scrim'))return;
+    switch(a){
+      case'pick':S.lang=v;render();break;
+      case'continue':if(S.persist)store.set('pgi.lang',S.lang);S.tab='home';go('home');break;
+      case'sheet':S.sheet=true;render();break;
+      case'sheet-close':S.sheet=false;render();break;
+      case'sheet-pick':S.lang=v;S.sheet=false;if(S.persist)store.set('pgi.lang',v);render();break;
+      case'nav':
+        S.tab=v;
+        if(v==='home')go('home');
+        else if(v==='more')go('more');
+        else openPh(v==='dept'?l.deptT:l.dirT,PLAN[v==='dept'?'deptT':'dirT'],'home');
+        break;
+      case'card':
+        if(v==='emerg'){S.prev=S.screen==='search'?'search':S.screen;go('emergency');}
+        else{S.tab='home';openPh(l[v][0],PLAN[v],S.screen==='search'?'search':'home');}
+        break;
+      case'ph':S.tab='more';openPh(l.m[+v],PLAN['m'+(+v)]||'',  'more');break;
+      case'emergency':S.prev=S.screen;go('emergency');break;
+      case'em-back':go(['splash','lang','emergency'].includes(S.prev)?'home':S.prev);break;
+      case'ph-back':go(S.prev==='more'?'more':S.prev==='search'?'search':'home');break;
+      case'goHome':S.tab='home';go('home');break;
+      case'search':S.q='';S.noFocus=false;go('search');break;
+      case'search-back':go('home');break;
+      case'clear':S.q='';render();{const i=root.querySelector('input');i&&i.focus();}break;
+      case'sugg':S.q=v;render();break;
+    }
+  });
+  root.addEventListener('input',e=>{
+    if(!e.target.matches('input[data-q]'))return;
+    S.q=e.target.value;
+    const r=root.querySelector('[data-results]');if(r)r.innerHTML=resultsHTML();
+    const s=root.querySelector('.search.focus'),c=s.querySelector('.clear');
+    if(S.q&&!c){s.insertAdjacentHTML('beforeend',`<button class="clear" data-act="clear" aria-label="${L().sClear}">${ic('close',20)}</button>`);}
+    else if(!S.q&&c)c.remove();
+  });
+  root.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.sheet){S.sheet=false;render();}});
+
+  render();
+  if(S.auto&&S.screen==='splash')timer=setTimeout(afterSplash,2400);
+  return {state:S,go,set(p){Object.assign(S,p);render();},restart(){clearTimeout(timer);S.screen='splash';S.sheet=false;S.q='';S.tab='home';render();timer=setTimeout(afterSplash,2400);}};
+}
+
+/* =========================================================
+   BOARD
+   ========================================================= */
+const PHONE_PAD=7;
+function frame(host,{w=360,h=800,caption,sub,opts={},full=false}){
+  const fw=w+PHONE_PAD*2;
+  const fig=document.createElement('figure');fig.className='fig';fig.style.cssText=`--fw:${fw}px;margin:0`;
+  fig.innerHTML=`<div class="fit"><div class="phone"><div class="screen" style="width:${w}px;height:${h}px"></div></div></div>${caption?`<div class="cap"><b>${caption}</b><span>${sub||''}</span></div>`:''}`;
+  host.appendChild(fig);
+  const scr=fig.querySelector('.screen');
+  const app=createApp(scr,Object.assign({noFocus:true},opts));
+  fig._dims={w:fw,h:h+PHONE_PAD*2};
+  return {fig,app};
+}
+function fitAll(){
+  document.querySelectorAll('figure.fig,.fig').forEach(f=>{
+    const ph=f.querySelector('.phone'),fit=f.querySelector('.fit');if(!ph)return;
+    const w=ph.offsetWidth,h=ph.offsetHeight,avail=fit.clientWidth||w,s=Math.min(1,avail/w);
+    ph.style.transform=`scale(${s})`;fit.style.height=(h*s)+'px';fit.style.width=(w*s)+'px';
+  });
+}
+function wire(){
+  mountLogos();
+  /* hero prototype */
+  const heroHost=document.getElementById('hero-fit');
+  const fw=360+PHONE_PAD*2;
+  heroHost.innerHTML=`<div class="phone"><div class="screen" id="hero-screen" style="width:360px;height:780px"></div></div>`;
+  const hero=createApp(document.getElementById('hero-screen'),{screen:'splash',lang:store.get('pgi.lang')||'en',persist:true,auto:true,noFocus:false,onChange:syncCtrl});
+  function syncCtrl(S){
+    document.querySelectorAll('#c-lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===S.lang));
+    document.querySelectorAll('#c-ts button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.v===S.ts));
+    document.querySelectorAll('#c-net button').forEach(b=>b.setAttribute('aria-pressed',(b.dataset.v==='off')===S.offline));
+  }
+  document.getElementById('c-lang').onclick=e=>{const b=e.target.closest('button');if(!b)return;hero.set({lang:b.dataset.v});store.set('pgi.lang',b.dataset.v);};
+  document.getElementById('c-ts').onclick=e=>{const b=e.target.closest('button');if(!b)return;hero.set({ts:+b.dataset.v});};
+  document.getElementById('c-net').onclick=e=>{const b=e.target.closest('button');if(!b)return;hero.set({offline:b.dataset.v==='off'});};
+  document.getElementById('c-restart').onclick=()=>{store.del('pgi.lang');hero.set({lang:'en',ts:1,offline:false,q:''});hero.restart();};
+  syncCtrl(hero.state);
+
+  /* gallery */
+  const F=(id,list)=>{const h=document.getElementById(id);list.forEach(x=>frame(h,x));};
+  F('f-core',[
+    {caption:'01 · Splash',sub:'Calm, light, one spinner.',opts:{screen:'splash'}},
+    {caption:'02 · Language selection',sub:'English selected by default.',opts:{screen:'lang',lang:'en'}},
+    {caption:'03 · Home dashboard',sub:'Search, six entry points, emergency bar, status, notes.',opts:{screen:'home',lang:'en'}}
+  ]);
+  F('f-states',[
+    {caption:'Selected-language state',sub:'Hindi chosen. The screen itself switches language.',opts:{screen:'lang',lang:'hi'}},
+    {caption:'Selected-language state',sub:'Punjabi chosen.',opts:{screen:'lang',lang:'pa'}},
+    {caption:'Language switcher on Home',sub:'Bottom sheet from the header chip.',opts:{screen:'home',lang:'en',sheet:true}},
+    {caption:'Emergency shortcut state',sub:'Opened from the red bar. Placeholder content is labelled.',opts:{screen:'emergency',lang:'en',prev:'home'}},
+    {caption:'Offline status state',sub:'Banner, last-synced line and Offline chip.',opts:{screen:'home',lang:'en',offline:true}},
+    {caption:'Search · opened',sub:'Common searches and a no-diagnosis note.',opts:{screen:'search',lang:'en'}},
+    {caption:'Search · results for “heart”',sub:'Synonym match. Each result carries a freshness chip.',opts:{screen:'search',lang:'en',q:'heart'}},
+    {caption:'Search · no results',sub:'Clear message and a next step.',opts:{screen:'search',lang:'en',q:'xyz'}},
+    {caption:'Placeholder destination',sub:'For screens not designed yet. Names the SRS item.',opts:{screen:'ph',lang:'en',ph:{title:'Tests & Samples',plan:'FR-007'}}},
+    {caption:'More tab',sub:'Language works. Other rows open placeholders.',opts:{screen:'more',lang:'en',tab:'more'}}
+  ]);
+  F('f-lang',[
+    {caption:'Home · हिन्दी',sub:'Noto Sans Devanagari.',opts:{screen:'home',lang:'hi'}},
+    {caption:'Home · ਪੰਜਾਬੀ',sub:'Noto Sans Gurmukhi.',opts:{screen:'home',lang:'pa'}},
+    {caption:'Search · हिन्दी “दिल”',sub:'Hindi query matches Cardiology.',opts:{screen:'search',lang:'hi',q:'दिल'}},
+    {caption:'Search · ਪੰਜਾਬੀ “ਅੱਖ”',sub:'Punjabi query matches Ophthalmology.',opts:{screen:'search',lang:'pa',q:'ਅੱਖ'}}
+  ]);
+  F('f-resp',[
+    {w:320,h:640,caption:'Small · 320 × 640',sub:'One column, 16 dp margins.',opts:{screen:'home',lang:'en'}},
+    {w:360,h:800,caption:'Baseline · 360 × 800',sub:'Primary target.',opts:{screen:'home',lang:'en'}},
+    {w:412,h:915,caption:'Large · 412 × 915',sub:'Same layout, more room.',opts:{screen:'home',lang:'en'}},
+    {w:360,h:800,caption:'Text at 160%',sub:'Single column, labels wrap.',opts:{screen:'home',lang:'en',ts:1.6}}
+  ]);
+  const full=frame(document.getElementById('f-full'),{h:1500,caption:'Home · full length',sub:'360 dp wide.',opts:{screen:'home',lang:'en'}});
+  full.fig.querySelector('.a-body').style.overflow='visible';
+
+  /* swatches */
+  const lum=h=>{h=h.replace('#','');const c=[0,2,4].map(i=>parseInt(h.substr(i,2),16)/255).map(v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4));return .2126*c[0]+.7152*c[1]+.0722*c[2]};
+  const cr=(a,b)=>{const x=lum(a),y=lum(b);return ((Math.max(x,y)+.05)/(Math.min(x,y)+.05)).toFixed(1)};
+  const SW=[
+   ['Primary','#174A78','Buttons, selected states, navigation','#FFFFFF'],['Primary deep','#0E3354','Pressed state, dark logo ground','#FFFFFF'],['Primary tint','#E8F0F8','Selected card, icon tiles','#174A78'],
+   ['Secondary','#159B91','Logo arc, accents. No text on it','#FFFFFF'],['Secondary text','#0B7A72','Teal text and icons on white','#FFFFFF'],['Secondary tint','#E3F4F2','Soft teal backgrounds','#0B7A72'],
+   ['Background','#F5F8FC','App background','#233244'],['Surface','#FFFFFF','Cards, sheets, nav','#233244'],['Primary text','#233244','Headings, body','#FFFFFF'],['Secondary text','#56667A','Descriptions, metadata','#FFFFFF'],
+   ['Success','#25845B','Icons, fills','#FFFFFF'],['Success text','#1D6B4A','Verified chip text','#E4F3EC'],
+   ['Warning','#B7791F','Icons, fills','#FFFFFF'],['Warning text','#8F5C0E','Needs-confirmation chip text','#FBF1DC'],
+   ['Emergency','#C43D43','Emergency bar and card','#FFFFFF'],['Emergency text','#A12F35','Text on red tint','#FBEAEB'],
+   ['Border','#E2E8F0','Dividers, card edges','#233244'],['Border strong','#7C8CA1','Inputs, language cards, chips','#FFFFFF']
+  ];
+  document.getElementById('swatches').innerHTML=SW.map(([n,h,u,on])=>{
+    const dark=n==='Border'||n==='Surface'||n==='Background'||/tint/i.test(n)&&!/Primary deep/.test(n)||n==='Success text'&&false;
+    const bg=n==='Success text'?'#E4F3EC':n==='Warning text'?'#FBF1DC':n==='Emergency text'?'#FBEAEB':null;
+    const show=bg||h, txt=bg?h:(['Border','Surface','Background','Primary tint','Secondary tint'].includes(n)?'#233244':'#fff');
+    const against=bg?bg:(['Primary text','Secondary text','Primary','Primary deep','Secondary','Secondary text','Success','Warning','Emergency','Border strong'].includes(n)?'#FFFFFF':(n==='Secondary text'?'#FFFFFF':null));
+    const ratioTxt=bg?`${cr(h,bg)}:1 on its tint`:(['Background','Surface','Border','Primary tint','Secondary tint'].includes(n)?`${cr('#233244',h)}:1 with text`:`${cr(h,'#FFFFFF')}:1 on white`);
+    return `<div class="sw"><div class="chip" style="background:${h};display:grid;place-items:center;color:${bg?'#fff':txt};font-weight:700;font-size:15px;border-bottom:1px solid var(--line)">${bg?`<span style="background:${bg};color:${h};padding:6px 14px;border-radius:8px">Aa text</span>`:'Aa'}</div><div class="meta"><b>${n}</b><span class="mono">${h}</span><span style="color:var(--muted)">${u}</span><span class="ratio">${ratioTxt}</span></div></div>`;
+  }).join('');
+  document.getElementById('changes').innerHTML=[
+   ['Secondary text','#64748B','#56667A','4.5:1 on #F5F8FC was borderline for older readers. Now 5.5:1.'],
+   ['Secondary (teal)','#159B91','Kept','3.4:1 on white. Fine for icons and fills, not for text or white-on-teal buttons.'],
+   ['Secondary text, new','—','#0B7A72','Text-safe teal, 5.2:1 on white.'],
+   ['Warning','#B7791F','Kept','3.6:1 on white. Icons and fills only.'],
+   ['Warning text, new','—','#8F5C0E','5.1:1 on its tint.'],
+   ['Success','#25845B','Kept','4.6:1 on white. Chip text uses the darker variant for 5.6:1 on tint.'],
+   ['Emergency','#C43D43','Kept','5.1:1 with white text.'],
+   ['Border strong, new','—','#7C8CA1','Light border is 1.2:1 and cannot mark a field. Strong border is 3.4:1.'],
+   ['Tints, Primary deep, new','—','See swatches','Needed for selected states, chips and the dark logo ground.']
+  ].map(r=>`<tr><td><b>${r[0]}</b></td><td class="mono">${r[1]}</td><td class="mono">${r[2]}</td><td>${r[3]}</td></tr>`).join('');
+
+  /* typography */
+  const ty=[['Main heading','26 / 34 · Bold 700','Welcome to PGI SAATHI','PGI SAATHI में आपका स्वागत है','PGI SAATHI ਵਿੱਚ ਜੀ ਆਇਆਂ ਨੂੰ',26,700],
+            ['Section heading','20 / 28 · SemiBold 600','What would you like to do?','आप क्या करना चाहते हैं?','ਤੁਸੀਂ ਕੀ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?',20,600],
+            ['Card title','17 / 22 · SemiBold 600','Find a Department','विभाग खोजें','ਵਿਭਾਗ ਲੱਭੋ',17,600],
+            ['Body','16 / 24 · Regular 400','Select your preferred language to continue.','जारी रखने के लिए अपनी पसंदीदा भाषा चुनें।','ਜਾਰੀ ਰੱਖਣ ਲਈ ਆਪਣੀ ਪਸੰਦੀਦਾ ਭਾਸ਼ਾ ਚੁਣੋ।',16,400],
+            ['Secondary','15 / 22 · Regular 400','Search and explore hospital departments.','विभागों को खोजें और देखें।','ਹਸਪਤਾਲ ਦੇ ਵਿਭਾਗ ਲੱਭੋ ਅਤੇ ਦੇਖੋ।',15,400],
+            ['Metadata','13 / 18 · Medium 500','Last verified: sample date','अंतिम सत्यापन: नमूना तिथि','ਆਖ਼ਰੀ ਪੁਸ਼ਟੀ: ਨਮੂਨਾ ਮਿਤੀ',13,500]];
+  document.getElementById('typespec').innerHTML=`<div style="overflow-x:auto"><div style="min-width:620px">`+ty.map(r=>`<div class="spec-row" style="grid-template-columns:170px minmax(0,1fr)"><div class="k">${r[0]}<br><span style="font-weight:500">${r[1]}</span></div><div style="display:grid;gap:4px;font-size:${r[5]}px;font-weight:${r[6]}"><span>${r[2]}</span><span lang="hi" style="line-height:1.6">${r[3]}</span><span lang="pa" style="line-height:1.6">${r[4]}</span></div></div>`).join('')+`</div></div>`;
+  /* spacing & radii */
+  document.getElementById('spacing').innerHTML=[4,8,12,16,20,24,32,40,48].map(n=>`<div class="bar"><span class="mono" style="width:26px">${n}</span><i style="width:${n*3}px"></i></div>`).join('');
+  document.getElementById('radii').innerHTML=[[8,'8 · chips, tiles'],[12,'12 · buttons, fields'],[16,'16 · cards']].map(([r,t])=>`<div style="display:grid;gap:6px;justify-items:center;font-size:12.5px"><div style="width:64px;height:64px;border:2px solid var(--accent);border-radius:${r}px"></div>${t}</div>`).join('');
+  /* icons */
+  document.getElementById('iconset').innerHTML=[['dept','Departments'],['dir','Directory'],['opd','OPD guide'],['tests','Tests'],['list','Checklist'],['alert','Emergency'],['search','Search'],['globe','Language'],['home','Home'],['grid','Departments tab'],['more','More'],['verified','Verified'],['help','Needs confirmation'],['expired','Outdated'],['wifioff','Offline'],['info','Information']].map(([k,n])=>`<div>${ic(k,28)}<span>${n}</span></div>`).join('');
+
+  /* components */
+  const C=document.getElementById('comps');
+  const cm=(title,html,cls='')=>`<div class="comp-stage app ${cls}" style="--ts:1">${`<div class="comp-title">${title}</div>`}${html}</div>`;
+  const lc=(k,sel)=>{const x=LANGS[k];return `<button class="lang-card" role="radio" aria-checked="${sel}" lang="${x.tag}" tabindex="-1"><span class="radio">${ic('check',18)}</span><span class="tx"><span class="nm">${x.name}</span><span class="sb">${x.sub}</span></span></button>`};
+  C.innerHTML=[
+   cm('1 · Buttons',`<button class="btn btn-primary block">Continue ${ic('right',20)}</button><button class="btn btn-secondary block">Back to Home</button><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-text">Text action</button><button class="btn btn-emerg">Emergency</button><button class="btn btn-primary" disabled>Disabled</button></div>`),
+   cm('2 · Search bar',`<button class="search" tabindex="-1">${ic('search',24)}<span>What are you looking for?</span></button><div class="search focus" role="presentation">${ic('search',24)}<input value="heart" aria-label="Focused example" tabindex="-1"><button class="clear" tabindex="-1" aria-label="Clear">${ic('close',20)}</button></div>`),
+   cm('3 · Information cards',`<div class="cards"><button class="fcard feat" tabindex="-1"><span class="tile">${ic('dept',24)}</span><span class="tx"><span class="t-title">Find a Department</span><span class="t-sec">Search and explore hospital departments.</span></span><span class="go">${ic('right',24)}</span></button><button class="fcard" tabindex="-1"><span class="tile">${ic('opd',24)}</span><span class="tx"><span class="t-title">OPD Visit Guide</span><span class="t-sec">Understand new and returning patient preparation.</span></span></button><button class="fcard" tabindex="-1"><span class="tile">${ic('tests',24)}</span><span class="tx"><span class="t-title">Tests &amp; Samples</span><span class="t-sec">General guidance about tests and sample collection.</span></span></button></div>`),
+   cm('4 · Language selection cards',`<div class="lang-stack" role="radiogroup" aria-label="Examples">${lc(0,true)}${lc(1,false)}</div>`),
+   cm('5 · Status indicators',`<div style="display:flex;gap:10px;flex-wrap:wrap">${chip('verified','en')}${chip('confirm','en')}${chip('outdated','en')}${chip('offline','en')}</div><p class="t-meta">Always icon plus word. Last verified date shown beneath when known. Sample content uses <span class="chip proto">Prototype data</span></p>`),
+   cm('6 · Emergency shortcut',`<div class="ebar-wrap" style="padding:0"><button class="ebar" tabindex="-1">${ic('alert',24)}<span>Emergency information</span>${ic('right',22)}</button></div><button class="fcard emg" tabindex="-1" style="min-height:96px"><span class="tile">${ic('alert',24)}</span><span class="tx"><span class="t-title">Emergency Information</span><span class="t-sec">Warning signs and important instructions.</span></span><span class="go">${ic('right',24)}</span></button>`),
+   cm('7 · Bottom navigation',`<nav class="nav" style="border:1px solid var(--a-border);border-radius:12px;overflow:hidden">${['home','grid','dir','more'].map((x,i)=>`<button tabindex="-1" ${i===0?'aria-current="page"':''}><span class="pill">${ic(x,24)}</span><span class="l">${T.en.nav[i]}</span></button>`).join('')}</nav>`),
+   cm('8 · Section headings',`<h2 class="t-h2" style="margin:0">What would you like to do?</h2><div class="t-meta" style="text-transform:uppercase;letter-spacing:.06em;font-weight:700">Departments · group label</div>`),
+   cm('9 · Information banner',`<div class="banner">${ic('info',24)}<span>Rooms, counters and timings can change. Please confirm with hospital staff.</span></div><div class="banner warn">${ic('help',24)}<span>This entry needs confirmation. Ask at the help desk.</span></div>`),
+   cm('10 · Offline status banner',`<div class="banner offline" style="padding-inline:14px;border-radius:12px;border:1px solid #CBD5E1">${ic('wifioff',24)}<div><b>Offline. Showing saved information.</b><div class="t-meta" style="color:var(--a-neutral-text)">Last synced: sample date (prototype)</div></div></div>`),
+   cm('11 · Info list rows',`<div class="card info-list"><div class="info-item">${ic('tests',24)}<span>Follow your doctor’s test slip for the sample collection counter.</span></div><div class="info-item">${ic('opd',24)}<span>Online pre-registration is not a confirmed appointment.</span></div></div>`)
+  ].join('');
+  mountLogos();
+  document.getElementById('findings').innerHTML=window.FINDINGS||'';
+  fitAll();
+  new ResizeObserver(fitAll).observe(document.body);
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitAll);
+}
+window.FINDINGS=`<h4 style="margin-bottom:10px">Fixed during review</h4><ul class="checks">
+<li><span class="mk">✓</span><span>Continue button label rendered dark on navy. Now white (8.9:1 or better).</span></li>
+<li><span class="mk">✓</span><span>Search field ran past the right edge on the Search screen. Now fits at 320, 360 and 412 dp.</span></li>
+<li><span class="mk">✓</span><span>“Departments” tab label broke mid-word at 320 dp and 160% text. Label now stays on one line and steps to 12 dp on small screens.</span></li>
+<li><span class="mk">✓</span><span>At 160% text the headings and Emergency bar took over the screen. Headings and the bar now stop growing at 140% and 125%.</span></li>
+<li><span class="mk">✓</span><span>Tagline rule contradicted the horizontal lockup. Rule reworded.</span></li></ul>
+<h4 style="margin:18px 0 10px">Still open</h4><ul class="checks">
+<li><span class="mk">!</span><span>At 160% text only about a third of the screen is scrollable content because header, emergency bar and tabs stay fixed. It works, but Iteration 02 should test hiding tab labels or collapsing the header at large sizes.</span></li>
+<li><span class="mk">!</span><span>The Emergency bar and the Emergency card on Home lead to the same place. I kept both because the brief asks for a card in the grid and a separately accessible shortcut. Say if you want only one.</span></li>
+<li><span class="mk">!</span><span>Checked in a desktop browser only, with Hindi and Punjabi fonts installed locally. Real Android rendering and TalkBack are not yet tested.</span></li>
+<li><span class="mk">!</span><span>No logo files (SVG/PNG) are exported yet. The logo lives in this page as vector code.</span></li></ul>`;
+wire();
+</script>
+
+</body></html>
