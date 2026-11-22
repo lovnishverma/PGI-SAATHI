@@ -3,8 +3,8 @@ import { Compass, Info, ChevronDown, ChevronUp, UserCheck, AlertTriangle } from 
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
-export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice }) => {
-  const [isOpen, setIsOpen] = useState(false);
+export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice, defaultOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
   const { lang, highContrast } = useLanguage();
 
   const fullAudio = goldenRules.map(r => `${r.num}. ${lang === 'hi' ? r.hindi_title : r.title}. ${lang === 'hi' ? r.hindi_desc : r.desc}`).join(" ");

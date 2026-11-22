@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, Phone, MapPin, AlertCircle, Star } from 'lucide-react';
+import { Building2, Phone, MapPin, AlertCircle, Star, Navigation } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -12,21 +12,62 @@ export const BuildingsGuide = ({ buildings }) => {
     return b.name;
   };
 
+  const gateLandmarks = [
+    {
+      gate: lang === 'hi' ? 'गेट 1 (मुख्य प्रवेश द्वार - सेक्टर 12)' : 'Gate 1 (Main Entrance - Sector 12)',
+      nearest: 'New OPD Block, Administrative Block, Kairon Block, Research Block A/B',
+      desc: lang === 'hi' ? 'सामान्य ओपीडी पर्ची बनवाने और न्यू ओपीडी जाने के लिए मुख्य गेट।' : 'Primary gate for General OPD registrations and New OPD clinics.'
+    },
+    {
+      gate: lang === 'hi' ? 'गेट 2 (कालका रोड / सेक्टर 11 की तरफ)' : 'Gate 2 (Towards Sector 11 / Kalka Road)',
+      nearest: 'Advanced Eye Centre (AEC), Advanced Cardiac Centre (ACC), Advanced Paediatric Centre (APC)',
+      desc: lang === 'hi' ? 'आँख, दिल और बच्चों के विशेष केंद्रों में जाने के लिए सबसे नजदीकी गेट।' : 'Closest entrance directly accessing Eye, Heart, and Children specialist centers.'
+    },
+    {
+      gate: lang === 'hi' ? 'गेट 3 (नेहरू अस्पताल / आपातकालीन प्रवेश)' : 'Gate 3 / Emergency Gate (Nehru Block)',
+      nearest: 'Advanced Trauma Centre (ATC), Emergency Ward, Nehru Hospital',
+      desc: lang === 'hi' ? '24 घंटे खुली इमरजेंसी और ट्रॉमा सेंटर के लिए 24x7 सीधा प्रवेश।' : '24x7 vehicle/ambulance access direct to Emergency & Advanced Trauma Centre.'
+    }
+  ];
+
   return (
-    <div className="space-y-4 pb-20">
+    <div className="space-y-4 pb-20 md:pb-6">
       {/* Banner Notice */}
       <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-xs text-amber-900 shadow-xs">
         <div className="flex items-start gap-2.5">
           <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
           <div>
             <h4 className="font-bold text-sm text-amber-950">
-              Important: Not all clinics are in New OPD
+              {lang === 'hi' ? 'सावधानी: सभी विभाग न्यू ओपीडी (New OPD) में नहीं हैं' : 'Important: Not all clinics are in New OPD'}
             </h4>
             <p className="mt-1 leading-relaxed">
-              Patients often waste hours standing in New OPD lines for heart, eye, or children's doctors. 
-              The <strong>Advanced Centres</strong> have their own separate registration counters and buildings.
+              {lang === 'hi' 
+                ? 'अक्सर मरीज आँख, दिल या बच्चों के डॉक्टरों के लिए न्यू ओपीडी की लाइन में खड़े होकर समय गंवा देते हैं। इन विशेष सेंटरों के अपने अलग काउंटर और भवन हैं।' 
+                : 'Patients often waste hours standing in New OPD lines for heart, eye, or children\'s doctors. The Advanced Centres have their own separate registration counters and buildings.'}
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Campus Gate Entry Landmark Guide */}
+      <div className="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-2xl p-4 shadow-sm border border-slate-800">
+        <div className="flex items-center gap-2 mb-2 font-semibold text-sm text-blue-200">
+          <Navigation className="w-4 h-4 text-blue-400" />
+          <span>{lang === 'hi' ? 'पीजीआई परिसर के मुख्य गेट व दिशा-निर्देश' : 'PGIMER Campus Gate Landmarks & Entry Points'}</span>
+        </div>
+        <p className="text-xs text-slate-300 mb-3 leading-relaxed">
+          {lang === 'hi' 
+            ? 'सही गेट से प्रवेश करने पर अस्पताल के भीतर पैदल चलने की थकान से बचा जा सकता है:' 
+            : 'Entering from the correct gate saves 10-15 minutes of unnecessary walking inside campus:'}
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
+          {gateLandmarks.map((g, idx) => (
+            <div key={idx} className="bg-white/10 rounded-xl p-3 border border-white/10 text-xs">
+              <span className="font-bold text-yellow-300 block mb-1">{g.gate}</span>
+              <p className="font-semibold text-white text-[11px] mb-1">{g.nearest}</p>
+              <p className="text-[11px] text-slate-300 leading-normal">{g.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
 

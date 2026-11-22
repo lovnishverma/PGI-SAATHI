@@ -1,11 +1,12 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Building, AlertCircle, Phone, Clock, Info, X } from 'lucide-react';
+import { Search, Building, AlertCircle, Phone, Clock, Info, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
 export const DepartmentFinder = ({ departments, buildings, schedule }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBuilding, setSelectedBuilding] = useState('all');
+  const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   const { lang, t, highContrast } = useLanguage();
 
   const filteredDepts = useMemo(() => {
@@ -45,28 +46,21 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
     return b.name;
   };
 
-  return (
-    <div className="space-y-4 pb-20">
-      {/* OPD Schedule Card */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-4 shadow-sm border border-blue-800">
-        <div className="flex items-center gap-2 mb-2 font-semibold text-sm">
-          <Clock className="w-4 h-4 text-blue-300" />
-          <span>{t('opd_timings_title')}</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-blue-100">
-          <div className="bg-white/10 rounded-lg p-2.5 backdrop-blur-xs">
-            <p className="font-bold text-white">{t('weekday_timings')}</p>
-            <p className="text-[11px] text-blue-200 mt-0.5">{schedule?.weekdays?.notes}</p>
-          </div>
-          <div className="bg-white/10 rounded-lg p-2.5 backdrop-blur-xs">
-            <p className="font-bold text-white">{t('saturday_timings')}</p>
-            <p className="text-[11px] text-blue-200 mt-0.5">{t('closed_sunday')}</p>
-          </div>
-        </div>
-      </div>
+  const commonSymptoms = [
+    { label: lang === 'hi' ? 'आँख (Eye)' : lang === 'pa' ? 'ਅੱਖ (Eye)' : 'Eye (AEC)', query: 'eye' },
+    { label: lang === 'hi' ? 'दिल (Heart)' : lang === 'pa' ? 'ਦਿਲ (Heart)' : 'Heart (ACC)', query: 'heart' },
+    { label: lang === 'hi' ? 'बच्चे (Child)' : lang === 'pa' ? 'ਬੱਚੇ (Child)' : 'Child (APC)', query: 'child' },
+    { label: lang === 'hi' ? 'हड्डी / दर्द (Bone)' : lang === 'pa' ? 'ਹੱਡੀ (Bone)' : 'Bone / Ortho', query: 'bone' },
+    { label: lang === 'hi' ? 'दांत (Dental)' : lang === 'pa' ? 'ਦੰਦ (Dental)' : 'Dental', query: 'dental' },
+    { label: lang === 'hi' ? 'सिर / नस (Brain)' : lang === 'pa' ? 'ਦਿਮਾਗ (Brain)' : 'Neurology', query: 'brain' },
+    { label: lang === 'hi' ? 'गुर्दा (Kidney)' : lang === 'pa' ? 'ਗੁਰਦਾ (Kidney)' : 'Kidney', query: 'kidney' },
+    { label: lang === 'hi' ? 'बुखार / खांसी' : lang === 'pa' ? 'ਬੁਖਾਰ / ਖੰਘ' : 'Fever / Cough', query: 'fever' },
+  ];
 
-      {/* Search Input */}
-      <div className="relative" role="search">
+  return (
+    <div className="space-y-4 pb-20 md:pb-6">
+      {/* Search Input - Prioritized at the top */}
+      <div className="relative sticky top-[57px] md:top-[65px] z-20 pt-1 pb-1" role="search">
         <label htmlFor="dept-search-input" className="sr-only">
           {t('search_placeholder')}
         </label>
@@ -79,7 +73,7 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('search_placeholder')}
-          className={`w-full pl-10 pr-10 py-3 rounded-xl border text-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-xs min-h-[44px] ${
+          className={`w-full pl-10 pr-10 py-3 rounded-xl border text-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-sm min-h-[44px] ${
             highContrast 
               ? 'bg-black text-yellow-300 border-yellow-400 placeholder:text-yellow-600' 
               : 'bg-white text-slate-900 border-slate-300 placeholder:text-slate-400'
@@ -93,6 +87,79 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
           >
             <X className="w-4 h-4" aria-hidden="true" />
           </button>
+        )}
+      </div>
+
+      {/* Quick Symptom Chips */}
+      <div className="space-y-1">
+        <p className="text-[11px] font-semibold text-slate-500 px-1">
+          {lang === 'hi' ? 'त्वरित खोज (समान्य समस्याएं):' : lang === 'pa' ? 'ਤੁਰੰਤ ਖੋਜ (ਆਮ ਸਮੱਸਿਆਵਾਂ):' : 'Quick Symptom Shortcuts:'}
+        </p>
+        <div 
+          role="group" 
+          aria-label="Quick symptom search shortcuts" 
+          className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs py-0.5"
+        >
+          {commonSymptoms.map((sym, idx) => {
+            const isSelected = searchQuery.toLowerCase().trim() === sym.query;
+            return (
+              <button
+                key={idx}
+                onClick={() => {
+                  if (isSelected) {
+                    setSearchQuery('');
+                  } else {
+                    setSearchQuery(sym.query);
+                  }
+                }}
+                aria-pressed={isSelected}
+                className={`px-3 py-1.5 rounded-full shrink-0 font-medium transition-all text-xs min-h-[34px] focus-visible:outline-2 focus-visible:outline-blue-600 ${
+                  isSelected
+                    ? highContrast
+                      ? 'bg-yellow-400 text-black font-bold'
+                      : 'bg-blue-600 text-white shadow-xs font-semibold'
+                    : highContrast
+                      ? 'bg-neutral-900 text-yellow-300 border border-yellow-400'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200/80'
+                }`}
+              >
+                {sym.label}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* OPD Schedule Card - Collapsible to avoid cluttering fold */}
+      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-3.5 shadow-sm border border-blue-800 transition-all">
+        <button
+          onClick={() => setIsScheduleOpen(!isScheduleOpen)}
+          aria-expanded={isScheduleOpen}
+          className="w-full flex items-center justify-between font-semibold text-xs md:text-sm text-left focus-visible:outline-2 focus-visible:outline-white rounded"
+        >
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4 text-blue-300 shrink-0" />
+            <span>{t('opd_timings_title')}</span>
+            <span className="text-[11px] text-blue-200 font-normal hidden sm:inline">(8:00 AM – 11:00 AM)</span>
+          </div>
+          <ChevronDown
+            className={`w-4 h-4 text-blue-300 transition-transform duration-200 ${
+              isScheduleOpen ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+
+        {isScheduleOpen && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-blue-100 mt-3 pt-3 border-t border-blue-800/80 animate-in fade-in duration-150">
+            <div className="bg-white/10 rounded-lg p-2.5 backdrop-blur-xs">
+              <p className="font-bold text-white">{t('weekday_timings')}</p>
+              <p className="text-[11px] text-blue-200 mt-0.5">{schedule?.weekdays?.notes}</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-2.5 backdrop-blur-xs">
+              <p className="font-bold text-white">{t('saturday_timings')}</p>
+              <p className="text-[11px] text-blue-200 mt-0.5">{t('closed_sunday')}</p>
+            </div>
+          </div>
         )}
       </div>
 
@@ -143,12 +210,38 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
       {/* Departments List */}
       <div className="space-y-3">
         {filteredDepts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-2xl border border-slate-200 p-6">
-            <Info className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-            <p className="font-semibold text-slate-700">No exact match found</p>
-            <p className="text-xs text-slate-500 mt-1 max-w-xs mx-auto">
-              Please check spelling, or visit the New OPD Central Help Desk at the hospital entrance for guidance.
-            </p>
+          <div className="text-center py-10 px-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-3">
+            <div className="w-12 h-12 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto">
+              <Search className="w-6 h-6" aria-hidden="true" />
+            </div>
+            <div>
+              <h3 className="font-bold text-slate-800 text-sm">
+                {searchQuery ? `No department found for "${searchQuery}"` : 'No departments match selected filter'}
+              </h3>
+              <p className="text-xs text-slate-500 mt-1 max-w-sm mx-auto leading-relaxed">
+                Try searching by simple symptom or body part (e.g., eye, bone, heart, chest, kidney), or visit the Central Registration Counter.
+              </p>
+            </div>
+            <div className="pt-2 flex flex-wrap justify-center gap-2">
+              {(searchQuery || selectedBuilding !== 'all') && (
+                <button
+                  onClick={() => {
+                    setSearchQuery('');
+                    setSelectedBuilding('all');
+                  }}
+                  className="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition-colors min-h-[38px]"
+                >
+                  Clear All Filters
+                </button>
+              )}
+              <a
+                href="tel:01722756565"
+                className="px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg inline-flex items-center gap-1.5 transition-colors min-h-[38px]"
+              >
+                <Phone className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Call PGI Operator (0172-2756565)</span>
+              </a>
+            </div>
           </div>
         ) : (
           filteredDepts.map(dept => {

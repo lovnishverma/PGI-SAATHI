@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck } from 'lucide-react';
+import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck, Share2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -42,6 +42,16 @@ export const VisitChecklist = ({ checklistItems }) => {
     if (window.confirm("Reset all ticked items in your visit checklist?")) {
       setCheckedItems({});
     }
+  };
+
+  const shareToWhatsApp = () => {
+    const listText = items
+      .map((item, idx) => `${idx + 1}. ${item.text}`)
+      .join('\n');
+    const message = encodeURIComponent(
+      `*PGI Chandigarh Visit Checklist (PGIMER)*\n\nEnsure to carry these documents:\n\n${listText}\n\nGenerated via PGI Saathi (Offline OPD Guide)`
+    );
+    window.open(`https://api.whatsapp.com/send?text=${message}`, '_blank');
   };
 
   const checkedCount = Object.values(checkedItems).filter(Boolean).length;
@@ -135,17 +145,26 @@ export const VisitChecklist = ({ checklistItems }) => {
       </div>
 
       {/* Action footer */}
-      <div className="flex items-center justify-between pt-2">
+      <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200/60">
         <span className="text-[11px] text-slate-400 flex items-center gap-1">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+          <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
           <span>{lang === 'hi' ? 'डेटा फोन में ही सुरक्षित रहता है' : 'Stored locally on device'}</span>
         </span>
-        <button
-          onClick={handleReset}
-          className="text-xs text-rose-600 hover:text-rose-700 font-semibold px-2 py-1 rounded"
-        >
-          {t('clear_checklist')}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={shareToWhatsApp}
+            className="text-xs bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-200 inline-flex items-center gap-1.5 transition-colors"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span>{lang === 'hi' ? 'व्हाट्सएप पर शेयर करें' : 'Share to WhatsApp'}</span>
+          </button>
+          <button
+            onClick={handleReset}
+            className="text-xs text-rose-600 hover:text-rose-700 font-semibold px-2 py-1.5 rounded"
+          >
+            {t('clear_checklist')}
+          </button>
+        </div>
       </div>
     </div>
   );

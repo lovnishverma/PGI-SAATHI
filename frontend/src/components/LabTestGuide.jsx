@@ -1,13 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FlaskConical, AlertTriangle, MapPin, HelpCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
 export const LabTestGuide = ({ protocols, fourQuestions }) => {
   const { lang, highContrast } = useLanguage();
+  const [selectedCategory, setSelectedCategory] = useState('all');
+
+  const categories = [
+    { id: 'all', label: lang === 'hi' ? 'सभी जांच' : 'All Tests' },
+    { id: 'blood', label: lang === 'hi' ? 'खून की जांच (Blood/Routine)' : 'Blood (Routine)' },
+    { id: 'special', label: lang === 'hi' ? 'विशेष जांच / दवा निगरानी' : 'Special / TDM' },
+    { id: 'urine', label: lang === 'hi' ? 'पेशाब / मल जांच (Urine/Stool)' : 'Urine / Stool' }
+  ];
+
+  const filteredProtocols = (protocols || []).filter(proto => {
+    if (selectedCategory === 'all') return true;
+    const text = (proto.type + ' ' + (proto.hindi_type || '')).toLowerCase();
+    if (selectedCategory === 'blood') return text.includes('routine') || text.includes('blood') || text.includes('खून') || text.includes('127');
+    if (selectedCategory === 'special') return text.includes('tdm') || text.includes('drug') || text.includes('विशेष') || text.includes('25');
+    if (selectedCategory === 'urine') return text.includes('urine') || text.includes('stool') || text.includes('पेशाब');
+    return true;
+  });
 
   return (
-    <div className="space-y-4 pb-20">
+    <div className="space-y-4 pb-20 md:pb-6">
       {/* Prime Rule Alert */}
       <div className="bg-red-50 border border-red-200 rounded-2xl p-4 text-xs text-red-900 shadow-xs">
         <div className="flex items-start gap-2.5">
@@ -52,11 +69,37 @@ export const LabTestGuide = ({ protocols, fourQuestions }) => {
 
       {/* Published Sample Collection Rooms */}
       <div className="space-y-3">
-        <h3 className="font-bold text-sm text-slate-800 px-1 flex items-center justify-between">
-          <span>{lang === 'hi' ? 'प्रकाशित सैंपल कलेक्शन काउंटर (दिशानिर्देश)' : 'Published Sample Collection Reference Counters'}</span>
-        </h3>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-1">
+          <h3 className="font-bold text-sm text-slate-800">
+            {lang === 'hi' ? 'प्रकाशित सैंपल कलेक्शन काउंटर (दिशानिर्देश)' : 'Published Sample Collection Reference Counters'}
+          </h3>
+          <div 
+            role="group" 
+            aria-label="Filter tests by type" 
+            className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar text-xs"
+          >
+            {categories.map(cat => (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                aria-pressed={selectedCategory === cat.id}
+                className={`px-2.5 py-1.5 rounded-full font-medium transition-all text-[11px] shrink-0 ${
+                  selectedCategory === cat.id
+                    ? highContrast
+                      ? 'bg-yellow-400 text-black font-bold'
+                      : 'bg-teal-700 text-white font-semibold shadow-xs'
+                    : highContrast
+                      ? 'bg-black text-yellow-300 border border-yellow-400'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200/60'
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
-        {protocols && protocols.map((proto, idx) => {
+        {filteredProtocols.map((proto, idx) => {
           const typeName = lang === 'hi' && proto.hindi_type ? proto.hindi_type : proto.type;
           const speechText = `${typeName}. Location: ${proto.published_location}. ${proto.verification_warning || ''}`;
 

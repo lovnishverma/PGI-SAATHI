@@ -79,13 +79,17 @@ function MainApp() {
       highContrast ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'
     }`}>
       {/* Sticky Header */}
-      <Header onOpenEmergency={() => setIsEmergencyOpen(true)} />
+      <Header
+        onOpenEmergency={() => setIsEmergencyOpen(true)}
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+      />
 
       {/* PWA Offline Install Banner */}
       <InstallPrompt />
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-xl w-full mx-auto p-4 space-y-4">
+      {/* Main Container - Responsive Dual Layout */}
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-6">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-24 space-y-3">
             <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
@@ -94,44 +98,62 @@ function MainApp() {
             </p>
           </div>
         ) : (
-          <>
-            {/* 5 Golden Rules banner displayed across views */}
-            {goldenRules.length > 0 && (
-              <GoldenRules
-                goldenRules={goldenRules}
-                cardProcess={cardProcess}
-                lostAdvice={lostAdvice}
-              />
-            )}
+          <div className="lg:grid lg:grid-cols-12 lg:gap-8 items-start">
+            {/* Desktop Left Rail: Golden rules and vital hospital orientation */}
+            <aside className="hidden lg:block lg:col-span-4 sticky top-24 space-y-4">
+              {goldenRules.length > 0 && (
+                <GoldenRules
+                  goldenRules={goldenRules}
+                  cardProcess={cardProcess}
+                  lostAdvice={lostAdvice}
+                  defaultOpen={true}
+                />
+              )}
+            </aside>
 
-            {activeTab === 'finder' && (
-              <DepartmentFinder
-                departments={departments}
-                buildings={buildings}
-                schedule={schedule}
-              />
-            )}
-            {activeTab === 'buildings' && (
-              <BuildingsGuide buildings={buildings} />
-            )}
-            {activeTab === 'checklist' && (
-              <VisitChecklist checklistItems={checklistItems} />
-            )}
-            {activeTab === 'tests' && (
-              <LabTestGuide protocols={protocols} fourQuestions={fourQuestions} />
-            )}
-            {activeTab === 'help' && (
-              <HelpDeskPhrases
-                phrases={phrases}
-                numbers={importantNumbers}
-                officialLinks={officialLinks}
-              />
-            )}
-          </>
+            {/* Main Content Area */}
+            <section className="lg:col-span-8 space-y-4">
+              {/* On mobile only, keep GoldenRules collapsible above tabs */}
+              <div className="lg:hidden">
+                {goldenRules.length > 0 && (
+                  <GoldenRules
+                    goldenRules={goldenRules}
+                    cardProcess={cardProcess}
+                    lostAdvice={lostAdvice}
+                    defaultOpen={false}
+                  />
+                )}
+              </div>
+
+              {activeTab === 'finder' && (
+                <DepartmentFinder
+                  departments={departments}
+                  buildings={buildings}
+                  schedule={schedule}
+                />
+              )}
+              {activeTab === 'buildings' && (
+                <BuildingsGuide buildings={buildings} />
+              )}
+              {activeTab === 'checklist' && (
+                <VisitChecklist checklistItems={checklistItems} />
+              )}
+              {activeTab === 'tests' && (
+                <LabTestGuide protocols={protocols} fourQuestions={fourQuestions} />
+              )}
+              {activeTab === 'help' && (
+                <HelpDeskPhrases
+                  phrases={phrases}
+                  numbers={importantNumbers}
+                  officialLinks={officialLinks}
+                />
+              )}
+            </section>
+          </div>
         )}
 
         {/* Global Footer Disclaimer */}
-        <footer className="mt-8 mb-20 text-center text-[11px] text-slate-400 px-4 leading-relaxed">
+        <footer className="mt-12 mb-20 md:mb-6 text-center text-[11px] text-slate-400 px-4 leading-relaxed border-t border-slate-200/60 pt-6">
           <p>{t('disclaimer')}</p>
           <p className="mt-1 font-medium text-slate-500">
             PGI Saathi • Independent Open Source Project • 100% Serverless

@@ -16,7 +16,7 @@ export const BottomNav = ({ activeTab, setActiveTab }) => {
   return (
     <nav 
       aria-label="Main Navigation"
-      className={`fixed bottom-0 left-0 right-0 z-40 border-t transition-colors ${
+      className={`md:hidden fixed bottom-0 left-0 right-0 z-40 border-t transition-colors ${
       highContrast 
         ? 'bg-black text-white border-yellow-400' 
         : 'bg-white/95 backdrop-blur-md text-slate-600 border-slate-200'
