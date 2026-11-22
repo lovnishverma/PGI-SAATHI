@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Building, AlertCircle, Phone, Clock, Info } from 'lucide-react';
+import { Search, Building, AlertCircle, Phone, Clock, Info, X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -91,7 +91,7 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
             aria-label="Clear search input"
             className="absolute inset-y-0 right-0 pr-3.5 flex items-center justify-center min-w-[44px] min-h-[44px] text-xs text-slate-400 hover:text-slate-600 focus-visible:outline-2 focus-visible:outline-blue-600"
           >
-            ✕
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         )}
       </div>

@@ -12,7 +12,7 @@ self.addEventListener('install', (event) => {
 
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('⚡ PGI Saathi Service Worker caching shell at scope:', scope);
+      console.log('[PGI Saathi] Service Worker caching shell at scope:', scope);
       return cache.addAll(staticAssets).catch(err => {
         console.warn('Non-blocking cache error during install:', err);
       });

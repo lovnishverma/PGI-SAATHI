@@ -28,12 +28,12 @@ if (isFirebaseConfigured) {
       localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
     });
     auth = getAuth(app);
-    console.log("⚡ Firebase initialized with multi-tab persistent IndexedDB cache.");
+    console.log("[Firebase] Initialized with multi-tab persistent IndexedDB cache.");
   } catch (err) {
-    console.warn("⚠️ Firebase initialization error, falling back to local seed data:", err);
+    console.warn("[Firebase] Initialization error, falling back to local seed data:", err);
   }
 } else {
-  console.info("ℹ️ Running in Mock Mode with local seed data. Add Firebase keys in .env to connect live Firestore.");
+  console.info("[Firebase] Running in Mock Mode with local seed data. Add Firebase keys in .env to connect live Firestore.");
 }
 
 export { app, db, auth };
