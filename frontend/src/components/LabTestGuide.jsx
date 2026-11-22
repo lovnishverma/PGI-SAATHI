@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlaskConical, AlertTriangle, MapPin, HelpCircle } from 'lucide-react';
+import { FlaskConical, AlertTriangle, MapPin, HelpCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -40,8 +40,9 @@ export const LabTestGuide = ({ protocols, fourQuestions }) => {
                 <p className="font-bold text-white">
                   {idx + 1}. {lang === 'hi' ? q.hindi : lang === 'pa' ? q.punjabi : q.q}
                 </p>
-                <p className="text-[11px] text-emerald-200 mt-0.5">
-                  👉 {q.note}
+                <p className="text-[11px] text-emerald-200 mt-0.5 flex items-center gap-1.5">
+                  <ArrowRight className="w-3.5 h-3.5 text-emerald-300 shrink-0" aria-hidden="true" />
+                  <span>{q.note}</span>
                 </p>
               </div>
             ))}
@@ -97,13 +98,15 @@ export const LabTestGuide = ({ protocols, fourQuestions }) => {
               </div>
 
               {/* Warning/Notes */}
-              <p className="text-[11px] text-slate-500 mt-2 italic leading-relaxed">
-                ⚠️ {proto.verification_warning}
+              <p className="text-[11px] text-slate-500 mt-2 italic leading-relaxed flex items-start gap-1.5">
+                <AlertTriangle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" aria-hidden="true" />
+                <span>{proto.verification_warning}</span>
               </p>
 
               {proto.fasting_guidance && (
-                <div className="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-emerald-800 font-medium">
-                  ✓ {proto.fasting_guidance}
+                <div className="mt-2.5 pt-2 border-t border-slate-100 text-[11px] text-emerald-800 font-medium flex items-start gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" aria-hidden="true" />
+                  <span>{proto.fasting_guidance}</span>
                 </div>
               )}
             </div>

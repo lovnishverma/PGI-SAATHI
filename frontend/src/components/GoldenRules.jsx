@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Compass, Info, ChevronDown, ChevronUp, UserCheck } from 'lucide-react';
+import { Compass, Info, ChevronDown, ChevronUp, UserCheck, AlertTriangle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -90,8 +90,11 @@ export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice }) => {
                 {cardProcess?.returning_patient?.instruction || "Pehle se bana CR number/card lekar aao. Same patient ke liye bina poochhe naya CR number na banwao."}
               </p>
               <div className="bg-white/80 p-2 rounded-lg border border-amber-200/80 mt-1">
-                <span className="font-bold text-rose-800">⚠️ Online Pre-Registration Warning: </span>
-                <span className="text-slate-700">
+                <span className="font-bold text-rose-800 inline-flex items-center gap-1">
+                  <AlertTriangle className="w-3.5 h-3.5 text-rose-700 shrink-0" aria-hidden="true" />
+                  Online Pre-Registration Warning:
+                </span>
+                <span className="text-slate-700 ml-1">
                   {cardProcess?.online_pre_registration?.instruction || "Ghar se details bhar sakte ho, lekin isse kisi particular doctor ki confirmed appointment nahi hoti. Counter par verification zaroori hai."}
                 </span>
               </div>

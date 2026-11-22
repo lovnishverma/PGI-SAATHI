@@ -1,5 +1,5 @@
 import React from 'react';
-import { Building2, Phone, MapPin, AlertCircle } from 'lucide-react';
+import { Building2, Phone, MapPin, AlertCircle, Star } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { AudioButton } from './AudioButton';
 
@@ -58,8 +58,15 @@ export const BuildingsGuide = ({ buildings }) => {
                     <h3 className="font-bold text-base text-slate-900">
                       {title}
                     </h3>
-                    <span className="text-[11px] font-semibold text-slate-500">
-                      {b.is_separate_building ? '★ Separate Building' : 'Main Block'}
+                    <span className="text-[11px] font-semibold text-slate-500 inline-flex items-center gap-1">
+                      {b.is_separate_building ? (
+                        <>
+                          <Star className="w-3 h-3 text-amber-500 fill-amber-500 shrink-0" aria-hidden="true" />
+                          <span>Separate Building</span>
+                        </>
+                      ) : (
+                        'Main Block'
+                      )}
                     </span>
                   </div>
                 </div>

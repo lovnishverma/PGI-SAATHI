@@ -1,6 +1,7 @@
 import React from 'react';
 import { AlertTriangle, Eye } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { LogoMark } from './LogoMark';
 
 export const Header = ({ onOpenEmergency }) => {
   const { lang, setLang, t, highContrast, setHighContrast } = useLanguage();
@@ -29,8 +30,8 @@ export const Header = ({ onOpenEmergency }) => {
       {/* Main Header bar */}
       <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-xl" role="img" aria-label="Hospital">🏥</span>
+          <div className="flex items-center gap-2.5">
+            <LogoMark size={32} variant={highContrast ? 'dark' : 'color'} />
             <h1 className="font-bold text-lg md:text-xl tracking-tight text-blue-900">
               {t('app_title')}
             </h1>

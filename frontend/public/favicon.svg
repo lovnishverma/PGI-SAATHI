@@ -1,5 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#103460" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="3" width="18" height="18" rx="4" fill="#103460" stroke="#0d294d"/>
-  <path d="M12 7v10" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
-  <path d="M7 12h10" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PGI SAATHI logo">
+  <defs>
+    <mask id="cross-mask">
+      <rect width="64" height="64" fill="#ffffff"/>
+      <rect x="28.5" y="16.5" width="7" height="19" rx="2" fill="#000000"/>
+      <rect x="22.5" y="22.5" width="19" height="7" rx="2" fill="#000000"/>
+    </mask>
+  </defs>
+  <!-- Navigation Pin with Care Cross cutout -->
+  <path d="M32 52C32 52 15 38.5 15 26a17 17 0 0134 0C49 38.5 32 52 32 52Z" fill="#174A78" mask="url(#cross-mask)"/>
+  <!-- Supporting Hand / Walking Path Arc -->
+  <path d="M13 50.5Q32 64 51 50.5" fill="none" stroke="#159B91" stroke-width="4.5" stroke-linecap="round"/>
 </svg>
