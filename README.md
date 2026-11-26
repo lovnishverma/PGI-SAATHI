@@ -2,7 +2,7 @@
 
 > **Empowering patients and attendants visiting PGIMER Chandigarh with instant, multilingual, offline-ready navigation and visit guidance.**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
 [![Frontend: React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-61dafb.svg)](https://react.dev/)
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github)](https://www.lovnishverma.in/PGI-SAATHI/)
 [![Backend: Firebase Spark Plan](https://img.shields.io/badge/Backend-Firebase%20Spark%20Plan%20(Free%20Forever)-FFA611.svg)](https://firebase.google.com/)
