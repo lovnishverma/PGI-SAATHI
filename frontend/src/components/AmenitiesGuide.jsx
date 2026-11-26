@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Pill, Home, Sparkles, MapPin, Tag, Bus, Accessibility, HeartHandshake, Droplet, Phone, ShieldCheck } from 'lucide-react';
+import { Pill, Home, Sparkles, MapPin, Tag, Bus, Accessibility, HeartHandshake, Droplet, Phone, ShieldCheck, Car, CreditCard, AlertCircle } from 'lucide-react';
 import { useLanguage } from '../context/useLanguage';
 
-export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null, welfare = null }) => {
+export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null, welfare = null, parking = null, atms = [], hearse = null }) => {
   const [activeSubTab, setActiveSubTab] = useState('pharmacies');
   const { lang, highContrast } = useLanguage();
 
@@ -23,7 +23,7 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
               {lang === 'hi' ? 'अस्पताल सुविधाएं, सस्ती दवाइयां व निःशुल्क शटल' : 'Hospital Amenities, Subsidies & Free Campus Transit'}
             </h3>
             <p className="text-[11px] text-slate-500">
-              {lang === 'hi' ? 'AMRIT दवाइयां, सराय, गोल्फ कार्ट, आयुष्मान भारत और ब्लड बैंक दिशा-निर्देश' : 'AMRIT pharmacies, Sarais, Free Golf Carts, Ayushman Bharat & Blood Bank Guide'}
+              {lang === 'hi' ? 'AMRIT दवाइयां, सराय, गोल्फ कार्ट, पार्किंग, एटीएम और आयुष्मान भारत' : 'AMRIT pharmacies, Sarais, Free Golf Carts, Parking, ATMs & Ayushman Bharat'}
             </p>
           </div>
         </div>
@@ -63,7 +63,7 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
             }`}
           >
             <Bus className="w-3.5 h-3.5 shrink-0" />
-            <span className="truncate">{lang === 'hi' ? 'शटल व व्हीलचेयर' : 'Transit & Wheelchair'}</span>
+            <span className="truncate">{lang === 'hi' ? 'शटल व पार्किंग' : 'Transit & Parking'}</span>
           </button>
 
           <button
@@ -75,7 +75,7 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
             }`}
           >
             <HeartHandshake className="w-3.5 h-3.5 shrink-0" />
-            <span className="truncate">{lang === 'hi' ? 'आयुष्मान व ब्लड बैंक' : 'Welfare & Blood Bank'}</span>
+            <span className="truncate">{lang === 'hi' ? 'कल्याण, एटीएम व ब्लड' : 'Welfare & ATMs'}</span>
           </button>
         </div>
       </div>
@@ -183,7 +183,7 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
         </div>
       )}
 
-      {/* 3. Transport & Mobility (Golf Carts, Shuttles & Wheelchair Stations) */}
+      {/* 3. Transport, Parking & Mobility */}
       {activeSubTab === 'transport' && (
         <div className="space-y-3 animate-in fade-in duration-150">
           <div className="bg-indigo-50/70 border border-indigo-200 rounded-xl p-3 text-xs text-indigo-950 flex items-start gap-2">
@@ -228,6 +228,28 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
             ))}
           </div>
 
+          {/* Multi-Level Parking Card */}
+          {parking && (
+            <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <Car className="w-4 h-4 text-slate-700 shrink-0" />
+                <h4 className="font-bold text-slate-900 text-xs md:text-sm">
+                  {parking.facility}
+                </h4>
+              </div>
+              <p className="text-[11px] text-slate-600">
+                📍 <strong>Location:</strong> {parking.location}
+              </p>
+              <p className="text-[11px] text-slate-700 bg-white p-2 rounded-lg border border-slate-100">
+                💵 <strong>Rates:</strong> {parking.charges}
+              </p>
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-2 text-[11px] text-amber-900 flex items-start gap-1.5">
+                <AlertCircle className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                <span><strong>{lang === 'hi' ? 'सख्त चेतावनी: ' : 'Clamping Warning: '}</strong>{parking.clamping_warning}</span>
+              </div>
+            </div>
+          )}
+
           {/* Wheelchair & Stretcher Stations */}
           <div className="space-y-2 pt-2 border-t border-slate-100">
             <h4 className="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center gap-1.5">
@@ -261,7 +283,7 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
         </div>
       )}
 
-      {/* 4. Welfare Schemes & Blood Bank */}
+      {/* 4. Welfare Schemes, ATMs & Blood Bank */}
       {activeSubTab === 'welfare' && (
         <div className="space-y-3 animate-in fade-in duration-150">
           {/* Ayushman Bharat Card */}
@@ -287,6 +309,31 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
               <p className="text-[10px] text-slate-500">
                 <strong>Admin Office:</strong> {welfare.ayushman_bharat.admin_office}
               </p>
+            </div>
+          )}
+
+          {/* On-Campus ATMs Card */}
+          {atms && atms.length > 0 && (
+            <div className="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <div className="flex items-center gap-2">
+                <CreditCard className="w-4 h-4 text-blue-600 shrink-0" />
+                <h4 className="font-bold text-slate-900 text-xs md:text-sm">
+                  {lang === 'hi' ? 'परिसर के 24x7 एटीएम (ATM)' : 'On-Campus 24x7 Cash ATMs'}
+                </h4>
+              </div>
+              <div className="grid grid-cols-1 gap-1.5">
+                {atms.map((atm) => (
+                  <div key={atm.id} className="bg-white p-2 rounded-lg border border-slate-100 flex items-start justify-between text-[11px]">
+                    <div>
+                      <span className="font-bold text-slate-900 block">{atm.bank}</span>
+                      <span className="text-slate-600">{atm.location}</span>
+                    </div>
+                    <span className="text-[10px] bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded font-medium shrink-0">
+                      {atm.hours}
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
           )}
 
@@ -332,6 +379,26 @@ export const AmenitiesGuide = ({ pharmacies = [], sarais = [], transport = null,
                 <p>⏰ <strong>Donation Timings:</strong> {welfare.blood_bank.donation_timings}</p>
                 <p>📞 <strong>Blood Bank Direct Helplines:</strong> {welfare.blood_bank.helplines.join(" • ")}</p>
               </div>
+            </div>
+          )}
+
+          {/* Hearse & Funeral Van Coordination */}
+          {hearse && (
+            <div className="bg-slate-100/70 p-3 rounded-xl border border-slate-200 space-y-2 text-xs">
+              <h4 className="font-bold text-slate-900 text-xs md:text-sm">
+                🕊️ {lang === 'hi' ? 'शव वाहन व रेड क्रॉस सेवा (Hearse Van)' : 'Funeral Van & Mortuary Transport'}
+              </h4>
+              <p className="text-[11px] text-slate-600">
+                📍 <strong>Mortuary:</strong> {hearse.mortuary_location}
+              </p>
+              <div className="space-y-1 bg-white p-2 rounded-lg border border-slate-200 text-[11px]">
+                {hearse.hearse_contacts.map((h, i) => (
+                  <p key={i}><strong>{h.service}:</strong> {h.numbers.join(", ")}</p>
+                ))}
+              </div>
+              <p className="text-[10px] text-slate-500">
+                Emergency SMO Helpdesk: {hearse.emergency_smo}
+              </p>
             </div>
           )}
         </div>

@@ -176,6 +176,22 @@ export const dataService = {
     return authoritativeDirectory.online_pre_registration_guide;
   },
 
+  async getOnlineLabReportsGuide() {
+    return authoritativeDirectory.online_lab_reports_guide;
+  },
+
+  async getCampusParkingRules() {
+    return authoritativeDirectory.campus_parking_rules;
+  },
+
+  async getCampusATMs() {
+    return authoritativeDirectory.campus_atms;
+  },
+
+  async getHearseAndMortuaryServices() {
+    return authoritativeDirectory.hearse_and_mortuary_services;
+  },
+
   /**
    * Submits user correction or feedback with strict privacy validation
    * and honest outcome transparency.

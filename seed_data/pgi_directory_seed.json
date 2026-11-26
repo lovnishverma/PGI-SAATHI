@@ -1013,5 +1013,107 @@
     ],
     "status": "published",
     "verified_at": "2026-11-26"
+  },
+  "online_lab_reports_guide": {
+    "portal_url": "https://pgimer.edu.in",
+    "portal_name": "PGIMER Online Lab Reports Portal (e-Reports)",
+    "turnaround_time": "Routine Blood, Biochemistry, and Hormone reports take 1 to 3 days to become available online after sample collection.",
+    "steps": [
+      "Open official PGIMER website (pgimer.edu.in) on your phone or computer.",
+      "Click on the 'Lab Reports' section/icon on the home screen.",
+      "Enter your permanent 12-digit Central Registration (CR) Number.",
+      "Click 'Generate OTP' to receive an SMS code on your registered mobile number.",
+      "Enter the OTP and click 'Get Reports' to view and download digitally signed PDF reports.",
+      "Print or save the PDF — you do not need to stand in physical collection queues at Room 127."
+    ],
+    "status": "published",
+    "verified_at": "2026-11-26"
+  },
+  "campus_parking_rules": {
+    "facility": "Multi-Level Car Parking (MLCP) - Sector 12",
+    "location": "Adjacent to New OPD Block (Entry via Madhya Marg / Sector 12)",
+    "capacity_advice": "Fills up very early by 7:30 AM – 8:00 AM on weekdays. Arrive early to secure parking.",
+    "charges": "Nominal institutional tariff: Approx. ₹20/hr for Four-Wheelers; ₹10–₹20 for Two-Wheelers",
+    "clamping_warning": "Strict Zero-Tolerance Clamping: Parking along internal hospital roads or emergency access lanes is strictly prohibited. Vehicles will be clamped and towed by Chandigarh Traffic Police.",
+    "status": "published",
+    "verified_at": "2026-11-26"
+  },
+  "campus_atms": [
+    {
+      "id": "sbi_nehru",
+      "bank": "State Bank of India (SBI)",
+      "location": "Nehru Hospital (Main Hospital Entrance Porch)",
+      "hours": "24 Hours (24x7)",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "sbi_atc",
+      "bank": "State Bank of India (SBI)",
+      "location": "Advanced Trauma Centre (ATC) Ground Floor Lobby",
+      "hours": "24 Hours (24x7)",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "sbi_acc",
+      "bank": "State Bank of India (SBI)",
+      "location": "Advanced Cardiac Centre (ACC) Ground Floor",
+      "hours": "24 Hours (24x7)",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "pnb_new_opd",
+      "bank": "Punjab National Bank (PNB)",
+      "location": "New OPD Block (Adjacent to Ground Floor Porch)",
+      "hours": "Working Hours",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "union_aec",
+      "bank": "Union Bank of India",
+      "location": "Advanced Eye Centre (AEC) Reception Lobby",
+      "hours": "Working Hours",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  ],
+  "hearse_and_mortuary_services": {
+    "mortuary_location": "PGIMER Mortuary Complex (near Gate No. 3 / Emergency back perimeter road)",
+    "hearse_contacts": [
+      {
+        "service": "PGI Official Hearse/Funeral Van Coordination",
+        "numbers": [
+          "8146672953",
+          "8146672963"
+        ]
+      },
+      {
+        "service": "UT Chandigarh Red Cross Funeral/Ambulance Van",
+        "numbers": [
+          "0172-2744188"
+        ]
+      },
+      {
+        "service": "Punjab Red Cross (Inter-State Transport)",
+        "numbers": [
+          "0172-2780827",
+          "0172-2542180"
+        ]
+      },
+      {
+        "service": "Haryana Red Cross (Inter-State Transport)",
+        "numbers": [
+          "0172-2546330",
+          "0172-2546328"
+        ]
+      }
+    ],
+    "emergency_smo": "0172-2756301 / +91-7087008254 (Senior Medical Officer Emergency Control)",
+    "body_donation": "0172-2755201 / +91-9660030095 (24x7 Voluntary Body Donation)",
+    "status": "published",
+    "verified_at": "2026-11-26"
   }
 }

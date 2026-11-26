@@ -3,7 +3,7 @@ import { FlaskConical, AlertTriangle, MapPin, HelpCircle, ArrowRight, CheckCircl
 import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 
-export const LabTestGuide = ({ protocols, fourQuestions }) => {
+export const LabTestGuide = ({ protocols, fourQuestions, onlineReportsGuide = null }) => {
   const { lang, highContrast } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState('all');
 
@@ -156,6 +156,48 @@ export const LabTestGuide = ({ protocols, fourQuestions }) => {
           );
         })}
       </div>
+
+      {/* Online Lab Reports Portal Walkthrough */}
+      {onlineReportsGuide && (
+        <div className="bg-slate-50 border border-blue-200 rounded-2xl p-4 space-y-3 text-xs shadow-xs">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="text-base">📥</span>
+              <h4 className="font-bold text-slate-900 text-sm">
+                {lang === 'hi' ? 'घर बैठे ऑनलाइन टेस्ट रिपोर्ट डाउनलोड करें (pgimer.edu.in)' : 'Download Lab Reports Online (Zero Queue)'}
+              </h4>
+            </div>
+            <a
+              href={onlineReportsGuide.portal_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 underline shrink-0"
+            >
+              {lang === 'hi' ? 'पोर्टल लिंक ↗' : 'Portal Link ↗'}
+            </a>
+          </div>
+
+          <p className="text-[11px] text-slate-600">
+            {onlineReportsGuide.turnaround_time}
+          </p>
+
+          <div className="space-y-1.5 pt-1">
+            <strong className="text-slate-800 text-[11px] block">
+              {lang === 'hi' ? 'डाउनलोड करने के आसान कदम:' : 'Simple Steps to Download:'}
+            </strong>
+            <ul className="space-y-1 text-[11px] text-slate-700">
+              {onlineReportsGuide.steps.map((step, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="w-4 h-4 rounded-full bg-blue-100 text-blue-700 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
+                    {idx + 1}
+                  </span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

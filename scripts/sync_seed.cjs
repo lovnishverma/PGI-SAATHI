@@ -15,6 +15,10 @@ import(pathToFileURL(authPath).href).then(({ authoritativeDirectory }) => {
   seed.welfare_and_schemes = authoritativeDirectory.welfare_and_schemes;
   seed.emergency_triage_zones = authoritativeDirectory.emergency_triage_zones;
   seed.online_pre_registration_guide = authoritativeDirectory.online_pre_registration_guide;
+  seed.online_lab_reports_guide = authoritativeDirectory.online_lab_reports_guide;
+  seed.campus_parking_rules = authoritativeDirectory.campus_parking_rules;
+  seed.campus_atms = authoritativeDirectory.campus_atms;
+  seed.hearse_and_mortuary_services = authoritativeDirectory.hearse_and_mortuary_services;
   seed.opd_schedule = authoritativeDirectory.opd_schedule;
 
   fs.writeFileSync(seedPath, JSON.stringify(seed, null, 2), 'utf8');

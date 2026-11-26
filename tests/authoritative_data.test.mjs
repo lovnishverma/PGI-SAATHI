@@ -182,4 +182,39 @@ describe('Authoritative Data Governance & Schemas', () => {
     assert.equal(guide.status, 'published');
   });
 
+  test('online_lab_reports_guide covers CR Number and OTP download steps', () => {
+    const reports = authoritativeDirectory.online_lab_reports_guide;
+    assert.ok(reports.portal_url.includes('pgimer.edu.in'));
+    assert.ok(reports.steps.length >= 4);
+    assert.ok(reports.steps.some(s => s.includes('CR')));
+    assert.ok(reports.steps.some(s => s.includes('OTP')));
+    assert.equal(reports.status, 'published');
+  });
+
+  test('campus_parking_rules covers MLCP rates, early capacity, and clamping warning', () => {
+    const parking = authoritativeDirectory.campus_parking_rules;
+    assert.ok(parking.facility.includes('Multi-Level'));
+    assert.ok(parking.charges.includes('₹20'));
+    assert.ok(parking.clamping_warning.includes('Clamping'));
+    assert.equal(parking.status, 'published');
+  });
+
+  test('campus_atms lists 24/7 strategic ATM locations across hospital blocks', () => {
+    const atms = authoritativeDirectory.campus_atms;
+    assert.ok(Array.isArray(atms));
+    assert.ok(atms.length >= 4, 'Must list at least 4 campus ATMs');
+    for (const a of atms) {
+      assert.ok(a.id && a.bank && a.location);
+      assert.equal(a.status, 'published');
+    }
+  });
+
+  test('hearse_and_mortuary_services covers funeral van lines and Red Cross transport', () => {
+    const hearse = authoritativeDirectory.hearse_and_mortuary_services;
+    assert.ok(hearse.mortuary_location);
+    assert.ok(hearse.hearse_contacts.length >= 3);
+    assert.ok(hearse.emergency_smo);
+    assert.equal(hearse.status, 'published');
+  });
+
 });

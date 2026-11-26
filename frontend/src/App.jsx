@@ -39,6 +39,10 @@ function MainApp() {
   const [welfare, setWelfare] = useState(null);
   const [triageZones, setTriageZones] = useState([]);
   const [preRegGuide, setPreRegGuide] = useState(null);
+  const [onlineReportsGuide, setOnlineReportsGuide] = useState(null);
+  const [parking, setParking] = useState(null);
+  const [atms, setAtms] = useState([]);
+  const [hearse, setHearse] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
 
@@ -63,7 +67,8 @@ function MainApp() {
       try {
         const [
           depts, blds, sched, protos, fourQs, phrs, rules, cardProc, items, numbers, links, advice, emerg,
-          steps, floors, pharms, sarList, trans, welf, triage, preReg
+          steps, floors, pharms, sarList, trans, welf, triage, preReg,
+          eReports, park, atmList, hearseSvc
         ] = await Promise.all([
           dataService.getDepartments(),
           dataService.getBuildings(),
@@ -85,7 +90,11 @@ function MainApp() {
           dataService.getCampusTransport(),
           dataService.getWelfareAndSchemes(),
           dataService.getEmergencyTriageZones(),
-          dataService.getOnlinePreRegistrationGuide()
+          dataService.getOnlinePreRegistrationGuide(),
+          dataService.getOnlineLabReportsGuide(),
+          dataService.getCampusParkingRules(),
+          dataService.getCampusATMs(),
+          dataService.getHearseAndMortuaryServices()
         ]);
         setDepartments(depts);
         setBuildings(blds);
@@ -108,6 +117,10 @@ function MainApp() {
         setWelfare(welf);
         setTriageZones(triage);
         setPreRegGuide(preReg);
+        setOnlineReportsGuide(eReports);
+        setParking(park);
+        setAtms(atmList);
+        setHearse(hearseSvc);
       } catch (err) {
         console.error("Error loading PGI Saathi data:", err);
       } finally {
@@ -197,6 +210,9 @@ function MainApp() {
                   sarais={sarais}
                   transport={transport}
                   welfare={welfare}
+                  parking={parking}
+                  atms={atms}
+                  hearse={hearse}
                 />
               )}
               {activeTab === 'checklist' && (
@@ -206,7 +222,11 @@ function MainApp() {
                 />
               )}
               {activeTab === 'tests' && (
-                <LabTestGuide protocols={protocols} fourQuestions={fourQuestions} />
+                <LabTestGuide
+                  protocols={protocols}
+                  fourQuestions={fourQuestions}
+                  onlineReportsGuide={onlineReportsGuide}
+                />
               )}
               {activeTab === 'help' && (
                 <HelpDeskPhrases
