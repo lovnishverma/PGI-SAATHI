@@ -5,7 +5,7 @@ import { AudioButton } from './AudioButton';
 import { FloorDirectory } from './FloorDirectory';
 import { AmenitiesGuide } from './AmenitiesGuide';
 
-export const BuildingsGuide = ({ buildings = [], floorDirectory = [], pharmacies = [], sarais = [] }) => {
+export const BuildingsGuide = ({ buildings = [], floorDirectory = [], pharmacies = [], sarais = [], transport = null, welfare = null }) => {
   const { lang, highContrast } = useLanguage();
 
   const getBuildingTitle = (b) => {
@@ -78,9 +78,14 @@ export const BuildingsGuide = ({ buildings = [], floorDirectory = [], pharmacies
         <FloorDirectory floorData={floorDirectory} />
       )}
 
-      {/* AMRIT Pharmacies and Sarais Guide */}
-      {(pharmacies?.length > 0 || sarais?.length > 0) && (
-        <AmenitiesGuide pharmacies={pharmacies} sarais={sarais} />
+      {/* AMRIT Pharmacies, Sarais, Shuttles & Welfare Guide */}
+      {(pharmacies?.length > 0 || sarais?.length > 0 || transport || welfare) && (
+        <AmenitiesGuide
+          pharmacies={pharmacies}
+          sarais={sarais}
+          transport={transport}
+          welfare={welfare}
+        />
       )}
 
       {/* Buildings Cards */}

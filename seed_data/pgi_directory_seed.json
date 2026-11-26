@@ -854,5 +854,152 @@
       "status": "published",
       "verified_at": "2026-11-26"
     }
-  ]
+  ],
+  "campus_transport": {
+    "shuttles_and_carts": [
+      {
+        "id": "bov_golf_carts",
+        "name": "Free Battery-Operated Vehicles (Golf Carts / E-Carts)",
+        "hindi_name": "निशुल्क बैटरी वाली गाड़ियां (गोल्फ कार्ट)",
+        "punjabi_name": "ਮੁਫਤ ਬੈਟਰੀ ਵਾਲੀਆਂ ਗੱਡੀਆਂ (ਗੋਲਫ ਕਾਰਟ)",
+        "route": "Main Gate No. 1 / Parking Area ↔ New OPD Block",
+        "frequency": "Continuous shuttle rounds throughout OPD hours (7:30 AM – 2:00 PM)",
+        "cost": "100% Free of Cost",
+        "priority": "Senior citizens, physically challenged (Divyangjan), and pregnant women",
+        "status": "published",
+        "verified_at": "2026-11-26"
+      },
+      {
+        "id": "swaraj_mazda_shuttle",
+        "name": "PGIMER Campus Free Shuttle Mini-Buses (Swaraj Mazda)",
+        "hindi_name": "पीजीआई परिसर फ्री शटल मिनी बस सेवा",
+        "punjabi_name": "ਪੀਜੀਆਈ ਕੈਂਪਸ ਮੁਫਤ ਸ਼ਟਲ ਬੱਸ ਸੇਵਾ",
+        "route": "Circular Loop: Main Gate 1 ↔ New OPD ↔ Nehru Hospital ↔ ACC ↔ AEC ↔ APC ↔ Hansraj Dharamsala ↔ Rotary Sarai",
+        "frequency": "Every 10 to 15 minutes",
+        "cost": "100% Free for all patients and attendants",
+        "priority": "Open to all patients commuting across hospital blocks",
+        "status": "published",
+        "verified_at": "2026-11-26"
+      }
+    ],
+    "wheelchair_stretcher_stations": [
+      {
+        "id": "new_opd_ramp",
+        "location": "New OPD Entrance Porch & Main Ramp",
+        "availability": "Morning OPD Hours (7:30 AM – 1:30 PM)",
+        "how_to_get": "Request on-duty hospital security guard or reception attendant at the main ramp. Return to same point after OPD visit.",
+        "status": "published",
+        "verified_at": "2026-11-26"
+      },
+      {
+        "id": "emergency_atc_porch",
+        "location": "Nehru Hospital Emergency & Advanced Trauma Centre (ATC) Entrances",
+        "availability": "24 Hours (24x7 Round-the-clock availability)",
+        "how_to_get": "Stationed directly at ambulance ramp and triage entrance. Trolley-men and hospital attendants assist for acute patients immediately.",
+        "status": "published",
+        "verified_at": "2026-11-26"
+      },
+      {
+        "id": "specialty_centres",
+        "location": "Advanced Cardiac Centre (ACC), Advanced Eye Centre (AEC) & APC Entrances",
+        "availability": "Working hours (8:00 AM – 5:00 PM)",
+        "how_to_get": "Available in front reception lobby with security staff assistance.",
+        "status": "published",
+        "verified_at": "2026-11-26"
+      }
+    ],
+    "control_room": {
+      "aso_security": "0172-2756100 / +91-7087007005 (Assistant Security Officer Control Room)",
+      "general_emergency": "0172-2756565 / 0172-2756464"
+    }
+  },
+  "welfare_and_schemes": {
+    "ayushman_bharat": {
+      "name": "Ayushman Bharat Pradhan Mantri Jan Arogya Yojana (AB-PMJAY)",
+      "hindi_name": "आयुष्मान भारत योजना (गोल्डन कार्ड)",
+      "punjabi_name": "ਆਯੁਸ਼ਮਾਨ ਭਾਰਤ ਯੋਜਨਾ",
+      "counters": [
+        "Nehru Hospital (Ground Floor Main Counter)",
+        "Advanced Trauma Centre (ATC) dedicated help desk",
+        "Advanced Paediatric Centre (APC) registration window",
+        "Advanced Cardiac Centre (ACC) & Advanced Eye Centre (AEC) billing areas"
+      ],
+      "admin_office": "Porta Cabin No. 6, 1st Floor (Above Procurement Section), Nehru Hospital",
+      "coverage": "Cashless secondary and tertiary healthcare coverage up to ₹5 Lakh per family per year for empanelled treatments",
+      "required_docs": "Ayushman Golden Card / PM-JAY letter, Aadhaar Card, and treating doctor's admission requisition",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    "poor_patient_cell": {
+      "name": "Poor Patient Assistance Cell / Poor Patient Welfare Fund (PPWF)",
+      "hindi_name": "निर्धन रोगी सहायता प्रकोष्ठ (PPWF)",
+      "punjabi_name": "ਗਰੀਬ ਮਰੀਜ਼ ਸਹਾਇਤਾ ਸੈੱਲ (PPWF)",
+      "location": "Nehru Hospital, Near Main Reception, Sector 12, PGIMER",
+      "timings": "Monday to Friday: 9:30 AM – 5:00 PM | Saturday: 9:30 AM – 2:00 PM",
+      "assistance": "Provides financial aid, waivers, and free life-saving medicines/surgical consumables for BPL families and destitute patients based on Medical Social Worker evaluation.",
+      "required_docs": "BPL Ration Card / Income Certificate, PGIMER CR Card, and doctor's prescription with estimated treatment cost",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    "blood_bank": {
+      "name": "Department of Transfusion Medicine (PGIMER Blood Bank)",
+      "hindi_name": "ब्लड बैंक (रक्तदान व रक्त प्राप्ति विभाग)",
+      "punjabi_name": "ਬਲੱਡ ਬੈਂਕ (ਰਕਤਦਾਨ ਵਿਭਾਗ)",
+      "location": "Nehru Hospital Complex (3rd Floor / Main Blood Bank)",
+      "issuance_timings": "24 Hours (24x7 Round-the-clock for emergencies and surgeries)",
+      "donation_timings": "Mon to Fri: 9:00 AM – 6:30 PM | Sat, Sun & Gazetted Holidays: 9:00 AM – 5:00 PM",
+      "replacement_slip_process": "For planned surgeries and inpatient transfusions, relatives donate blood at the donation counter. Blood bank issues a stamped 'Replacement Slip', which is handed over to the patient's ward coordinator to authorize releasing matching blood units.",
+      "helplines": [
+        "0172-2756480",
+        "0172-2756481",
+        "+91-7087009480"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  },
+  "emergency_triage_zones": [
+    {
+      "code": "red",
+      "color_name": "Red Zone (तुरंत आपातकाल / Immediate Resuscitation)",
+      "area": "Hall A / Resuscitation Bay (Nehru Emergency / ATC)",
+      "urgency": "Immediate — 0 Minutes Wait Time",
+      "conditions": "Cardiac arrest, severe respiratory failure (gasping), profound shock, unconsciousness, severe road accident trauma, active massive bleeding, acute stroke in golden window.",
+      "action": "Direct resuscitation by emergency physicians and trauma surgeons. Routine OPD cards and counter lines are strictly bypassed.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "code": "yellow",
+      "color_name": "Yellow Zone (गंभीर लेकिन स्थिर / Urgent Observation)",
+      "area": "Hall C / Acute Observation Wards",
+      "urgency": "Urgent — Assessed within 15 to 30 Minutes",
+      "conditions": "Severe pain, acute abdomen, bone fractures, high persistent fever with dehydration, asthma flare-up with stable oxygen, stable chronic illness acute crisis.",
+      "action": "Serial monitoring, urgent blood tests, ECG, X-rays, and IV therapy while awaiting admission bed or specialist evaluation.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "code": "green",
+      "color_name": "Green Zone (गैर-गंभीर / Non-Urgent Ambulatory)",
+      "area": "Minor Procedure Room & Ambulatory Corridor",
+      "urgency": "Non-Urgent — Assessed as per sequence",
+      "conditions": "Minor cuts, superficial abrasions, routine dressing changes, old chronic complaints, prescription refills outside morning OPD hours.",
+      "action": "Basic first aid and pain relief given; patient is redirected to morning OPD (8:00 AM) for comprehensive diagnostic workup.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  ],
+  "online_pre_registration_guide": {
+    "portal_url": "https://www.pgimer.edu.in/PGIMER_PORTAL/PGIMERPORTAL/GlobalPages/JSP/portal_pre_registration.jsp",
+    "key_rules": [
+      "Advance Window: Portal opens up to 30 days prior and closes at 6:00 AM on the day of the visit.",
+      "Not a Time Slot: Pre-registration gives you an official registration token to skip the general queue; it does NOT book a specific doctor or exact consultation hour.",
+      "Dedicated Counter No. 1: On the morning of your visit, report directly to Counter No. 1 (Online Pre-Registration) on New OPD Ground Floor.",
+      "Morning Cutoff Timings: Report between 8:00 AM – 11:00 AM (Mon–Fri) or 8:00 AM – 10:30 AM (Sat/Holidays). If you miss this window, the token expires.",
+      "Mandatory to Bring: Smartphone with confirmation SMS/screenshot, valid Government Photo ID (Aadhaar), and ₹10 registration fee."
+    ],
+    "status": "published",
+    "verified_at": "2026-11-26"
+  }
 }

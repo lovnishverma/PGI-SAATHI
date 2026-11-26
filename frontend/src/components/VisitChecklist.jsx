@@ -3,7 +3,7 @@ import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck, Share2 } from '
 import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 
-export const VisitChecklist = ({ checklistItems }) => {
+export const VisitChecklist = ({ checklistItems, preRegGuide = null }) => {
   const { lang, t, highContrast } = useLanguage();
   const [patientType, setPatientType] = useState('new'); // 'new' or 'returning'
   const [checkedItems, setCheckedItems] = useState(() => {
@@ -166,6 +166,33 @@ export const VisitChecklist = ({ checklistItems }) => {
           </button>
         </div>
       </div>
+
+      {/* Online Pre-Registration Rules Card */}
+      {preRegGuide && (
+        <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 space-y-2.5 text-xs">
+          <div className="flex items-center justify-between">
+            <span className="font-bold text-slate-900 text-sm">
+              🌐 {lang === 'hi' ? 'ऑनलाइन प्री-रजिस्ट्रेशन के जरूरी नियम (pgimer.edu.in)' : 'Online Pre-Registration Rules (pgimer.edu.in)'}
+            </span>
+            <a
+              href={preRegGuide.portal_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[11px] font-semibold text-blue-600 hover:text-blue-800 underline"
+            >
+              {lang === 'hi' ? 'पोर्टल खोलें ↗' : 'Open Portal ↗'}
+            </a>
+          </div>
+          <ul className="space-y-1.5 text-slate-700 text-[11px]">
+            {preRegGuide.key_rules.map((rule, idx) => (
+              <li key={idx} className="flex items-start gap-1.5">
+                <span className="text-blue-500 font-bold shrink-0">•</span>
+                <span>{rule}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

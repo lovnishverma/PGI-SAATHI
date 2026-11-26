@@ -122,4 +122,62 @@ describe('Authoritative Data Governance & Schemas', () => {
     }
   });
 
+  test('campus_transport covers free battery golf carts, shuttles, and wheelchair stations', () => {
+    const transport = authoritativeDirectory.campus_transport;
+    assert.ok(transport, 'campus_transport must be defined');
+    assert.ok(Array.isArray(transport.shuttles_and_carts));
+    assert.ok(transport.shuttles_and_carts.length >= 2, 'Must include battery golf carts and Swaraj Mazda shuttles');
+    
+    for (const s of transport.shuttles_and_carts) {
+      assert.ok(s.name && s.route && s.cost);
+      assert.equal(s.status, 'published');
+    }
+
+    assert.ok(Array.isArray(transport.wheelchair_stretcher_stations));
+    assert.ok(transport.wheelchair_stretcher_stations.length >= 2);
+    assert.ok(transport.control_room.aso_security, 'Must provide security control room contact');
+  });
+
+  test('welfare_and_schemes covers Ayushman Bharat, PPWF, and 24x7 Blood Bank', () => {
+    const welfare = authoritativeDirectory.welfare_and_schemes;
+    assert.ok(welfare, 'welfare_and_schemes must be defined');
+    
+    // Ayushman Bharat
+    assert.ok(welfare.ayushman_bharat.counters.length >= 3);
+    assert.equal(welfare.ayushman_bharat.status, 'published');
+
+    // Poor Patient Welfare Cell
+    assert.ok(welfare.poor_patient_cell.location);
+    assert.equal(welfare.poor_patient_cell.status, 'published');
+
+    // Blood Bank
+    assert.ok(welfare.blood_bank.issuance_timings.includes('24'));
+    assert.ok(welfare.blood_bank.replacement_slip_process);
+    assert.ok(welfare.blood_bank.helplines.length >= 2);
+    assert.equal(welfare.blood_bank.status, 'published');
+  });
+
+  test('emergency_triage_zones strictly defines Red, Yellow, and Green zones', () => {
+    const zones = authoritativeDirectory.emergency_triage_zones;
+    assert.ok(Array.isArray(zones));
+    assert.equal(zones.length, 3, 'Must define exactly Red, Yellow, and Green triage zones');
+
+    const codes = zones.map(z => z.code);
+    assert.ok(codes.includes('red'));
+    assert.ok(codes.includes('yellow'));
+    assert.ok(codes.includes('green'));
+
+    const red = zones.find(z => z.code === 'red');
+    assert.ok(red.area.includes('Hall A') || red.area.includes('Resuscitation'));
+  });
+
+  test('online_pre_registration_guide details advance rules and morning cutoff', () => {
+    const guide = authoritativeDirectory.online_pre_registration_guide;
+    assert.ok(guide.portal_url.includes('pgimer.edu.in'));
+    assert.ok(guide.key_rules.length >= 4);
+    assert.ok(guide.key_rules.some(r => r.includes('30 days')));
+    assert.ok(guide.key_rules.some(r => r.includes('Counter No. 1')));
+    assert.equal(guide.status, 'published');
+  });
+
 });

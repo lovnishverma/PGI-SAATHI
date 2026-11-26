@@ -160,6 +160,22 @@ export const dataService = {
     return authoritativeDirectory.sarais_and_amenities;
   },
 
+  async getCampusTransport() {
+    return authoritativeDirectory.campus_transport;
+  },
+
+  async getWelfareAndSchemes() {
+    return authoritativeDirectory.welfare_and_schemes;
+  },
+
+  async getEmergencyTriageZones() {
+    return authoritativeDirectory.emergency_triage_zones;
+  },
+
+  async getOnlinePreRegistrationGuide() {
+    return authoritativeDirectory.online_pre_registration_guide;
+  },
+
   /**
    * Submits user correction or feedback with strict privacy validation
    * and honest outcome transparency.

@@ -35,6 +35,10 @@ function MainApp() {
   const [floorDirectory, setFloorDirectory] = useState([]);
   const [amritPharmacies, setAmritPharmacies] = useState([]);
   const [sarais, setSarais] = useState([]);
+  const [transport, setTransport] = useState(null);
+  const [welfare, setWelfare] = useState(null);
+  const [triageZones, setTriageZones] = useState([]);
+  const [preRegGuide, setPreRegGuide] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
 
@@ -59,7 +63,7 @@ function MainApp() {
       try {
         const [
           depts, blds, sched, protos, fourQs, phrs, rules, cardProc, items, numbers, links, advice, emerg,
-          steps, floors, pharms, sarList
+          steps, floors, pharms, sarList, trans, welf, triage, preReg
         ] = await Promise.all([
           dataService.getDepartments(),
           dataService.getBuildings(),
@@ -77,7 +81,11 @@ function MainApp() {
           dataService.getPatientJourneySteps(),
           dataService.getNewOPDFloorDirectory(),
           dataService.getAmritPharmacies(),
-          dataService.getSaraisAndAmenities()
+          dataService.getSaraisAndAmenities(),
+          dataService.getCampusTransport(),
+          dataService.getWelfareAndSchemes(),
+          dataService.getEmergencyTriageZones(),
+          dataService.getOnlinePreRegistrationGuide()
         ]);
         setDepartments(depts);
         setBuildings(blds);
@@ -96,6 +104,10 @@ function MainApp() {
         setFloorDirectory(floors);
         setAmritPharmacies(pharms);
         setSarais(sarList);
+        setTransport(trans);
+        setWelfare(welf);
+        setTriageZones(triage);
+        setPreRegGuide(preReg);
       } catch (err) {
         console.error("Error loading PGI Saathi data:", err);
       } finally {
@@ -183,10 +195,15 @@ function MainApp() {
                   floorDirectory={floorDirectory}
                   pharmacies={amritPharmacies}
                   sarais={sarais}
+                  transport={transport}
+                  welfare={welfare}
                 />
               )}
               {activeTab === 'checklist' && (
-                <VisitChecklist checklistItems={checklistItems} />
+                <VisitChecklist
+                  checklistItems={checklistItems}
+                  preRegGuide={preRegGuide}
+                />
               )}
               {activeTab === 'tests' && (
                 <LabTestGuide protocols={protocols} fourQuestions={fourQuestions} />
@@ -222,6 +239,7 @@ function MainApp() {
         isOpen={isEmergencyOpen}
         onClose={() => setIsEmergencyOpen(false)}
         emergencyData={emergencyData}
+        triageZones={triageZones}
       />
     </div>
   );

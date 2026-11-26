@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { AlertTriangle, Phone, X, ShieldAlert } from 'lucide-react';
 import { useLanguage } from '../context/useLanguage';
 
-export const EmergencyModal = ({ isOpen, onClose, emergencyData }) => {
+export const EmergencyModal = ({ isOpen, onClose, emergencyData, triageZones = [] }) => {
   const { t } = useLanguage();
   const closeButtonRef = useRef(null);
 
@@ -76,6 +76,29 @@ export const EmergencyModal = ({ isOpen, onClose, emergencyData }) => {
             ))}
           </ul>
         </div>
+
+        {/* Color-Coded Triage Protocol Guidance */}
+        {triageZones && triageZones.length > 0 && (
+          <div className="mb-4 bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs space-y-2 max-h-48 overflow-y-auto">
+            <p className="font-bold text-slate-800 text-[11px] uppercase tracking-wider">
+              🏥 अस्पताल इमरजेंसी ट्रायज नियम (Red / Yellow / Green):
+            </p>
+            <div className="space-y-1.5">
+              {triageZones.map((z) => (
+                <div key={z.code} className="p-2 rounded-xl bg-white border border-slate-100 text-[11px] space-y-0.5">
+                  <div className="flex items-center justify-between font-bold">
+                    <span className={z.code === 'red' ? 'text-red-700' : z.code === 'yellow' ? 'text-amber-700' : 'text-emerald-700'}>
+                      {z.color_name}
+                    </span>
+                    <span className="text-[10px] bg-slate-100 px-1.5 py-0.5 rounded text-slate-600">{z.urgency}</span>
+                  </div>
+                  <p className="text-slate-600 text-[10px]"><strong>स्थान:</strong> {z.area}</p>
+                  <p className="text-slate-600 text-[10px]">{z.conditions}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Direct Call Buttons */}
         <div className="space-y-2">
