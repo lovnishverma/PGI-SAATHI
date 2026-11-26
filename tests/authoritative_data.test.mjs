@@ -29,6 +29,11 @@ describe('Authoritative Data Governance & Schemas', () => {
       assert.ok(dept.reviewer_role, `Department ${dept.id} must have reviewer_role`);
       assert.ok(dept.source_reference, `Department ${dept.id} must cite source reference`);
     }
+
+    const imm = depts.find(d => d.id === 'paediatric_immunization');
+    assert.ok(imm, 'paediatric_immunization department must exist');
+    assert.equal(imm.building_id, 'apc', 'Must be housed in APC building');
+    assert.ok(imm.concerns.includes('vaccination'), 'Must handle vaccination concerns');
   });
 
   test('all buildings validate and all department foreign keys resolve', () => {

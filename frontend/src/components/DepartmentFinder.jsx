@@ -1,8 +1,8 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Building, AlertCircle, Phone, Clock, Info, X, ChevronDown, ShieldAlert, AlertTriangle } from 'lucide-react';
+import { Search, Building, AlertCircle, Phone, Clock, Info, X, ChevronDown, ShieldAlert, AlertTriangle, MapPin } from 'lucide-react';
 import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
-import { detectEmergency, normalizeQuery } from '../utils/emergencyInterception';
+import { detectEmergency, detectOffCampusDeflection, normalizeQuery } from '../utils/emergencyInterception';
 import { PatientJourneyWizard } from './PatientJourneyWizard';
 
 export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmergency, journeySteps = [] }) => {
@@ -15,6 +15,11 @@ export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmerg
   const emergencyCheck = useMemo(() => {
     return detectEmergency(searchQuery);
   }, [searchQuery]);
+
+  // Evaluate query for off-campus municipal deflections (e.g. routine animal bites or travel vaccines)
+  const deflectionCheck = useMemo(() => {
+    return detectOffCampusDeflection(searchQuery, lang);
+  }, [searchQuery, lang]);
 
   const { filteredDepts, matchRationaleMap } = useMemo(() => {
     const q = normalizeQuery(searchQuery);
@@ -192,6 +197,56 @@ export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmerg
                   <span>Call Trauma Centre (0172-2755454)</span>
                 </a>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* OFF-CAMPUS DEFLECTION BANNER (Animal Bites / Yellow Fever) */}
+      {!emergencyCheck.isEmergency && deflectionCheck && (
+        <div 
+          role="region" 
+          aria-label={deflectionCheck.title}
+          className="bg-amber-500 text-slate-950 p-4 rounded-2xl shadow-md border-2 border-amber-600 animate-in fade-in duration-200"
+        >
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-black/10 rounded-xl shrink-0 text-slate-950">
+              <MapPin className="w-6 h-6" aria-hidden="true" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-black text-amber-300 px-2 py-0.5 rounded">
+                  {deflectionCheck.badge}
+                </span>
+                <h3 className="text-base font-extrabold mt-1 text-slate-950">
+                  {deflectionCheck.title}
+                </h3>
+                <p className="text-xs text-amber-950 font-semibold mt-0.5 leading-relaxed">
+                  {deflectionCheck.warning}
+                </p>
+              </div>
+
+              <div className="bg-amber-600/20 p-3 rounded-xl border border-amber-600/40 text-xs text-slate-950 space-y-1">
+                <p className="font-bold flex items-center gap-1.5">
+                  <AlertCircle className="w-4 h-4 text-amber-900 shrink-0" />
+                  <span>{lang === 'hi' ? 'सही अधिकृत केंद्र:' : lang === 'pa' ? 'ਸਹੀ ਅਧਿਕਾਰਤ ਕੇਂਦਰ:' : 'Correct Destination:'}</span>
+                </p>
+                <p className="text-[12px] text-amber-950 leading-relaxed font-medium">
+                  {deflectionCheck.destination}
+                </p>
+              </div>
+
+              {deflectionCheck.phone && (
+                <div className="pt-1">
+                  <a
+                    href={`tel:${deflectionCheck.phone.replace(/[^0-9]/g, '')}`}
+                    className="px-3.5 py-2 bg-slate-950 text-amber-300 font-bold text-xs rounded-xl inline-flex items-center gap-1.5 hover:bg-slate-900 shadow-sm transition-colors min-h-[44px]"
+                  >
+                    <Phone className="w-4 h-4 text-amber-400" />
+                    <span>Call {deflectionCheck.phoneLabel}</span>
+                  </a>
+                </div>
+              )}
             </div>
           </div>
         </div>

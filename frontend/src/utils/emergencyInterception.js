@@ -124,3 +124,96 @@ export function detectEmergency(query) {
 
   return { isEmergency: false };
 }
+
+/**
+ * Off-Campus Patient Deflection Patterns
+ * Handles specific searches where patients mistakenly arrive at PGIMER tertiary care
+ * instead of the authorized municipal/civil facilities (e.g. routine dog bites / yellow fever).
+ */
+export const DEFLECTION_PATTERNS = [
+  {
+    type: 'animal_bite',
+    matches: (q) => (
+      q.includes('dog bite') || q.includes('kutta') || q.includes('rabies') || 
+      q.includes('animal bite') || q.includes('monkey bite') || q.includes('cat bite') || 
+      q.includes('billi') || q.includes('bandar') || q.includes('कुत्ता') || 
+      q.includes('काट') || q.includes('ਕੁੱਤਾ') || q.includes('anti rabies') || q.includes('arv')
+    ),
+    badge: 'Off-Campus Referral (GMSH 16)',
+    phone: '0172-2768201',
+    phoneLabel: 'GMSH-16: 0172-2768201',
+    titles: {
+      en: 'Dog / Animal Bite (Anti-Rabies Notice)',
+      hi: 'कुत्ते / जानवर के काटने पर ध्यान दें',
+      pa: 'ਕੁੱਤੇ / ਜਾਨਵਰ ਦੇ ਕੱਟਣ ਬਾਰੇ ਅਹਿਮ ਜਾਣਕਾਰੀ'
+    },
+    warnings: {
+      en: 'PGIMER does NOT run a routine outpatient Anti-Rabies Vaccination (ARV) clinic. Rushing to PGI queues will cause dangerous delays in post-exposure treatment.',
+      hi: 'पीजीआई (PGIMER) में सामान्य एंटी-रेबीज इंजेक्शन (Anti-Rabies Vaccine) नहीं लगाया जाता है। पीजीआई में कतार में खड़े होकर समय व्यर्थ न करें।',
+      pa: 'ਪੀਜੀਆਈ (PGIMER) ਵਿਖੇ ਐਂਟੀ-ਰੇਬੀਜ਼ ਟੀਕੇ (Anti-Rabies Vaccine) ਨਹੀਂ ਲੱਗਦੇ। ਲਾਈਨ ਵਿੱਚ ਖੜ੍ਹੇ ਹੋ ਕੇ ਕੀਮਤੀ ਸਮਾਂ ਖਰਾਬ ਨਾ ਕਰੋ।'
+    },
+    destinations: {
+      en: 'Designated 24x7 Anti-Rabies Centre: GMSH Sector 16 (Emergency ARV Counter) or Civil Hospital Sector 22, Chandigarh. (PGI ATC only handles severe surgical/mangling trauma).',
+      hi: 'एंटी-रेबीज इंजेक्शन के लिए तुरंत यहां जाएं: GMSH सेक्टर 16 (24 घंटे इमरजेंसी इंजेक्शन रूम) या सिविल अस्पताल सेक्टर 22, चंडीगढ़।',
+      pa: 'ਐਂਟੀ-ਰੇਬੀਜ਼ ਟੀਕੇ ਲਈ ਤੁਰੰਤ ਇੱਥੇ ਜਾਓ: ਜੀ.ਐੱਮ.ਐੱਸ.ਐੱਚ. ਸੈਕਟਰ 16 (24 ਘੰਟੇ ਐਮਰਜੈਂਸੀ ਰੂਮ) ਜਾਂ ਸਿਵਲ ਹਸਪਤਾਲ ਸੈਕਟਰ 22, ਚੰਡੀਗੜ੍ਹ।'
+    }
+  },
+  {
+    type: 'travel_vaccine',
+    matches: (q) => (
+      q.includes('yellow fever') || q.includes('travel vaccine') || 
+      q.includes('peela bukhar') || q.includes('international vaccine') || 
+      q.includes('ਯੈਲੋ ਫੀਵਰ') ||
+      ((q.includes('विदेश') || q.includes('travel') || q.includes('international') || q.includes('videsh')) && 
+       (q.includes('टीका') || q.includes('teeka') || q.includes('tika') || q.includes('vaccin') || q.includes('ਟੀਕਾ')))
+    ),
+    badge: 'Civil Hospital Sec 22 Only',
+    phone: '0172-2702222',
+    phoneLabel: 'Civil Hosp 22: 0172-2702222',
+    titles: {
+      en: 'Yellow Fever / International Travel Vaccine Notice',
+      hi: 'येलो फीवर / विदेश यात्रा टीकाकरण सूचना',
+      pa: 'ਯੈਲੋ ਫੀਵਰ / ਵਿਦੇਸ਼ ਯਾਤਰਾ ਟੀਕਾਕਰਨ ਸੂਚਨਾ'
+    },
+    warnings: {
+      en: 'PGIMER is NOT an authorized Yellow Fever / International Travel Vaccination centre.',
+      hi: 'पीजीआई (PGIMER) में विदेश यात्रा के लिए अनिवार्य येलो फीवर का टीका नहीं लगाया जाता।',
+      pa: 'ਪੀਜੀਆਈ (PGIMER) ਵਿਖੇ ਅੰਤਰਰਾਸ਼ਟਰੀ ਯਾਤਰਾ ਲਈ ਯੈਲੋ ਫੀਵਰ ਦਾ ਟੀਕਾ ਉਪਲਬਧ ਨਹੀਂ ਹੈ।'
+    },
+    destinations: {
+      en: 'Official Authorized Centre: Civil Hospital, Sector 22, Chandigarh (Authorized Yellow Fever Vaccination & International Certificate Centre).',
+      hi: 'चंडीगढ़ में अधिकृत केंद्र: सिविल अस्पताल, सेक्टर 22 (Civil Hospital Sector 22), चंडीगढ़।',
+      pa: 'ਚੰਡੀਗੜ੍ਹ ਵਿੱਚ ਅਧਿਕਾਰਤ ਕੇਂਦਰ: ਸਿਵਲ ਹਸਪਤਾਲ, ਸੈਕਟਰ 22, ਚੰਡੀਗੜ੍ਹ।'
+    }
+  }
+];
+
+/**
+ * Checks if a search query matches an off-campus deflection condition.
+ * @param {string} query
+ * @param {string} [lang='en']
+ * @returns {object|null}
+ */
+export function detectOffCampusDeflection(query, lang = 'en') {
+  const normalized = normalizeQuery(query);
+  if (!normalized || normalized.length < 3) {
+    return null;
+  }
+
+  for (const pattern of DEFLECTION_PATTERNS) {
+    if (pattern.matches(normalized)) {
+      return {
+        type: pattern.type,
+        badge: pattern.badge,
+        phone: pattern.phone,
+        phoneLabel: pattern.phoneLabel,
+        title: pattern.titles[lang] || pattern.titles.en,
+        warning: pattern.warnings[lang] || pattern.warnings.en,
+        destination: pattern.destinations[lang] || pattern.destinations.en
+      };
+    }
+  }
+
+  return null;
+}
+

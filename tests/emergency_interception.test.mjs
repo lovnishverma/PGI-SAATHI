@@ -1,6 +1,6 @@
 import { test, describe } from 'node:test';
 import assert from 'node:assert/strict';
-import { detectEmergency, normalizeQuery } from '../frontend/src/utils/emergencyInterception.js';
+import { detectEmergency, detectOffCampusDeflection, normalizeQuery } from '../frontend/src/utils/emergencyInterception.js';
 
 describe('Emergency Interception Engine - Unit Tests', () => {
 
@@ -94,6 +94,41 @@ describe('Emergency Interception Engine - Unit Tests', () => {
     assert.equal(detectEmergency('ab').isEmergency, false);
     assert.equal(detectEmergency('!@#$%^&*()').isEmergency, false);
     assert.equal(normalizeQuery('  Severe,  CHEST Pain!  '), 'severe chest pain');
+  });
+
+  test('detects off-campus deflection for animal/dog bite (Anti-Rabies)', () => {
+    const resEn = detectOffCampusDeflection('I need injection for dog bite', 'en');
+    assert.ok(resEn);
+    assert.equal(resEn.type, 'animal_bite');
+    assert.ok(resEn.destination.includes('GMSH Sector 16'));
+    assert.ok(resEn.phone.includes('0172-2768201'));
+
+    const resHi = detectOffCampusDeflection('कुत्ता काट लिया है', 'hi');
+    assert.ok(resHi);
+    assert.equal(resHi.type, 'animal_bite');
+    assert.ok(resHi.destination.includes('GMSH'));
+
+    const resPa = detectOffCampusDeflection('ਕੁੱਤਾ ਕੱਟਿਆ ਹੈ ਟੀਕਾ ਚਾਹੀਦਾ', 'pa');
+    assert.ok(resPa);
+    assert.equal(resPa.type, 'animal_bite');
+  });
+
+  test('detects off-campus deflection for Yellow Fever / Travel Vaccine', () => {
+    const resEn = detectOffCampusDeflection('Where can I get yellow fever vaccine?', 'en');
+    assert.ok(resEn);
+    assert.equal(resEn.type, 'travel_vaccine');
+    assert.ok(resEn.destination.includes('Civil Hospital, Sector 22'));
+    assert.ok(resEn.phone.includes('0172-2702222'));
+
+    const resHi = detectOffCampusDeflection('विदेश यात्रा के लिए टीका', 'hi');
+    assert.ok(resHi);
+    assert.equal(resHi.type, 'travel_vaccine');
+  });
+
+  test('returns null for non-deflection standard queries', () => {
+    assert.equal(detectOffCampusDeflection('fever and cough'), null);
+    assert.equal(detectOffCampusDeflection('eye cataract check'), null);
+    assert.equal(detectOffCampusDeflection(''), null);
   });
 
 });

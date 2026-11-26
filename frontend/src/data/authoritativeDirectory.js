@@ -979,6 +979,20 @@ export const authoritativeDirectory = {
       verified_at: LAST_VERIFIED_DATE,
       reviewer_role: ACCOUNTABLE_ROLE,
       source_reference: SOURCE_REFERENCE
+    },
+    {
+      id: "paediatric_immunization",
+      name: "Paediatric Immunization & Child Vaccination Clinic",
+      hindi_name: "बाल टीकाकरण एवं प्रतिरक्षण क्लिनिक (APC)",
+      punjabi_name: "ਬੱਚਿਆਂ ਦਾ ਟੀਕਾਕਰਨ ਕਲੀਨਿਕ (ਏਪੀਸੀ)",
+      building_id: "apc",
+      concerns: ["vaccination", "tika", "child vaccine", "infant vaccination", "polio", "bcg", "pentavalent", "rotavirus", "measles", "rubella", "immunization", "bachon ka teeka"],
+      notes: "Advanced Paediatric Centre (APC) Ground Floor. Dedicated Child Immunization Clinic operates Mon–Fri: 8:00 AM – 12:00 PM. Contact Reception: 0172-2755858. Carry child's immunization card / birth record.",
+      referral_needed: false,
+      status: "published",
+      verified_at: LAST_VERIFIED_DATE,
+      reviewer_role: ACCOUNTABLE_ROLE,
+      source_reference: SOURCE_REFERENCE
     }
   ],
 
