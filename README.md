@@ -3,7 +3,7 @@
 > **Empowering patients and attendants visiting PGIMER Chandigarh with instant, multilingual, offline-ready navigation and visit guidance.**
 
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary-red.svg)](LICENSE)
-[![Frontend: React](https://img.shields.io/badge/Frontend-React%2018%20%2B%20Vite-61dafb.svg)](https://react.dev/)
+[![Frontend: React](https://img.shields.io/badge/Frontend-React%2019%20%2B%20Vite-61dafb.svg)](https://react.dev/)
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github)](https://www.lovnishverma.in/PGI-SAATHI/)
 [![Backend: Firebase Spark Plan](https://img.shields.io/badge/Backend-Firebase%20Spark%20Plan%20(Free%20Forever)-FFA611.svg)](https://firebase.google.com/)
 [![Architecture: Serverless](https://img.shields.io/badge/Architecture-100%25%20Serverless-green.svg)](ARCHITECTURE.md)
@@ -28,7 +28,7 @@ Visiting a premier medical tertiary center like **PGIMER Chandigarh** can be ove
 PGI Saathi is designed to run **free forever** on the **Firebase Spark Plan**, requiring **zero monthly hosting fees or cloud server maintenance**.
 
 ```
-[ React 18 + Vite PWA ] (Mobile & Desktop Responsive)
+[ React 19 + Vite PWA ] (Mobile & Desktop Responsive)
        │
        ├── Multilingual Engine (English, Hindi, Punjabi)
        ├── Offline IndexedDB Local Persistence
@@ -51,7 +51,7 @@ For complete technical and data specifications, see [ARCHITECTURE.md](ARCHITECTU
 | Team Member | Core Focus | Primary Deliverables |
 | :--- | :--- | :--- |
 | **Lovnish Verma** (`@LovnishVerma`) | **Project Lead & System Integration** | Project leadership, overall architecture coordination, Non-diagnostic Department Finder ("Symptom Matcher"), full-text search engine, offline visit checklist, test collection guide (Room 127/25), seed data pipeline (`seed_data/`), feedback module with PII safeguards. |
-| **Prateek Dhar Dwivedi** (`@prateek-dhar-dwivedi`) | **Frontend UI/UX & Accessibility Lead** | React 18 + Vite scaffold, Tailwind CSS mobile-first design, Multilingual localization (English, Hindi, Punjabi), WCAG 2.2 AA accessibility (high contrast, TalkBack screen-reader support), PWA service worker. |
+| **Prateek Dhar Dwivedi** (`@prateek-dhar-dwivedi`) | **Frontend UI/UX & Accessibility Lead** | React 19 + Vite scaffold, Tailwind CSS mobile-first design, Multilingual localization (English, Hindi, Punjabi), WCAG 2.2 AA accessibility (high contrast, TalkBack screen-reader support), PWA service worker. |
 | **Mridul** (`@mridulck001`) | **Cloud, Firebase & Backend Architecture Lead** | Firebase project setup (Spark plan), Firestore database design, security rules (`firestore.rules`), CI/CD GitHub Actions, Admin authentication & verification portal. |
 
 Detailed sprint milestones, task assignments, and pull-request procedures are outlined in [TEAM_WORK_BREAKDOWN.md](TEAM_WORK_BREAKDOWN.md).
@@ -94,7 +94,7 @@ Detailed sprint milestones, task assignments, and pull-request procedures are ou
 
 ---
 
-### 1. Running the Frontend (React 18 PWA)
+### 1. Running the Frontend (React 19 PWA)
 
 1. **Clone the repository**:
    ```bash
