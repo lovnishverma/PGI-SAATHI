@@ -355,6 +355,26 @@ export const authoritativeDirectory = {
       charges: "Free public access",
       status: "published",
       verified_at: LAST_VERIFIED_DATE
+    },
+    {
+      id: "visitor_canteens",
+      name: "Visitor Canteens & Subsidized Meals",
+      type: "Hospital Cafeteria",
+      location: "New OPD Block (Ground Floor) & Nehru Hospital Basement",
+      timings: "7:00 AM – 5:00 PM (Daily)",
+      charges: "Nominal approved rate list (Thalis, Tea, Dal-Roti, Snacks)",
+      status: "published",
+      verified_at: LAST_VERIFIED_DATE
+    },
+    {
+      id: "verka_dairy_booths",
+      name: "Verka Milk & Dairy Booths",
+      type: "Packaged Dairy & Bakery",
+      location: "Sector 12 Gol Market & New OPD Main Porch",
+      timings: "6:00 AM – 9:00 PM",
+      charges: "Strict MRP (Packaged milk for infants, lassi, curd, bread, paneer)",
+      status: "published",
+      verified_at: LAST_VERIFIED_DATE
     }
   ],
 
@@ -1091,6 +1111,10 @@ export const authoritativeDirectory = {
     online_pre_registration: {
       step: "Online Pre-Registration",
       instruction: "Ghar se details bhar sakte ho, lekin isse kisi particular doctor ki confirmed appointment nahi hoti. Registration counter No. 1 par jakar formal card verify karwana hota hai."
+    },
+    lost_cr_card: {
+      step: "Lost CR Card / Duplicate (गुम हुआ कार्ड)",
+      instruction: "Agar purana card kho gaya hai, naya CR number kabhi mat banwao! Registration counter par registered mobile number aur naam batao. Hospital computer database se aapka purana 12-digit number dhoondhkar duplicate card reprint ho jayega."
     }
   },
 
@@ -1135,7 +1159,13 @@ export const authoritativeDirectory = {
     { service: "Advanced Eye Centre (AEC)", phone: "0172-2755252" },
     { service: "Advanced Trauma Centre (ATC)", phone: "0172-2755454" },
     { service: "Nehru Hospital Emergency", phone: "0172-2755555" },
-    { service: "PGI General Operator / Helpline", phone: "0172-2756565" }
+    { service: "PGI General Operator / Helpline", phone: "0172-2756565" },
+    { service: "PGI Police Post (Lost Phone & Security)", phone: "0172-2928012 / 9779580940" },
+    { service: "24x7 Eye Bank & Cornea Donation", phone: "7087008200 / 9814014464" },
+    { service: "Security Control Room (ASO)", phone: "0172-2756100 / 7087007005" },
+    { service: "Emergency SMO Helpdesk", phone: "0172-2756301 / 7087008254" },
+    { service: "Blood Bank Transfusion Helpline", phone: "0172-2756480 / 7087009480" },
+    { service: "UT Red Cross Hearse / Ambulance", phone: "0172-2744188" }
   ],
 
   official_links: [

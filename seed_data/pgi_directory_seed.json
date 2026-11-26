@@ -865,6 +865,26 @@
       "charges": "Free public access",
       "status": "published",
       "verified_at": "2026-11-26"
+    },
+    {
+      "id": "visitor_canteens",
+      "name": "Visitor Canteens & Subsidized Meals",
+      "type": "Hospital Cafeteria",
+      "location": "New OPD Block (Ground Floor) & Nehru Hospital Basement",
+      "timings": "7:00 AM – 5:00 PM (Daily)",
+      "charges": "Nominal approved rate list (Thalis, Tea, Dal-Roti, Snacks)",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "verka_dairy_booths",
+      "name": "Verka Milk & Dairy Booths",
+      "type": "Packaged Dairy & Bakery",
+      "location": "Sector 12 Gol Market & New OPD Main Porch",
+      "timings": "6:00 AM – 9:00 PM",
+      "charges": "Strict MRP (Packaged milk for infants, lassi, curd, bread, paneer)",
+      "status": "published",
+      "verified_at": "2026-11-26"
     }
   ],
   "campus_transport": {

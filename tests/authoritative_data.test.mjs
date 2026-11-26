@@ -217,4 +217,17 @@ describe('Authoritative Data Governance & Schemas', () => {
     assert.equal(hearse.status, 'published');
   });
 
+  test('important_numbers covers critical hospital helplines including Police and Eye Bank', () => {
+    const nums = authoritativeDirectory.important_numbers;
+    assert.ok(nums.length >= 10, 'Must contain comprehensive critical contact numbers');
+    assert.ok(nums.some(n => n.service.includes('Police Post')));
+    assert.ok(nums.some(n => n.service.includes('Eye Bank')));
+  });
+
+  test('card_making_process includes instructions for lost CR card retrieval', () => {
+    const proc = authoritativeDirectory.card_making_process;
+    assert.ok(proc.lost_cr_card, 'Must have lost_cr_card procedure');
+    assert.ok(proc.lost_cr_card.instruction.includes('naya CR number'));
+  });
+
 });
