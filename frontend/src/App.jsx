@@ -246,7 +246,7 @@ function MainApp() {
             Last Verified: 2026-11-20 • Source: PGIMER Official OPD Schedule & Patient Welfare Guide 2026
           </p>
           <p className="text-[10px] text-slate-400">
-            PGI Saathi • Independent Open Source Project • 100% Serverless Offline PWA
+            PGI Saathi
           </p>
         </footer>
       </main>
