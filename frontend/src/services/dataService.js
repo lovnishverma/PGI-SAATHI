@@ -144,12 +144,27 @@ export const dataService = {
     return authoritativeDirectory.lost_patient_advice;
   },
 
+  async getPatientJourneySteps() {
+    return authoritativeDirectory.patient_journey_steps;
+  },
+
+  async getNewOPDFloorDirectory() {
+    return authoritativeDirectory.new_opd_floor_directory;
+  },
+
+  async getAmritPharmacies() {
+    return authoritativeDirectory.amrit_pharmacies;
+  },
+
+  async getSaraisAndAmenities() {
+    return authoritativeDirectory.sarais_and_amenities;
+  },
+
   /**
    * Submits user correction or feedback with strict privacy validation
    * and honest outcome transparency.
    */
   async submitFeedback({ category, message }) {
-    // 1. Strict Privacy & Identifier Sanitization
     const validation = validateFeedbackPrivacy(message);
     if (!validation.isValid) {
       throw new Error(validation.error);
@@ -157,7 +172,6 @@ export const dataService = {
 
     const { db } = await getFirebaseInstances();
 
-    // 2. Cloud Firestore Submission (when configured)
     if (db) {
       try {
         const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
@@ -178,7 +192,6 @@ export const dataService = {
       }
     }
 
-    // 3. Offline / Unconfigured Fallback - Truthful Acknowledgment
     const localQueue = JSON.parse(localStorage.getItem('pgi_saathi_feedback_queue') || '[]');
     const localId = 'local_' + Date.now();
     localQueue.push({

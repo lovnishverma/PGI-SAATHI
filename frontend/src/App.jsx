@@ -31,6 +31,10 @@ function MainApp() {
   const [officialLinks, setOfficialLinks] = useState([]);
   const [lostAdvice, setLostAdvice] = useState('');
   const [emergencyData, setEmergencyData] = useState(null);
+  const [journeySteps, setJourneySteps] = useState([]);
+  const [floorDirectory, setFloorDirectory] = useState([]);
+  const [amritPharmacies, setAmritPharmacies] = useState([]);
+  const [sarais, setSarais] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isOnline, setIsOnline] = useState(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
 
@@ -54,7 +58,8 @@ function MainApp() {
     async function loadData() {
       try {
         const [
-          depts, blds, sched, protos, fourQs, phrs, rules, cardProc, items, numbers, links, advice, emerg
+          depts, blds, sched, protos, fourQs, phrs, rules, cardProc, items, numbers, links, advice, emerg,
+          steps, floors, pharms, sarList
         ] = await Promise.all([
           dataService.getDepartments(),
           dataService.getBuildings(),
@@ -68,7 +73,11 @@ function MainApp() {
           dataService.getImportantNumbers(),
           dataService.getOfficialLinks(),
           dataService.getLostAdvice(),
-          dataService.getEmergencyGuidance()
+          dataService.getEmergencyGuidance(),
+          dataService.getPatientJourneySteps(),
+          dataService.getNewOPDFloorDirectory(),
+          dataService.getAmritPharmacies(),
+          dataService.getSaraisAndAmenities()
         ]);
         setDepartments(depts);
         setBuildings(blds);
@@ -83,6 +92,10 @@ function MainApp() {
         setOfficialLinks(links);
         setLostAdvice(advice);
         setEmergencyData(emerg);
+        setJourneySteps(steps);
+        setFloorDirectory(floors);
+        setAmritPharmacies(pharms);
+        setSarais(sarList);
       } catch (err) {
         console.error("Error loading PGI Saathi data:", err);
       } finally {
@@ -161,10 +174,16 @@ function MainApp() {
                   buildings={buildings}
                   schedule={schedule}
                   onOpenEmergency={() => setIsEmergencyOpen(true)}
+                  journeySteps={journeySteps}
                 />
               )}
               {activeTab === 'buildings' && (
-                <BuildingsGuide buildings={buildings} />
+                <BuildingsGuide
+                  buildings={buildings}
+                  floorDirectory={floorDirectory}
+                  pharmacies={amritPharmacies}
+                  sarais={sarais}
+                />
               )}
               {activeTab === 'checklist' && (
                 <VisitChecklist checklistItems={checklistItems} />

@@ -56,7 +56,10 @@
       "hindi_name": "न्यू ओपीडी ब्लॉक",
       "punjabi_name": "ਨਿਊ ਓਪੀਡੀ ਬਲਾਕ",
       "description": "General registration counters and multiple Medicine, Surgery & specialty clinics across various floors and blocks.",
-      "reception_phone": ["0172-2756969", "0172-2756868"],
+      "reception_phone": [
+        "0172-2756969",
+        "0172-2756868"
+      ],
       "landmark": "Near Gate No. 1 / Main roundabout",
       "is_separate_building": false,
       "status": "published",
@@ -68,7 +71,9 @@
       "hindi_name": "एडवांस्ड कार्डिएक सेंटर (ACC)",
       "punjabi_name": "ਐਡਵਾਂਸਡ ਕਾਰਡੀਅਕ ਸੈਂਟਰ (ACC)",
       "description": "Dedicated specialty hospital for heart diseases and surgery. Reception & separate OPD registration.",
-      "reception_phone": ["0172-2755353"],
+      "reception_phone": [
+        "0172-2755353"
+      ],
       "landmark": "Separate building near Nehru Hospital",
       "is_separate_building": true,
       "status": "published",
@@ -80,7 +85,9 @@
       "hindi_name": "एडवांस्ड पीडियाट्रिक सेंटर (APC)",
       "punjabi_name": "ਐਡਵਾਂਸਡ ਪੀਡੀਆਟ੍ਰਿਕ ਸੈਂਟਰ (APC)",
       "description": "Dedicated children's specialty OPD and inpatient hospital. Separate registration.",
-      "reception_phone": ["0172-2755858"],
+      "reception_phone": [
+        "0172-2755858"
+      ],
       "landmark": "Separate building next to Advanced Eye Centre",
       "is_separate_building": true,
       "status": "published",
@@ -92,7 +99,9 @@
       "hindi_name": "एडवांस्ड आई सेंटर (AEC)",
       "punjabi_name": "ਐਡਵਾਂਸਡ ਆਈ ਸੈਂਟਰ (AEC)",
       "description": "Dedicated ophthalmology building for eye treatments, retina checkups, and surgery.",
-      "reception_phone": ["0172-2755252"],
+      "reception_phone": [
+        "0172-2755252"
+      ],
       "landmark": "Separate building near APC",
       "is_separate_building": true,
       "status": "published",
@@ -104,7 +113,9 @@
       "hindi_name": "एडवांस्ड ट्रॉमा सेंटर (ATC)",
       "punjabi_name": "ਐਡਵਾਂਸਡ ਟ੍ਰੋਮਾ ਸੈਂਟਰ (ATC)",
       "description": "24/7 dedicated acute emergency trauma care facility for severe accidents and urgent polytrauma.",
-      "reception_phone": ["0172-2755454"],
+      "reception_phone": [
+        "0172-2755454"
+      ],
       "landmark": "Emergency sector road",
       "is_separate_building": true,
       "status": "published",
@@ -116,7 +127,9 @@
       "hindi_name": "नेहरू हॉस्पिटल / इमरजेंसी ब्लॉक",
       "punjabi_name": "ਨਹਿਰੂ ਹਸਪਤਾਲ / ਐਮਰਜੈਂਸੀ ਬਲਾਕ",
       "description": "Emergency hospital. Immediate triage care. Routine OPD card is NOT required to enter emergency.",
-      "reception_phone": ["0172-2755555"],
+      "reception_phone": [
+        "0172-2755555"
+      ],
       "landmark": "Central hospital complex",
       "is_separate_building": true,
       "status": "published",
@@ -130,7 +143,18 @@
       "hindi_name": "इंटरनल मेडिसिन / सामान्य चिकित्सा",
       "punjabi_name": "ਜਨਰਲ ਮੈਡੀਸਨ",
       "building_id": "new_opd",
-      "concerns": ["fever", "bukhar", "weakness", "kamzori", "diabetes", "sugar", "blood pressure", "bp", "chhati mein jalan", "general illness"],
+      "concerns": [
+        "fever",
+        "bukhar",
+        "weakness",
+        "kamzori",
+        "diabetes",
+        "sugar",
+        "blood pressure",
+        "bp",
+        "chhati mein jalan",
+        "general illness"
+      ],
       "notes": "Primary starting point in New OPD for adult patients.",
       "referral_needed": false,
       "status": "published",
@@ -142,7 +166,16 @@
       "hindi_name": "पल्मोनरी मेडिसिन / छाती एवं सांस विभाग",
       "punjabi_name": "ਛਾਤੀ ਅਤੇ ਸਾਹ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["cough", "purani khansi", "asthma", "copd", "saans ki dikkat", "saans phoolna", "tb", "chest allergy"],
+      "concerns": [
+        "cough",
+        "purani khansi",
+        "asthma",
+        "copd",
+        "saans ki dikkat",
+        "saans phoolna",
+        "tb",
+        "chest allergy"
+      ],
       "notes": "New OPD block. Ask at help desk if Medicine referral is needed.",
       "referral_needed": false,
       "status": "published",
@@ -154,7 +187,15 @@
       "hindi_name": "हृदय रोग विभाग (कार्डियोलॉजी)",
       "punjabi_name": "ਦਿਲ ਦਾ ਰੋਗ ਵਿਭਾਗ",
       "building_id": "acc",
-      "concerns": ["dil ki bimari", "heart follow-up", "chest pain follow-up", "palpitations", "dil ki dhadkan", "angioplasty check", "valve problem"],
+      "concerns": [
+        "dil ki bimari",
+        "heart follow-up",
+        "chest pain follow-up",
+        "palpitations",
+        "dil ki dhadkan",
+        "angioplasty check",
+        "valve problem"
+      ],
       "notes": "Advanced Cardiac Centre (ACC) — ALAG BUILDING. Do not look inside New OPD.",
       "referral_needed": false,
       "status": "published",
@@ -166,7 +207,16 @@
       "hindi_name": "न्यूरोलॉजी (तंत्रिका व दिमाग)",
       "punjabi_name": "ਦਿਮਾਗ ਅਤੇ ਨਸਾਂ ਦਾ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["mirgi", "epilepsy", "seizures", "nerve", "haath kaanpna", "tremors", "numbness", "paralysis check"],
+      "concerns": [
+        "mirgi",
+        "epilepsy",
+        "seizures",
+        "nerve",
+        "haath kaanpna",
+        "tremors",
+        "numbness",
+        "paralysis check"
+      ],
       "notes": "Confirm OPD location and clinic room at New OPD ground floor desk.",
       "referral_needed": false,
       "status": "published",
@@ -178,7 +228,16 @@
       "hindi_name": "हड्डी एवं जोड़ रोग (ऑर्थोपेडिक्स)",
       "punjabi_name": "ਹੱਡੀਆਂ ਅਤੇ ਜੋੜਾਂ ਦਾ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["haddi", "joint", "ghutne", "kamar ki dikkat", "knee pain", "back pain", "fracture check", "arthritis"],
+      "concerns": [
+        "haddi",
+        "joint",
+        "ghutne",
+        "kamar ki dikkat",
+        "knee pain",
+        "back pain",
+        "fracture check",
+        "arthritis"
+      ],
       "notes": "Confirm room from New OPD help desk upon arrival.",
       "referral_needed": false,
       "status": "published",
@@ -190,7 +249,15 @@
       "hindi_name": "जनरल सर्जरी (शल्य चिकित्सा)",
       "punjabi_name": "ਜਨਰਲ ਸਰਜਰੀ",
       "building_id": "new_opd",
-      "concerns": ["hernia", "gallbladder", "operation wali dikkat", "pitta ki pathri", "gilti", "swelling", "lump"],
+      "concerns": [
+        "hernia",
+        "gallbladder",
+        "operation wali dikkat",
+        "pitta ki pathri",
+        "gilti",
+        "swelling",
+        "lump"
+      ],
       "notes": "New OPD block.",
       "referral_needed": false,
       "status": "published",
@@ -202,7 +269,15 @@
       "hindi_name": "गैस्ट्रोएंटरोलॉजी (लिवर एवं पेट)",
       "punjabi_name": "ਪੇਟ ਅਤੇ ਲਿਵਰ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["liver", "pet ki purani problem", "jaundice", "piliya", "hepatitis", "cirrhosis", "stomach burning"],
+      "concerns": [
+        "liver",
+        "pet ki purani problem",
+        "jaundice",
+        "piliya",
+        "hepatitis",
+        "cirrhosis",
+        "stomach burning"
+      ],
       "notes": "Ask at help desk if internal referral from Medicine is needed first.",
       "referral_needed": true,
       "status": "published",
@@ -214,7 +289,14 @@
       "hindi_name": "नेफ्रोलॉजी (गुर्दा रोग)",
       "punjabi_name": "ਗੁਰਦੇ ਦਾ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["kidney ki bimari", "gurda", "high creatinine", "dialysis", "swelling legs", "swelling face"],
+      "concerns": [
+        "kidney ki bimari",
+        "gurda",
+        "high creatinine",
+        "dialysis",
+        "swelling legs",
+        "swelling face"
+      ],
       "notes": "Ask at reception if initial Medicine referral is required.",
       "referral_needed": true,
       "status": "published",
@@ -226,7 +308,13 @@
       "hindi_name": "यूरोलॉजी (पेशाब व प्रोस्टेट)",
       "punjabi_name": "ਯੂਰੋਲੋਜੀ",
       "building_id": "new_opd",
-      "concerns": ["peshab ki pathri", "prostate", "kidney stone", "difficulty urinating", "peshab mein dard"],
+      "concerns": [
+        "peshab ki pathri",
+        "prostate",
+        "kidney stone",
+        "difficulty urinating",
+        "peshab mein dard"
+      ],
       "notes": "New OPD specialty; confirm clinic room on registration.",
       "referral_needed": false,
       "status": "published",
@@ -238,7 +326,14 @@
       "hindi_name": "प्रसूति एवं स्त्री रोग विभाग",
       "punjabi_name": "ਇਸਤਰੀ ਰੋਗ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["pregnancy", "periods", "mahila rog", "garbhvastha", "women health", "pcos"],
+      "concerns": [
+        "pregnancy",
+        "periods",
+        "mahila rog",
+        "garbhvastha",
+        "women health",
+        "pcos"
+      ],
       "notes": "Confirm clinic location and female registration counter in New OPD.",
       "referral_needed": false,
       "status": "published",
@@ -250,7 +345,13 @@
       "hindi_name": "बाल रोग विभाग (पीडियाट्रिक्स)",
       "punjabi_name": "ਬੱਚਿਆਂ ਦਾ ਵਿਭਾਗ",
       "building_id": "apc",
-      "concerns": ["bachche ki bimari", "child illness", "infant fever", "child development", "vaccination"],
+      "concerns": [
+        "bachche ki bimari",
+        "child illness",
+        "infant fever",
+        "child development",
+        "vaccination"
+      ],
       "notes": "Advanced Paediatric Centre (APC) — ALAG BUILDING. Located near Advanced Eye Centre.",
       "referral_needed": false,
       "status": "published",
@@ -262,7 +363,15 @@
       "hindi_name": "नेत्र रोग विभाग (आंखों की ओपीडी)",
       "punjabi_name": "ਅੱਖਾਂ ਦਾ ਵਿਭਾਗ",
       "building_id": "aec",
-      "concerns": ["aankhon ki problem", "eye problem", "dhundhla dikhna", "motiyabind", "cataract", "chashma", "glaucoma"],
+      "concerns": [
+        "aankhon ki problem",
+        "eye problem",
+        "dhundhla dikhna",
+        "motiyabind",
+        "cataract",
+        "chashma",
+        "glaucoma"
+      ],
       "notes": "Advanced Eye Centre (AEC) — ALAG BUILDING. Do not look in New OPD.",
       "referral_needed": false,
       "status": "published",
@@ -274,7 +383,15 @@
       "hindi_name": "ईएनटी (कान, नाक, गला)",
       "punjabi_name": "ਕੰਨ, ਨੱਕ, ਗਲਾ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["kaan", "naak", "gala", "ear pain", "throat infection", "nose bleed", "hearing problem"],
+      "concerns": [
+        "kaan",
+        "naak",
+        "gala",
+        "ear pain",
+        "throat infection",
+        "nose bleed",
+        "hearing problem"
+      ],
       "notes": "Confirm room from New OPD help desk.",
       "referral_needed": false,
       "status": "published",
@@ -286,7 +403,15 @@
       "hindi_name": "चर्म रोग विभाग (त्वचा व एलर्जी)",
       "punjabi_name": "ਚਮੜੀ ਦੇ ਰੋਗ",
       "building_id": "new_opd",
-      "concerns": ["khujli", "daane", "skin allergy", "rashes", "eczema", "fungal", "safed daag"],
+      "concerns": [
+        "khujli",
+        "daane",
+        "skin allergy",
+        "rashes",
+        "eczema",
+        "fungal",
+        "safed daag"
+      ],
       "notes": "New OPD location confirm.",
       "referral_needed": false,
       "status": "published",
@@ -298,7 +423,15 @@
       "hindi_name": "मनोचिकित्सा विभाग (मानसिक स्वास्थ्य)",
       "punjabi_name": "ਮਾਨਸਿਕ ਸਿਹਤ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["depression", "anxiety", "mental health", "ghabrahat", "neend na aana", "insomnia", "stress"],
+      "concerns": [
+        "depression",
+        "anxiety",
+        "mental health",
+        "ghabrahat",
+        "neend na aana",
+        "insomnia",
+        "stress"
+      ],
       "notes": "New OPD location confirm.",
       "referral_needed": false,
       "status": "published",
@@ -310,7 +443,14 @@
       "hindi_name": "दंत चिकित्सा विभाग (दांत व मुंह)",
       "punjabi_name": "ਦੰਦਾਂ ਦਾ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["daant", "munh ki problem", "tooth pain", "gum bleeding", "cavity", "jaw pain"],
+      "concerns": [
+        "daant",
+        "munh ki problem",
+        "tooth pain",
+        "gum bleeding",
+        "cavity",
+        "jaw pain"
+      ],
       "notes": "Oral Health Sciences department reception in New OPD block.",
       "referral_needed": false,
       "status": "published",
@@ -322,7 +462,14 @@
       "hindi_name": "हेमेटोलॉजी (रक्त विकार व ल्यूकेमिया)",
       "punjabi_name": "ਖੂਨ ਦੇ ਰੋਗ (ਹੀਮੈਟੋਲੋਜੀ)",
       "building_id": "new_opd",
-      "concerns": ["khoon ki bimari", "leukemia", "anemia", "low platelets", "blood cancer", "bleeding disorders"],
+      "concerns": [
+        "khoon ki bimari",
+        "leukemia",
+        "anemia",
+        "low platelets",
+        "blood cancer",
+        "bleeding disorders"
+      ],
       "notes": "Referral zaroori ho sakta hai. Inquire at Medicine registration desk first.",
       "referral_needed": true,
       "status": "published",
@@ -334,7 +481,13 @@
       "hindi_name": "ऑन्कोलॉजी (कैंसर चिकित्सा)",
       "punjabi_name": "ਕੈਂਸਰ ਵਿਭਾਗ",
       "building_id": "new_opd",
-      "concerns": ["cancer ki dikkat", "tumor", "chemotherapy follow-up", "radiotherapy", "biopsy follow-up"],
+      "concerns": [
+        "cancer ki dikkat",
+        "tumor",
+        "chemotherapy follow-up",
+        "radiotherapy",
+        "biopsy follow-up"
+      ],
       "notes": "Specialty determined by cancer type; confirm referral at Central Help Desk.",
       "referral_needed": true,
       "status": "published",
@@ -415,5 +568,291 @@
     "Bahut bleeding ya badi chot (Severe bleeding, major road trauma)",
     "Fit / daure ke baad hosh na aana (Unresponsive after a seizure)"
   ],
-  "emergency_instruction": "Turant Emergency staff ko batao. Routine OPD registration card ka wait mat karo!"
+  "emergency_instruction": "Turant Emergency staff ko batao. Routine OPD registration card ka wait mat karo!",
+  "patient_journey_steps": [
+    {
+      "step": 1,
+      "title": "Arrival at PGIMER Campus",
+      "hindi_title": "1. अस्पताल पहुंचना (सुबह 7:30 – 8:00 बजे)",
+      "punjabi_title": "1. ਹਸਪਤਾਲ ਪਹੁੰਚਣਾ (ਸਵੇਰੇ 7:30 – 8:00 ਵਜੇ)",
+      "desc": "Reach Gate No. 1 (Sector 12) for general New OPD clinics. For Heart, Eye, or Children's centers, enter via Gate No. 2. Arrive early to secure your token.",
+      "hindi_desc": "न्यू ओपीडी जाने के लिए गेट नंबर 1 (सेक्टर 12) से आएं। दिल, आंख या बच्चों के सेंटर के लिए गेट नंबर 2 नजदीक है। टोकन लेने के लिए सुबह 7:30 से 8:00 बजे तक पहुंचें।",
+      "punjabi_desc": "ਨਿਊ ਓਪੀਡੀ ਜਾਣ ਲਈ ਗੇਟ ਨੰਬਰ 1 ਤੋਂ ਆਓ। ਦਿਲ, ਅੱਖਾਂ ਜਾਂ ਬੱਚਿਆਂ ਦੇ ਸੈਂਟਰਾਂ ਲਈ ਗੇਟ 2 ਨੇੜੇ ਹੈ। ਸਮੇਂ ਸਿਰ ਟੋਕਨ ਲੈਣ ਲਈ ਸਵੇਰੇ 7:30 ਤੋਂ 8:00 ਵਜੇ ਪਹੁੰਚੋ।",
+      "tip": "Carry valid photo ID (Aadhaar/Voter ID) and ₹10 cash or UPI for registration fee.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "step": 2,
+      "title": "Get Registration Token",
+      "hindi_title": "2. टोकन मशीन से टोकन लेना",
+      "punjabi_title": "2. ਟੋਕਨ ਮਸ਼ੀਨ ਤੋਂ ਟੋਕਨ ਪ੍ਰਾਪਤ ਕਰਨਾ",
+      "desc": "Go to New OPD Ground Floor. Collect a printed token from the automatic dispenser machine. If pre-registered online, head directly to Counter No. 1.",
+      "hindi_desc": "न्यू ओपीडी के ग्राउंड फ्लोर पर ऑटोमैटिक मशीन से टोकन पर्ची लें। यदि घर से ऑनलाइन प्री-रजिस्ट्रेशन किया है, तो सीधे काउंटर नंबर 1 पर जाएं।",
+      "punjabi_desc": "ਨਿਊ ਓਪੀਡੀ ਦੇ ਗਰਾਊਂਡ ਫਲੋਰ 'ਤੇ ਟੋਕਨ ਮਸ਼ੀਨ ਤੋਂ ਪਰਚੀ ਲਵੋ। ਜੇਕਰ ਆਨਲਾਈਨ ਪ੍ਰੀ-ਰਜਿਸਟ੍ਰੇਸ਼ਨ ਕੀਤੀ ਹੈ, ਤਾਂ ਸਿੱਧੇ ਕਾਊਂਟਰ ਨੰਬਰ 1 'ਤੇ ਜਾਓ।",
+      "tip": "Senior citizens and physically challenged patients have priority facilitation counters.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "step": 3,
+      "title": "CR Card Generation & Fee Payment",
+      "hindi_title": "3. CR कार्ड व टोकन सत्यापन (फीस ₹10)",
+      "punjabi_title": "3. ਸੀਆਰ ਕਾਰਡ ਅਤੇ ਫੀਸ (₹10)",
+      "desc": "Watch the digital LED screen for your token number. Approach the allotted counter, present patient ID, pay ₹10 fee, and receive your permanent 12-digit CR Number & OPD slip.",
+      "hindi_desc": "स्क्रीन पर अपना टोकन नंबर देखें। संबंधित काउंटर पर जाएं, ₹10 फीस दें। आपको 12 अंकों का पक्का CR नंबर और डॉक्टर की ओपीडी पर्ची मिलेगी।",
+      "punjabi_desc": "ਡਿਜੀਟਲ ਸਕ੍ਰੀਨ 'ਤੇ ਆਪਣਾ ਟੋਕਨ ਨੰਬਰ ਦੇਖੋ। ਕਾਊਂਟਰ 'ਤੇ ਜਾ ਕੇ ₹10 ਫੀਸ ਦਿਓ ਅਤੇ ਆਪਣਾ ਪੱਕਾ 12 ਅੰਕਾਂ ਦਾ ਸੀਆਰ ਕਾਰਡ ਲਵੋ।",
+      "tip": "Never lose your CR card. Returning patients must never make a duplicate card—bring your existing CR number.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "step": 4,
+      "title": "Proceed to Allotted Floor & Room",
+      "hindi_title": "4. पर्ची पर लिखे फ्लोर और कमरे में जाना",
+      "punjabi_title": "4. ਪਰਚੀ ਵਾਲੇ ਫਲੋਰ ਤੇ ਕਮਰੇ ਵਿੱਚ ਜਾਣਾ",
+      "desc": "Check the Room Number and Floor stamped on your OPD slip. Take the stairs/lifts to that floor. Submit your slip to the nursing station outside the doctor's room.",
+      "hindi_desc": "अपनी ओपीडी पर्ची पर लिखा कमरा नंबर और फ्लोर देखें। लिफ्ट या सीढ़ियों से उस फ्लोर पर जाएं और डॉक्टर के कमरे के बाहर स्टाफ/नर्स को पर्ची जमा करवाएं।",
+      "punjabi_desc": "ਆਪਣੀ ਪਰਚੀ 'ਤੇ ਲਿਖਿਆ ਕਮਰਾ ਨੰਬਰ ਅਤੇ ਫਲੋਰ ਦੇਖੋ। ਉੱਥੇ ਜਾ ਕੇ ਡਾਕਟਰ ਦੇ ਕਮਰੇ ਦੇ ਬਾਹਰ ਨਰਸ ਨੂੰ ਆਪਣੀ ਪਰਚੀ ਦਿਓ।",
+      "tip": "Consultations happen in sequence of entry/appointment. Keep previous medical files and discharge slips ready in hand.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "step": 5,
+      "title": "Doctor Consultation & Investigation Slips",
+      "hindi_title": "5. डॉक्टर से परामर्श व जांच पर्ची लेना",
+      "punjabi_title": "5. ਡਾਕਟਰ ਨਾਲ ਸਲਾਹ ਅਤੇ ਟੈਸਟ ਪਰਚੀ",
+      "desc": "Doctor examines the patient and writes diagnoses, medicines, and any required blood/radiology investigations. Ensure you ask when the next follow-up is scheduled.",
+      "hindi_desc": "डॉक्टर मरीज की जांच करेंगे और दवाइयां या टेस्ट लिखेंगे। डॉक्टर से यह जरूर पूछें कि दोबारा किस दिन दिखाना है।",
+      "punjabi_desc": "ਡਾਕਟਰ ਮਰੀਜ਼ ਦੀ ਜਾਂਚ ਕਰਕੇ ਦਵਾਈਆਂ ਜਾਂ ਟੈਸਟ ਲਿਖਣਗੇ। ਅਗਲੀ ਵਾਰ ਕਿਸ ਦਿਨ ਆਉਣਾ ਹੈ, ਇਹ ਜ਼ਰੂਰ ਪੁੱਛੋ।",
+      "tip": "Ask the 4 golden sample questions before leaving: Fasting needed? Stop medicines? Where is sample lab?",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "step": 6,
+      "title": "Sample Labs & AMRIT Discounted Pharmacy",
+      "hindi_title": "6. सैंपल जमा करवाना व सस्ती दवाई लेना",
+      "punjabi_title": "6. ਸੈਂਪਲ ਲੈਬ ਅਤੇ ਸਸਤੀ ਦਵਾਈ (AMRIT)",
+      "desc": "For routine blood/urine, visit Room 127 (1st Floor). Pay lab fees at billing counters. Purchase prescribed medicines at in-campus AMRIT pharmacies (50%–70% cheaper than outside chemists).",
+      "hindi_desc": "खून/पेशाब जांच के लिए रूम 127 (फर्स्ट फ्लोर) जाएं। दवाइयां अस्पताल परिसर के अंदर मौजूद AMRIT फार्मेसी से खरीदें, जहां 50% से 70% तक छूट मिलती है।",
+      "punjabi_desc": "ਖੂਨ/ਪਿਸ਼ਾਬ ਟੈਸਟ ਲਈ ਰੂਮ 127 (ਪਹਿਲੀ ਮੰਜ਼ਿਲ) ਜਾਓ। ਦਵਾਈਆਂ ਕੈਂਪਸ ਅੰਦਰ ਅੰਮ੍ਰਿਤ (AMRIT) ਫਾਰਮੇਸੀ ਤੋਂ ਲਵੋ ਜਿੱਥੇ ਭਾਰੀ ਛੋਟ ਮਿਲਦੀ ਹੈ।",
+      "tip": "Avoid private medical stores outside the gate that push expensive non-generic brands.",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  ],
+  "new_opd_floor_directory": [
+    {
+      "floor": "Ground Floor",
+      "hindi_floor": "ग्राउंड फ्लोर (भू-तल)",
+      "punjabi_floor": "ਗਰਾਊਂਡ ਫਲੋਰ (ਹੇਠਲੀ ਮੰਜ਼ਿਲ)",
+      "services": [
+        "Central OPD Registration Counters (Tokens, New & Old Patient cards)",
+        "Counter No. 1: Online Pre-Registration Verification Window",
+        "Central 'May I Help You' / Inquiry Desk",
+        "Central Billing & Cash Counters",
+        "Room 25: Therapeutic Drug Monitoring (TDM) & Special Drug Lab",
+        "General waiting hall, drinking water & public washrooms"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "floor": "1st Floor",
+      "hindi_floor": "पहला फ्लोर (1st Floor)",
+      "punjabi_floor": "ਪਹਿਲੀ ਮੰਜ਼ਿਲ (1st Floor)",
+      "services": [
+        "Room 127: Central Routine Blood & Urine Sample Collection Lab (Block C)",
+        "Physical Medicine and Rehabilitation (PMR)",
+        "General Surgery sub-specialty clinics",
+        "Surgical dressing and minor procedure rooms"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "floor": "2nd Floor",
+      "hindi_floor": "दूसरा फ्लोर (2nd Floor)",
+      "punjabi_floor": "ਦੂਜੀ ਮੰਜ਼ਿਲ (2nd Floor)",
+      "services": [
+        "Obstetrics & Gynaecology (Women's Health, Antenatal & Infertility)",
+        "Clinical Immunology & Rheumatology (Joint & autoimmune diseases)",
+        "Endocrinology & Endocrine Surgery (Diabetes, Thyroid)",
+        "Psychiatry & Mental Health Consultation (Blocks A & B)",
+        "Jan Aushadhi Generic Medical Store (Level 2)"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "floor": "3rd Floor",
+      "hindi_floor": "तीसरा फ्लोर (3rd Floor)",
+      "punjabi_floor": "ਤੀਜੀ ਮੰਜ਼ਿਲ (3rd Floor)",
+      "services": [
+        "Internal Medicine Units 1, 2, 3, 4, 5, 6 (Blocks A and B)",
+        "Cardiology routine follow-up consultations",
+        "Geriatric (Elderly care) specialty clinics",
+        "Pulmonary Medicine (Chest & Respiratory allergy consultations)"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "floor": "4th Floor",
+      "hindi_floor": "चौथा फ्लोर (4th Floor)",
+      "punjabi_floor": "ਚੌਥੀ ਮੰਜ਼ਿਲ (4th Floor)",
+      "services": [
+        "Gastroenterology & Hepatology (Liver, stomach, jaundice, hepatitis)",
+        "Plastic Surgery & Burn / Cleft Palate rehabilitation (Block C)",
+        "Pre-Anaesthesia Checkup (PAC) Clinic (Block B)",
+        "Surgical gastroenterology follow-ups"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "floor": "5th Floor",
+      "hindi_floor": "पांचवां फ्लोर (5th Floor)",
+      "punjabi_floor": "ਪੰਜਵੀਂ ਮੰਜ਼ਿਲ (5th Floor)",
+      "services": [
+        "Medical Oncology & Chemotherapy Day Care guidance",
+        "Clinical Haematology (Blood cancer, thalassemia, leukemia)",
+        "Pain Clinic & Palliative Care Units (Blocks C & D)",
+        "Ophthalmology specialized follow-up desks"
+      ],
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  ],
+  "amrit_pharmacies": [
+    {
+      "id": "amrit_nehru",
+      "name": "AMRIT Pharmacy - Nehru Hospital",
+      "location": "Nehru Hospital (Block A, Ground Floor near main entrance)",
+      "timings": "24 Hours (7 Days a week)",
+      "discounts": "50% to 70% discount on branded medicines, cancer drugs, and surgical items",
+      "phone": "0172-2755555 (Ext. Pharmacy)",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "amrit_emergency",
+      "name": "AMRIT Pharmacy - Emergency Block",
+      "location": "Inside Emergency Triage Hall, Ground Floor",
+      "timings": "24 Hours (24x7 Immediate Acute Relief)",
+      "discounts": "50% to 70% subsidized emergency life-saving medications, stents, and surgical disposables",
+      "phone": "0172-2755555",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "amrit_acc",
+      "name": "AMRIT Pharmacy - Advanced Cardiac Centre (ACC)",
+      "location": "ACC Building, Ground Floor Entrance",
+      "timings": "8:00 AM – 8:00 PM (Emergency 24x7)",
+      "discounts": "40% to 70% discount on specialized cardiology drugs, blood thinners, pacemakers, and cardiac consumables",
+      "phone": "0172-2755353",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "amrit_aec",
+      "name": "AMRIT Pharmacy & Opticals - Advanced Eye Centre (AEC)",
+      "location": "AEC Ground Floor Lobby",
+      "timings": "8:00 AM – 5:00 PM",
+      "discounts": "40% to 60% subsidized intraocular lenses (IOLs), prescription eye drops, and optical glasses",
+      "phone": "0172-2755252",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "amrit_apc",
+      "name": "AMRIT Pharmacy - Advanced Paediatric Centre (APC)",
+      "location": "APC Building, Ground Floor OPD area",
+      "timings": "8:00 AM – 8:00 PM",
+      "discounts": "50% to 70% discount on pediatric formulations, syrups, drops, and newborn ICU consumables",
+      "phone": "0172-2755858",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "jan_aushadhi_opd",
+      "name": "Pradhan Mantri Jan Aushadhi Kendra - New OPD",
+      "location": "New OPD Block, Level 2 (2nd Floor)",
+      "timings": "8:00 AM – 4:00 PM (Monday–Saturday)",
+      "discounts": "Affordable top-quality unbranded generic medicines (up to 80% cheaper)",
+      "phone": "In-campus desk",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "jan_aushadhi_gol_market",
+      "name": "Jan Aushadhi Store - Gol Market",
+      "location": "Shop No. 7, Gol Market, PGIMER Campus",
+      "timings": "8:30 AM – 6:00 PM",
+      "discounts": "50% to 80% cheaper generic alternatives for daily maintenance drugs (BP, Diabetes, Thyroid)",
+      "phone": "In-campus desk",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  ],
+  "sarais_and_amenities": [
+    {
+      "id": "infosys_sarai",
+      "name": "Infosys Red Cross Sarai",
+      "type": "Hospital-Managed On-Site Sarai",
+      "location": "Inside PGIMER Campus (near Research Block)",
+      "capacity": "Over 300 beds (Dormitories & Private Rooms)",
+      "booking_mode": "Online portal and on-site booking counter at Sarai reception",
+      "charges": "Nominal subsidized rates (₹50–₹100 for dorm bed, ₹300–₹500 for room)",
+      "eligibility": "Requires valid PGIMER patient OPD card or indoor admission slip",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "rotary_sarai",
+      "name": "Rotary Sarai PGIMER",
+      "type": "Trust-Run On-Campus Accommodation",
+      "location": "Inside PGIMER Campus complex",
+      "capacity": "Dormitory beds and family rooms for patient attendants",
+      "booking_mode": "Inquire at Sarai desk with treatment card",
+      "charges": "Subsidized maintenance charge",
+      "eligibility": "PGI patient attendants only",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "hans_raj_sarai",
+      "name": "Hans Raj Dharamshala",
+      "type": "Nearby Trust Dharamshala",
+      "location": "Sector 12, Chandigarh (Directly adjacent to PGIMER Gate)",
+      "capacity": "Rooms and shared halls for outstation families",
+      "booking_mode": "Walk-in registration at reception",
+      "charges": "Budget-friendly nominal charity rates",
+      "eligibility": "Patient slip required",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "langar_points",
+      "name": "Free Community Meals (Langar Services)",
+      "type": "Free Humanitarian Meal Distribution",
+      "location": "Outside Gate No. 1 and near Gurdwara Sahib outside PGI perimeter",
+      "timings": "Afternoon (12:30 PM – 2:30 PM) & Evening (7:30 PM – 9:00 PM)",
+      "charges": "100% Free (Seva for all patients and attendants)",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    },
+    {
+      "id": "drinking_water_toilets",
+      "name": "RO Clean Drinking Water & Public Toilets",
+      "type": "Public Utility",
+      "location": "Every floor of New OPD (near central lift lobby), Nehru Hospital, and ACC/APC waiting halls",
+      "charges": "Free public access",
+      "status": "published",
+      "verified_at": "2026-11-26"
+    }
+  ]
 }

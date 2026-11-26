@@ -3,8 +3,9 @@ import { Search, Building, AlertCircle, Phone, Clock, Info, X, ChevronDown, Shie
 import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 import { detectEmergency, normalizeQuery } from '../utils/emergencyInterception';
+import { PatientJourneyWizard } from './PatientJourneyWizard';
 
-export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmergency }) => {
+export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmergency, journeySteps = [] }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBuilding, setSelectedBuilding] = useState('all');
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
@@ -94,6 +95,11 @@ export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmerg
 
   return (
     <div className="space-y-4 pb-20 md:pb-6">
+      {/* 6-Step Chronological Patient Journey Wizard */}
+      {journeySteps && journeySteps.length > 0 && (
+        <PatientJourneyWizard steps={journeySteps} />
+      )}
+
       {/* Search Input */}
       <div className="relative sticky top-[57px] md:top-[65px] z-20 pt-1 pb-1" role="search">
         <label htmlFor="dept-search-input" className="sr-only">

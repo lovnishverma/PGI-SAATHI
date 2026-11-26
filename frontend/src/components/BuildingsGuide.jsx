@@ -2,8 +2,10 @@ import React from 'react';
 import { Building2, Phone, MapPin, AlertCircle, Star, Navigation } from 'lucide-react';
 import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
+import { FloorDirectory } from './FloorDirectory';
+import { AmenitiesGuide } from './AmenitiesGuide';
 
-export const BuildingsGuide = ({ buildings }) => {
+export const BuildingsGuide = ({ buildings = [], floorDirectory = [], pharmacies = [], sarais = [] }) => {
   const { lang, highContrast } = useLanguage();
 
   const getBuildingTitle = (b) => {
@@ -70,6 +72,16 @@ export const BuildingsGuide = ({ buildings }) => {
           ))}
         </div>
       </div>
+
+      {/* New OPD Floor-by-Floor Directory */}
+      {floorDirectory && floorDirectory.length > 0 && (
+        <FloorDirectory floorData={floorDirectory} />
+      )}
+
+      {/* AMRIT Pharmacies and Sarais Guide */}
+      {(pharmacies?.length > 0 || sarais?.length > 0) && (
+        <AmenitiesGuide pharmacies={pharmacies} sarais={sarais} />
+      )}
 
       {/* Buildings Cards */}
       <div className="grid grid-cols-1 gap-3.5">
