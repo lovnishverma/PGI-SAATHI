@@ -7,7 +7,7 @@
 [![GitHub Pages](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-2ea44f?logo=github)](https://www.lovnishverma.in/PGI-SAATHI/)
 [![Backend: Firebase Spark Plan](https://img.shields.io/badge/Backend-Firebase%20Spark%20Plan%20(Free%20Forever)-FFA611.svg)](https://firebase.google.com/)
 [![Architecture: Serverless](https://img.shields.io/badge/Architecture-100%25%20Serverless-green.svg)](ARCHITECTURE.md)
-[![Status: MVP Development](https://img.shields.io/badge/Status-MVP%20Development-orange.svg)](ROADMAP.md)
+[![Status: Release Ready v2.2.0](https://img.shields.io/badge/Status-Release%20Ready%20v2.2.0-brightgreen.svg)](ROADMAP.md)
 
 ---
 
@@ -74,7 +74,13 @@ Detailed sprint milestones, task assignments, and pull-request procedures are ou
 * 📝 **Offline Preparation Checklist**: Saves required documents in device local storage without transmitting personal data, with one-tap WhatsApp checklist sharing.
 * 🗣️ **Help Desk Pocket Phrases**: Multilingual audio-enabled enquiry phrases in Hindi, Punjabi, and English for asking directions at hospital reception.
 * 🛡️ **Strict PII Privacy Protection**: Client- and backend-level regex redaction intercepting phone numbers, 12-digit Aadhaar, and CR numbers in feedback submissions.
-* 🧪 **Automated Quality Testing**: 40 comprehensive automated test suites (`node --test tests/*.test.mjs`) guarding schemas, security, clinical keywords, and translations.
+* 🚨 **Off-Campus Vaccine & Rabies Deflection**: Real-time search interception warning patients that PGIMER does not run routine outpatient Anti-Rabies (ARV) or Yellow Fever clinics, deflecting to GMSH-16 (24x7 Emergency ARV) and Civil Hospital Sector 22.
+* 👶 **Dedicated Paediatric Immunization Clinic**: Timings (8:00 AM – 12:00 PM Mon–Fri) and reception contacts for child vaccinations at Advanced Paediatric Centre (APC) Ground Floor.
+* 🅿️ **MLCP Parking & Clamping Rules**: Rates, early morning capacity cut-offs (fills by 8:30 AM), and strict ₹1,000+ towing/clamping warnings for unauthorized parking.
+* 🏧 **Strategic 24x7 Campus ATMs**: Precise on-ground locations of State Bank of India, Punjab National Bank, and Union Bank ATMs across New OPD, Nehru Hospital, and Eye Centre.
+* 🚓 **Police Post & Rotary Eye Bank**: Direct contacts for PGI Police Post (0172-2928012 / 9779580940) for lost belongings, and 24x7 Rotary PGI Eye Bank (`7087008200`) for posthumous eye donations.
+* 🕊️ **Hearse & Mortuary Transport**: Clear directory of UT Red Cross hearse vans (0172-2744188), Punjab/Haryana Red Cross inter-state lines, and Senior Medical Officer control room numbers.
+* 🧪 **Automated Quality Testing**: 49 comprehensive automated unit and regression tests (`node --test tests/*.test.mjs`) guarding schemas, security, clinical keywords, deflection alerts, and translations.
 * 📴 **100% Offline-First PWA**: Versioned service worker caching (`pgi-saathi-v2.2.0`) enabling full navigation inside hospital basements with zero network signal.
 
 ---
