@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { LanguageProvider } from './context/LanguageContext';
+import { useLanguage } from './context/useLanguage';
 import { Header } from './components/Header';
 import { BottomNav } from './components/BottomNav';
 import { DepartmentFinder } from './components/DepartmentFinder';
@@ -10,7 +11,9 @@ import { HelpDeskPhrases } from './components/HelpDeskPhrases';
 import { EmergencyModal } from './components/EmergencyModal';
 import { GoldenRules } from './components/GoldenRules';
 import { InstallPrompt } from './components/InstallPrompt';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { dataService } from './services/dataService';
+import { WifiOff } from 'lucide-react';
 
 function MainApp() {
   const [activeTab, setActiveTab] = useState('finder');
@@ -29,8 +32,23 @@ function MainApp() {
   const [lostAdvice, setLostAdvice] = useState('');
   const [emergencyData, setEmergencyData] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isOnline, setIsOnline] = useState(() => typeof navigator !== 'undefined' ? navigator.onLine : true);
 
   const { t, highContrast } = useLanguage();
+
+  // Monitor connectivity state
+  useEffect(() => {
+    const handleOnline = () => setIsOnline(true);
+    const handleOffline = () => setIsOnline(false);
+
+    window.addEventListener('online', handleOnline);
+    window.addEventListener('offline', handleOffline);
+
+    return () => {
+      window.removeEventListener('online', handleOnline);
+      window.removeEventListener('offline', handleOffline);
+    };
+  }, []);
 
   useEffect(() => {
     async function loadData() {
@@ -78,6 +96,18 @@ function MainApp() {
     <div className={`min-h-screen flex flex-col transition-colors ${
       highContrast ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'
     }`}>
+      {/* Offline Status Alert Banner */}
+      {!isOnline && (
+        <aside 
+          role="status" 
+          aria-live="polite"
+          className="bg-amber-600 text-white text-xs px-4 py-2 text-center font-semibold flex items-center justify-center gap-2 shadow-sm"
+        >
+          <WifiOff className="w-3.5 h-3.5 shrink-0" aria-hidden="true" />
+          <span>You are currently offline. Showing verified local hospital directory and guidance.</span>
+        </aside>
+      )}
+
       {/* Sticky Header */}
       <Header
         onOpenEmergency={() => setIsEmergencyOpen(true)}
@@ -94,7 +124,7 @@ function MainApp() {
           <div className="flex flex-col items-center justify-center py-24 space-y-3">
             <div className="w-10 h-10 border-4 border-blue-600 border-t-transparent rounded-full animate-spin" />
             <p className="text-xs font-semibold text-slate-500">
-              Loading PGI Saathi directory...
+              Loading verified PGI Saathi directory...
             </p>
           </div>
         ) : (
@@ -130,6 +160,7 @@ function MainApp() {
                   departments={departments}
                   buildings={buildings}
                   schedule={schedule}
+                  onOpenEmergency={() => setIsEmergencyOpen(true)}
                 />
               )}
               {activeTab === 'buildings' && (
@@ -152,11 +183,14 @@ function MainApp() {
           </div>
         )}
 
-        {/* Global Footer Disclaimer */}
-        <footer className="mt-12 mb-20 md:mb-6 text-center text-[11px] text-slate-400 px-4 leading-relaxed border-t border-slate-200/60 pt-6">
+        {/* Global Footer Disclaimer & Provenance Metadata */}
+        <footer className="mt-12 mb-20 md:mb-6 text-center text-[11px] text-slate-400 px-4 leading-relaxed border-t border-slate-200/60 pt-6 space-y-1.5">
           <p>{t('disclaimer')}</p>
-          <p className="mt-1 font-medium text-slate-500">
-            PGI Saathi • Independent Open Source Project • 100% Serverless
+          <p className="font-medium text-slate-500">
+            Last Verified: 2026-11-20 • Source: PGIMER Official OPD Schedule & Patient Welfare Guide 2026
+          </p>
+          <p className="text-[10px] text-slate-400">
+            PGI Saathi • Independent Open Source Project • 100% Serverless Offline PWA
           </p>
         </footer>
       </main>
@@ -176,8 +210,10 @@ function MainApp() {
 
 export default function App() {
   return (
-    <LanguageProvider>
-      <MainApp />
-    </LanguageProvider>
+    <ErrorBoundary>
+      <LanguageProvider>
+        <MainApp />
+      </LanguageProvider>
+    </ErrorBoundary>
   );
 }

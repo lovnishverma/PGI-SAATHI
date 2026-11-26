@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckSquare, Square, RotateCcw, ShieldCheck, UserCheck, Share2 } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 
 export const VisitChecklist = ({ checklistItems }) => {

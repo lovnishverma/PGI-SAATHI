@@ -1,6 +1,6 @@
 import React from 'react';
 import { Building2, Phone, MapPin, AlertCircle, Star, Navigation } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 
 export const BuildingsGuide = ({ buildings }) => {

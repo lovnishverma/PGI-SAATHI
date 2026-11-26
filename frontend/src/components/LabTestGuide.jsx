@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlaskConical, AlertTriangle, MapPin, HelpCircle, ArrowRight, CheckCircle2 } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 
 export const LabTestGuide = ({ protocols, fourQuestions }) => {

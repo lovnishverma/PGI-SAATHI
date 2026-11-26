@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search, Building2, CheckSquare, FlaskConical, HelpCircle } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 
 export const BottomNav = ({ activeTab, setActiveTab }) => {
   const { t, highContrast } = useLanguage();

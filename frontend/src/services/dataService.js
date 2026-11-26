@@ -1,118 +1,201 @@
-import { db, isFirebaseConfigured } from './firebase';
-import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
-import { localSeedData } from '../data/localSeedData';
+import { authoritativeDirectory, filterPublished } from '../data/authoritativeDirectory';
+import { validateFeedbackPrivacy } from '../utils/privacyValidator';
+
+// Lazy Firebase loader to keep initial bundle lean on slow networks
+let cachedDb = null;
+let cachedAuth = null;
+let firebaseInitialized = false;
+
+async function getFirebaseInstances() {
+  if (firebaseInitialized) {
+    return { db: cachedDb, auth: cachedAuth };
+  }
+
+  const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+  const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
+
+  if (apiKey && projectId) {
+    try {
+      const { initializeApp } = await import('firebase/app');
+      const { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } = await import('firebase/firestore');
+      const { getAuth } = await import('firebase/auth');
+
+      const app = initializeApp({
+        apiKey,
+        authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+        projectId,
+        storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+        appId: import.meta.env.VITE_FIREBASE_APP_ID
+      });
+
+      cachedDb = initializeFirestore(app, {
+        localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() })
+      });
+      cachedAuth = getAuth(app);
+      firebaseInitialized = true;
+      return { db: cachedDb, auth: cachedAuth };
+    } catch (err) {
+      console.warn("[Firebase] Could not initialize live Firestore, using verified snapshot:", err);
+    }
+  }
+
+  firebaseInitialized = true;
+  return { db: null, auth: null };
+}
 
 export const dataService = {
+  /**
+   * Fetches published departments with fallback to authoritative snapshot.
+   */
   async getDepartments() {
-    if (isFirebaseConfigured && db) {
+    const { db } = await getFirebaseInstances();
+    if (db) {
       try {
-        const querySnapshot = await getDocs(collection(db, 'departments'));
-        if (!querySnapshot.empty) {
-          return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const { collection, getDocs, query, where } = await import('firebase/firestore');
+        const q = query(collection(db, 'departments'), where('status', '==', 'published'));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         }
       } catch (err) {
-        console.warn("Falling back to local departments due to Firestore error:", err);
+        console.warn("[dataService] Firestore read failed, serving verified local snapshot:", err);
       }
     }
-    return localSeedData.departments;
+    return filterPublished(authoritativeDirectory.departments);
   },
 
+  /**
+   * Fetches published buildings with fallback to authoritative snapshot.
+   */
   async getBuildings() {
-    if (isFirebaseConfigured && db) {
+    const { db } = await getFirebaseInstances();
+    if (db) {
       try {
-        const querySnapshot = await getDocs(collection(db, 'buildings'));
-        if (!querySnapshot.empty) {
-          return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        const { collection, getDocs, query, where } = await import('firebase/firestore');
+        const q = query(collection(db, 'buildings'), where('status', '==', 'published'));
+        const snapshot = await getDocs(q);
+        if (!snapshot.empty) {
+          return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         }
       } catch (err) {
-        console.warn("Falling back to local buildings due to Firestore error:", err);
+        console.warn("[dataService] Firestore read failed, serving verified local snapshot:", err);
       }
     }
-    return localSeedData.buildings;
+    return filterPublished(authoritativeDirectory.buildings);
   },
 
   async getOPDSchedule() {
-    return localSeedData.opd_schedule;
+    const { db } = await getFirebaseInstances();
+    if (db) {
+      try {
+        const { doc, getDoc } = await import('firebase/firestore');
+        const docSnap = await getDoc(doc(db, 'system_config', 'opd_schedule'));
+        if (docSnap.exists() && docSnap.data().status === 'published') {
+          return docSnap.data();
+        }
+      } catch (err) {
+        console.warn("[dataService] Firestore schedule read failed:", err);
+      }
+    }
+    return authoritativeDirectory.opd_schedule;
   },
 
   async getSampleProtocols() {
-    return localSeedData.sample_collection;
+    return filterPublished(authoritativeDirectory.sample_collection);
   },
 
   async getSampleFourQuestions() {
-    return localSeedData.sample_four_questions;
+    return authoritativeDirectory.sample_four_questions;
   },
 
   async getEmergencyGuidance() {
     return {
-      warning_signs: localSeedData.emergency_warning_signs,
-      instruction: localSeedData.emergency_instruction
+      warning_signs: authoritativeDirectory.emergency_warning_signs,
+      instruction: authoritativeDirectory.emergency_instruction
     };
   },
 
   async getHelpDeskPhrases() {
-    return localSeedData.help_desk_phrases;
+    return authoritativeDirectory.help_desk_phrases;
   },
 
   async getGoldenRules() {
-    return localSeedData.golden_rules;
+    return filterPublished(authoritativeDirectory.golden_rules);
   },
 
   async getCardMakingProcess() {
-    return localSeedData.card_making_process;
+    return authoritativeDirectory.card_making_process;
   },
 
   async getChecklistItems() {
-    return localSeedData.checklist_items;
+    return authoritativeDirectory.checklist_items;
   },
 
   async getImportantNumbers() {
-    return localSeedData.important_numbers;
+    return authoritativeDirectory.important_numbers;
   },
 
   async getOfficialLinks() {
-    return localSeedData.official_links;
+    return authoritativeDirectory.official_links;
   },
 
   async getLostAdvice() {
-    return localSeedData.lost_patient_advice;
+    return authoritativeDirectory.lost_patient_advice;
   },
 
+  /**
+   * Submits user correction or feedback with strict privacy validation
+   * and honest outcome transparency.
+   */
   async submitFeedback({ category, message }) {
-    if (!message || message.trim().length < 5) {
-      throw new Error("Message must be at least 5 characters.");
-    }
-    
-    // Privacy check: disallow common PII words
-    const lower = message.toLowerCase();
-    if (lower.includes('cr number') || lower.includes('aadhaar') || lower.includes('cr no')) {
-      throw new Error("Please do not include CR numbers or patient identification for privacy.");
+    // 1. Strict Privacy & Identifier Sanitization
+    const validation = validateFeedbackPrivacy(message);
+    if (!validation.isValid) {
+      throw new Error(validation.error);
     }
 
-    if (isFirebaseConfigured && db) {
+    const { db } = await getFirebaseInstances();
+
+    // 2. Cloud Firestore Submission (when configured)
+    if (db) {
       try {
+        const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
         const docRef = await addDoc(collection(db, 'feedback'), {
           category: category || 'general',
           message: message.trim(),
           created_at: serverTimestamp(),
           status: 'pending'
         });
-        return { success: true, id: docRef.id };
+        return {
+          success: true,
+          persisted: true,
+          id: docRef.id,
+          message: "Report submitted to central review queue. Thank you for helping keep information accurate!"
+        };
       } catch (err) {
-        console.error("Failed to submit feedback to Firestore:", err);
+        console.error("[dataService] Failed to persist feedback to Firestore:", err);
       }
     }
 
-    // In local mock mode, save feedback in localStorage
-    const existing = JSON.parse(localStorage.getItem('pgi_saathi_feedback') || '[]');
-    const localId = 'mock_' + Date.now();
-    existing.push({
+    // 3. Offline / Unconfigured Fallback - Truthful Acknowledgment
+    const localQueue = JSON.parse(localStorage.getItem('pgi_saathi_feedback_queue') || '[]');
+    const localId = 'local_' + Date.now();
+    localQueue.push({
       id: localId,
-      category,
-      message,
-      created_at: new Date().toISOString()
+      category: category || 'general',
+      message: message.trim(),
+      created_at: new Date().toISOString(),
+      persisted: false
     });
-    localStorage.setItem('pgi_saathi_feedback', JSON.stringify(existing));
-    return { success: true, id: localId, mock: true };
+    localStorage.setItem('pgi_saathi_feedback_queue', JSON.stringify(localQueue));
+
+    return {
+      success: true,
+      persisted: false,
+      localQueued: true,
+      id: localId,
+      message: "Recorded in local device review log. (Cloud synchronization is currently offline; feedback has not been transmitted to hospital coordinators)."
+    };
   }
 };

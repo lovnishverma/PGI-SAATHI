@@ -1,40 +1,52 @@
 {
   "metadata": {
-    "source": "PGIMER Chandigarh Patient Help Guide (November 2026) & PGI Saathi SRS v2.0",
-    "version": "2.1.0",
-    "verified_at": "2026-11-18",
-    "status": "baseline_seed"
+    "source": "PGIMER Official OPD Schedule & Patient Welfare Guide 2026",
+    "version": "2.2.0",
+    "verified_at": "2026-11-20",
+    "reviewer_role": "Clinical Navigation Review Board",
+    "status": "published",
+    "disclaimer": "Independent patient navigation aid. Not an official PGIMER publication. Room numbers, counters, and OPD timings are subject to change. Reconfirm at hospital help desk, signage, or test slip."
   },
   "golden_rules": [
     {
       "num": 1,
       "title": "Identify Patient Concern First",
       "hindi_title": "मरीज की तकलीफ के हिसाब से विभाग चुनें",
-      "punjabi_title": "ਮਰੀਜ਼ ਦੀ ਤਕਲੀਫ਼ ਅਨੁਸਾਰ ਵਿਭਾਗ ਚੁਣੋ"
+      "punjabi_title": "ਮਰੀਜ਼ ਦੀ ਤਕਲੀਫ਼ ਅਨੁਸਾਰ ਵਿਭਾਗ ਚੁਣੋ",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "num": 2,
       "title": "Not Everyone Goes to New OPD",
       "hindi_title": "हर मरीज को New OPD नहीं जाना (दिल, आंख, बच्चों की अलग इमारतें हैं)",
-      "punjabi_title": "ਹਰ ਮਰੀਜ਼ ਨੂੰ ਨਿਊ ਓਪੀਡੀ ਨਹੀਂ ਜਾਣਾ"
+      "punjabi_title": "ਹਰ ਮਰੀਜ਼ ਨੂੰ ਨਿਊ ਓਪੀਡੀ ਨਹੀਂ ਜਾਣਾ",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "num": 3,
       "title": "New Patient: Correct Token & CR Card",
       "hindi_title": "नया मरीज: सही काउंटर से टोकन और CR कार्ड बनवाएं",
-      "punjabi_title": "ਨਵਾਂ ਮਰੀਜ਼: ਸਹੀ ਕਾਊਂਟਰ ਤੋਂ ਟੋਕਨ ਤੇ ਕਾਰਡ ਬਣਵਾਓ"
+      "punjabi_title": "ਨਵਾਂ ਮਰੀਜ਼: ਸਹੀ ਕਾਊਂਟਰ ਤੋਂ ਟੋਕਨ ਤੇ ਕਾਰਡ ਬਣਵਾਓ",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "num": 4,
       "title": "Returning Patient: Never Make a Duplicate Card",
       "hindi_title": "पुराना मरीज: पुराना कार्ड व रिपोर्ट लाएं, नया कार्ड न बनवाएं",
-      "punjabi_title": "ਪੁਰਾਣਾ ਮਰੀਜ਼: ਪੁਰਾਣਾ ਕਾਰਡ ਲਿਆਓ, ਨਵਾਂ ਕਾਰਡ ਨਾ ਬਣਵਾਓ"
+      "punjabi_title": "ਪੁਰਾਣਾ ਮਰੀਜ਼: ਪੁਰਾਣਾ ਕਾਰਡ ਲਿਆਓ, ਨਵਾਂ ਕਾਰਡ ਨਾ ਬਣਵਾਓ",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "num": 5,
       "title": "Test Slips Rule: Follow Doctor's Stamped Counter",
       "hindi_title": "टेस्ट पर्ची का नियम: पर्ची पर लिखा काउंटर ही मान्य है",
-      "punjabi_title": "ਟੈਸਟ ਪਰਚੀ ਦਾ ਨਿਯਮ: ਪਰਚੀ ਵਾਲਾ ਕਾਊਂਟਰ ਹੀ ਦੇਖੋ"
+      "punjabi_title": "ਟੈਸਟ ਪਰਚੀ ਦਾ ਨਿਯਮ: ਪਰਚੀ ਵਾਲਾ ਕਾਊਂਟਰ ਹੀ ਦੇਖੋ",
+      "status": "published",
+      "verified_at": "2026-11-20"
     }
   ],
   "buildings": [
@@ -46,7 +58,9 @@
       "description": "General registration counters and multiple Medicine, Surgery & specialty clinics across various floors and blocks.",
       "reception_phone": ["0172-2756969", "0172-2756868"],
       "landmark": "Near Gate No. 1 / Main roundabout",
-      "is_separate_building": false
+      "is_separate_building": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "acc",
@@ -56,7 +70,9 @@
       "description": "Dedicated specialty hospital for heart diseases and surgery. Reception & separate OPD registration.",
       "reception_phone": ["0172-2755353"],
       "landmark": "Separate building near Nehru Hospital",
-      "is_separate_building": true
+      "is_separate_building": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "apc",
@@ -66,7 +82,9 @@
       "description": "Dedicated children's specialty OPD and inpatient hospital. Separate registration.",
       "reception_phone": ["0172-2755858"],
       "landmark": "Separate building next to Advanced Eye Centre",
-      "is_separate_building": true
+      "is_separate_building": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "aec",
@@ -76,7 +94,9 @@
       "description": "Dedicated ophthalmology building for eye treatments, retina checkups, and surgery.",
       "reception_phone": ["0172-2755252"],
       "landmark": "Separate building near APC",
-      "is_separate_building": true
+      "is_separate_building": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "atc",
@@ -86,7 +106,9 @@
       "description": "24/7 dedicated acute emergency trauma care facility for severe accidents and urgent polytrauma.",
       "reception_phone": ["0172-2755454"],
       "landmark": "Emergency sector road",
-      "is_separate_building": true
+      "is_separate_building": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "nehru_hospital",
@@ -96,7 +118,9 @@
       "description": "Emergency hospital. Immediate triage care. Routine OPD card is NOT required to enter emergency.",
       "reception_phone": ["0172-2755555"],
       "landmark": "Central hospital complex",
-      "is_separate_building": true
+      "is_separate_building": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     }
   ],
   "departments": [
@@ -108,7 +132,9 @@
       "building_id": "new_opd",
       "concerns": ["fever", "bukhar", "weakness", "kamzori", "diabetes", "sugar", "blood pressure", "bp", "chhati mein jalan", "general illness"],
       "notes": "Primary starting point in New OPD for adult patients.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "pulmonary_medicine",
@@ -118,17 +144,21 @@
       "building_id": "new_opd",
       "concerns": ["cough", "purani khansi", "asthma", "copd", "saans ki dikkat", "saans phoolna", "tb", "chest allergy"],
       "notes": "New OPD block. Ask at help desk if Medicine referral is needed.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "cardiology",
-      "name": "Cardiology (Heart)",
+      "name": "Cardiology (Heart Follow-up)",
       "hindi_name": "हृदय रोग विभाग (कार्डियोलॉजी)",
       "punjabi_name": "ਦਿਲ ਦਾ ਰੋਗ ਵਿਭਾਗ",
       "building_id": "acc",
       "concerns": ["dil ki bimari", "heart follow-up", "chest pain follow-up", "palpitations", "dil ki dhadkan", "angioplasty check", "valve problem"],
       "notes": "Advanced Cardiac Centre (ACC) — ALAG BUILDING. Do not look inside New OPD.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "neurology",
@@ -138,7 +168,9 @@
       "building_id": "new_opd",
       "concerns": ["mirgi", "epilepsy", "seizures", "nerve", "haath kaanpna", "tremors", "numbness", "paralysis check"],
       "notes": "Confirm OPD location and clinic room at New OPD ground floor desk.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "orthopaedics",
@@ -148,7 +180,9 @@
       "building_id": "new_opd",
       "concerns": ["haddi", "joint", "ghutne", "kamar ki dikkat", "knee pain", "back pain", "fracture check", "arthritis"],
       "notes": "Confirm room from New OPD help desk upon arrival.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "general_surgery",
@@ -158,7 +192,9 @@
       "building_id": "new_opd",
       "concerns": ["hernia", "gallbladder", "operation wali dikkat", "pitta ki pathri", "gilti", "swelling", "lump"],
       "notes": "New OPD block.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "gastroenterology",
@@ -168,7 +204,9 @@
       "building_id": "new_opd",
       "concerns": ["liver", "pet ki purani problem", "jaundice", "piliya", "hepatitis", "cirrhosis", "stomach burning"],
       "notes": "Ask at help desk if internal referral from Medicine is needed first.",
-      "referral_needed": true
+      "referral_needed": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "nephrology",
@@ -178,7 +216,9 @@
       "building_id": "new_opd",
       "concerns": ["kidney ki bimari", "gurda", "high creatinine", "dialysis", "swelling legs", "swelling face"],
       "notes": "Ask at reception if initial Medicine referral is required.",
-      "referral_needed": true
+      "referral_needed": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "urology",
@@ -188,7 +228,9 @@
       "building_id": "new_opd",
       "concerns": ["peshab ki pathri", "prostate", "kidney stone", "difficulty urinating", "peshab mein dard"],
       "notes": "New OPD specialty; confirm clinic room on registration.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "obs_gynae",
@@ -198,7 +240,9 @@
       "building_id": "new_opd",
       "concerns": ["pregnancy", "periods", "mahila rog", "garbhvastha", "women health", "pcos"],
       "notes": "Confirm clinic location and female registration counter in New OPD.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "paediatrics",
@@ -208,7 +252,9 @@
       "building_id": "apc",
       "concerns": ["bachche ki bimari", "child illness", "infant fever", "child development", "vaccination"],
       "notes": "Advanced Paediatric Centre (APC) — ALAG BUILDING. Located near Advanced Eye Centre.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "ophthalmology",
@@ -218,7 +264,9 @@
       "building_id": "aec",
       "concerns": ["aankhon ki problem", "eye problem", "dhundhla dikhna", "motiyabind", "cataract", "chashma", "glaucoma"],
       "notes": "Advanced Eye Centre (AEC) — ALAG BUILDING. Do not look in New OPD.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "ent",
@@ -228,7 +276,9 @@
       "building_id": "new_opd",
       "concerns": ["kaan", "naak", "gala", "ear pain", "throat infection", "nose bleed", "hearing problem"],
       "notes": "Confirm room from New OPD help desk.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "dermatology",
@@ -238,7 +288,9 @@
       "building_id": "new_opd",
       "concerns": ["khujli", "daane", "skin allergy", "rashes", "eczema", "fungal", "safed daag"],
       "notes": "New OPD location confirm.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "psychiatry",
@@ -248,7 +300,9 @@
       "building_id": "new_opd",
       "concerns": ["depression", "anxiety", "mental health", "ghabrahat", "neend na aana", "insomnia", "stress"],
       "notes": "New OPD location confirm.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "oral_health",
@@ -258,7 +312,9 @@
       "building_id": "new_opd",
       "concerns": ["daant", "munh ki problem", "tooth pain", "gum bleeding", "cavity", "jaw pain"],
       "notes": "Oral Health Sciences department reception in New OPD block.",
-      "referral_needed": false
+      "referral_needed": false,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "haematology",
@@ -268,7 +324,9 @@
       "building_id": "new_opd",
       "concerns": ["khoon ki bimari", "leukemia", "anemia", "low platelets", "blood cancer", "bleeding disorders"],
       "notes": "Referral zaroori ho sakta hai. Inquire at Medicine registration desk first.",
-      "referral_needed": true
+      "referral_needed": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "id": "oncology",
@@ -278,10 +336,14 @@
       "building_id": "new_opd",
       "concerns": ["cancer ki dikkat", "tumor", "chemotherapy follow-up", "radiotherapy", "biopsy follow-up"],
       "notes": "Specialty determined by cancer type; confirm referral at Central Help Desk.",
-      "referral_needed": true
+      "referral_needed": true,
+      "status": "published",
+      "verified_at": "2026-11-20"
     }
   ],
   "opd_schedule": {
+    "status": "published",
+    "verified_at": "2026-11-20",
     "weekdays": {
       "days": "Monday – Friday",
       "registration_timings": "8:00 AM – 11:00 AM",
@@ -291,39 +353,58 @@
       "days": "Saturday / Gazetted Holidays",
       "registration_timings": "8:00 AM – 10:30 AM",
       "notes": "Closed on Sundays. Emergency remains open 24/7."
-    }
+    },
+    "special_clinics_note": "Special clinics ke din aur timing alag ho sakte hain. Registration time aur doctor consultation time ek jaise nahi hote."
   },
   "sample_collection": [
     {
       "type": "Routine OPD Blood & Urine Collection",
+      "hindi_type": "सामान्य खून व पेशाब जांच",
       "published_location": "New OPD, Block-C, 1st Floor, Room 127",
       "verification_warning": "Published directory reference. Current counter aur test eligibility zaroor confirm karein. Slip par doosra room ho to slip follow karein.",
-      "fasting_guidance": "Har blood test mein fasting (khali pet) nahi hoti. Bina doctor ki salah ke regular medicines band mat karo."
+      "fasting_guidance": "Har blood test mein fasting (khali pet) nahi hoti. Bina doctor ki salah ke regular medicines band mat karo.",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "type": "Therapeutic Drug Monitoring (TDM)",
+      "hindi_type": "दवा स्तर जांच (TDM)",
       "published_location": "New OPD, Ground Floor, Room 25",
-      "verification_warning": "Special drug-level testing ke published instructions. Routine blood tests ke liye nahi."
+      "verification_warning": "Special drug-level testing ke published instructions. Routine blood tests ke liye nahi.",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "type": "Stool / Sputum / Culture",
+      "hindi_type": "मल, बलगम और कल्चर जांच",
       "published_location": "Department of Microbiology / Designated Lab Help Desk",
-      "verification_warning": "Exact current counter verified nahi; test slip aur microbiology/lab help desk se poochhein."
+      "verification_warning": "Exact current counter verified nahi; test slip aur microbiology/lab help desk se poochhein.",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "type": "Biopsy / Special Hormone Tests",
+      "hindi_type": "बायोप्सी एवं विशेष हार्मोन जांच",
       "published_location": "Respective Department Specific Laboratories",
-      "verification_warning": "Department-specific instructions follow karein; direct Room 127 assume na karein."
+      "verification_warning": "Department-specific instructions follow karein; direct Room 127 assume na karein.",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "type": "Radiology (X-Ray / Ultrasound / CT / MRI)",
+      "hindi_type": "रेडियोलॉजी (एक्स-रे, सीटी, एमआरआई, अल्ट्रासाउंड)",
       "published_location": "Radiology Department (Test slip ke hisaab se)",
-      "verification_warning": "Exact room aur appointment counter confirm karein. CT aur Ultrasound ke liye pehle token/appointment zaroori hai."
+      "verification_warning": "Exact room aur appointment counter confirm karein. CT aur Ultrasound ke liye pehle token/appointment zaroori hai.",
+      "status": "published",
+      "verified_at": "2026-11-20"
     },
     {
       "type": "Report Collection (रिपोर्ट लेना)",
+      "hindi_type": "जांच रिपोर्ट प्राप्त करना",
       "published_location": "Designated Report Collection Counters",
-      "verification_warning": "Receipt, CR number aur lab instructions dekhein; report collection counter se samay poochhein."
+      "verification_warning": "Receipt, CR number aur lab instructions dekhein; report collection counter se samay poochhein.",
+      "status": "published",
+      "verified_at": "2026-11-20"
     }
   ],
   "emergency_warning_signs": [

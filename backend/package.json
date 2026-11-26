@@ -7,6 +7,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
+    "test": "node --test ../tests/backend_api.test.mjs",
     "seed": "node ../seed_data/import_seed.js"
   },
   "keywords": [

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 
 export const AudioButton = ({ text, className = "" }) => {
   const [isPlaying, setIsPlaying] = useState(false);

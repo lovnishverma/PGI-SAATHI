@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "oxlint",
+    "test": "node --test ../tests/emergency_interception.test.mjs ../tests/privacy_validator.test.mjs ../tests/authoritative_data.test.mjs ../tests/translation_parity.test.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

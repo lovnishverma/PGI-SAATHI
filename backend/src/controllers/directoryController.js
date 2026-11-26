@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs');
 const { db, isFirebaseConnected } = require('../config/firebase');
 
-// Load fallback seed data
+// Load fallback authoritative seed data
 const seedPath = path.join(__dirname, '../../../seed_data/pgi_directory_seed.json');
 let seedData = null;
 try {
@@ -11,12 +11,17 @@ try {
   console.warn("Could not read local seed JSON:", e.message);
 }
 
+function filterPublished(list) {
+  if (!Array.isArray(list)) return [];
+  return list.filter(item => item && item.status === 'published');
+}
+
 exports.getDepartments = async (req, res) => {
   try {
     const { building, search } = req.query;
 
     if (isFirebaseConnected && db) {
-      let query = db.collection('departments');
+      let query = db.collection('departments').where('status', '==', 'published');
       if (building) {
         query = query.where('building_id', '==', building);
       }
@@ -36,8 +41,8 @@ exports.getDepartments = async (req, res) => {
       }
     }
 
-    // Fallback seed
-    let depts = seedData?.departments || [];
+    // Fallback seed (strictly published)
+    let depts = filterPublished(seedData?.departments || []);
     if (building) {
       depts = depts.filter(d => d.building_id === building);
     }
@@ -60,7 +65,7 @@ exports.getDepartments = async (req, res) => {
 exports.getBuildings = async (req, res) => {
   try {
     if (isFirebaseConnected && db) {
-      const snapshot = await db.collection('buildings').get();
+      const snapshot = await db.collection('buildings').where('status', '==', 'published').get();
       if (!snapshot.empty) {
         const buildings = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         return res.json({ success: true, count: buildings.length, data: buildings, source: 'firestore' });
@@ -69,8 +74,8 @@ exports.getBuildings = async (req, res) => {
 
     return res.json({ 
       success: true, 
-      count: seedData?.buildings?.length || 0, 
-      data: seedData?.buildings || [], 
+      count: filterPublished(seedData?.buildings || []).length, 
+      data: filterPublished(seedData?.buildings || []), 
       source: 'seed_fallback' 
     });
   } catch (error) {
@@ -83,7 +88,7 @@ exports.getSchedule = async (req, res) => {
   try {
     if (isFirebaseConnected && db) {
       const doc = await db.collection('system_config').doc('opd_schedule').get();
-      if (doc.exists) {
+      if (doc.exists && doc.data().status === 'published') {
         return res.json({ success: true, data: doc.data(), source: 'firestore' });
       }
     }
@@ -129,7 +134,7 @@ exports.getSampleProtocols = async (req, res) => {
 
     return res.json({
       success: true,
-      data: seedData?.sample_collection || [],
+      data: filterPublished(seedData?.sample_collection || []),
       source: 'seed_fallback'
     });
   } catch (error) {

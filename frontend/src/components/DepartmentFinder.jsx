@@ -1,34 +1,69 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Building, AlertCircle, Phone, Clock, Info, X, ChevronDown } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { Search, Building, AlertCircle, Phone, Clock, Info, X, ChevronDown, ShieldAlert, AlertTriangle } from 'lucide-react';
+import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
+import { detectEmergency, normalizeQuery } from '../utils/emergencyInterception';
 
-export const DepartmentFinder = ({ departments, buildings, schedule }) => {
+export const DepartmentFinder = ({ departments, buildings, schedule, onOpenEmergency }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBuilding, setSelectedBuilding] = useState('all');
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   const { lang, t, highContrast } = useLanguage();
 
-  const filteredDepts = useMemo(() => {
-    const q = searchQuery.toLowerCase().trim();
-    return departments.filter(dept => {
+  // Evaluate query for acute life-threatening emergency signs
+  const emergencyCheck = useMemo(() => {
+    return detectEmergency(searchQuery);
+  }, [searchQuery]);
+
+  const { filteredDepts, matchRationaleMap } = useMemo(() => {
+    const q = normalizeQuery(searchQuery);
+    const rationales = {};
+
+    const results = departments.filter(dept => {
       // Building filter
       if (selectedBuilding !== 'all' && dept.building_id !== selectedBuilding) {
         return false;
       }
       if (!q) return true;
 
-      // Match name in current or alternate languages
-      const nameMatch = 
-        dept.name?.toLowerCase().includes(q) ||
-        dept.hindi_name?.includes(q) ||
-        dept.punjabi_name?.includes(q);
+      const normName = normalizeQuery(dept.name || '');
+      const normHindi = normalizeQuery(dept.hindi_name || '');
+      const normPunjabi = normalizeQuery(dept.punjabi_name || '');
+      const normNotes = normalizeQuery(dept.notes || '');
 
-      // Match concerns/symptoms array
-      const concernMatch = dept.concerns?.some(c => c.toLowerCase().includes(q));
+      // Name matches
+      if (normName.includes(q)) {
+        rationales[dept.id] = `Department name matched "${searchQuery}"`;
+        return true;
+      }
+      if (normHindi.includes(q)) {
+        rationales[dept.id] = `Hindi department name matched "${searchQuery}"`;
+        return true;
+      }
+      if (normPunjabi.includes(q)) {
+        rationales[dept.id] = `Punjabi department name matched "${searchQuery}"`;
+        return true;
+      }
 
-      return nameMatch || concernMatch;
+      // Concerns matches
+      if (Array.isArray(dept.concerns)) {
+        const matchedConcern = dept.concerns.find(c => normalizeQuery(c).includes(q));
+        if (matchedConcern) {
+          rationales[dept.id] = `Matched common symptom: "${matchedConcern}"`;
+          return true;
+        }
+      }
+
+      // Notes match
+      if (normNotes.includes(q)) {
+        rationales[dept.id] = `Matched in department orientation guidance`;
+        return true;
+      }
+
+      return false;
     });
+
+    return { filteredDepts: results, matchRationaleMap: rationales };
   }, [departments, searchQuery, selectedBuilding]);
 
   const getBuilding = (id) => buildings.find(b => b.id === id);
@@ -54,12 +89,12 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
     { label: lang === 'hi' ? 'दांत (Dental)' : lang === 'pa' ? 'ਦੰਦ (Dental)' : 'Dental', query: 'dental' },
     { label: lang === 'hi' ? 'सिर / नस (Brain)' : lang === 'pa' ? 'ਦਿਮਾਗ (Brain)' : 'Neurology', query: 'brain' },
     { label: lang === 'hi' ? 'गुर्दा (Kidney)' : lang === 'pa' ? 'ਗੁਰਦਾ (Kidney)' : 'Kidney', query: 'kidney' },
-    { label: lang === 'hi' ? 'बुखार / खांसी' : lang === 'pa' ? 'ਬੁਖਾਰ / ਖੰਘ' : 'Fever / Cough', query: 'fever' },
+    { label: lang === 'hi' ? 'बुखार / कमजोरी' : lang === 'pa' ? 'ਬੁਖਾਰ / ਕਮਜ਼ੋਰੀ' : 'Fever / Illness', query: 'fever' },
   ];
 
   return (
     <div className="space-y-4 pb-20 md:pb-6">
-      {/* Search Input - Prioritized at the top */}
+      {/* Search Input */}
       <div className="relative sticky top-[57px] md:top-[65px] z-20 pt-1 pb-1" role="search">
         <label htmlFor="dept-search-input" className="sr-only">
           {t('search_placeholder')}
@@ -74,9 +109,11 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder={t('search_placeholder')}
           className={`w-full pl-10 pr-10 py-3 rounded-xl border text-sm transition-all focus:outline-hidden focus:ring-2 focus:ring-blue-500 shadow-sm min-h-[44px] ${
-            highContrast 
-              ? 'bg-black text-yellow-300 border-yellow-400 placeholder:text-yellow-600' 
-              : 'bg-white text-slate-900 border-slate-300 placeholder:text-slate-400'
+            emergencyCheck.isEmergency
+              ? 'border-red-500 ring-2 ring-red-400 bg-red-50/40 text-red-950'
+              : highContrast 
+                ? 'bg-black text-yellow-300 border-yellow-400 placeholder:text-yellow-600' 
+                : 'bg-white text-slate-900 border-slate-300 placeholder:text-slate-400'
           }`}
         />
         {searchQuery && (
@@ -89,6 +126,70 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
           </button>
         )}
       </div>
+
+      {/* PRIORITY EMERGENCY INTERCEPTION BANNER */}
+      {emergencyCheck.isEmergency && (
+        <div 
+          role="alert" 
+          aria-live="assertive"
+          className="bg-red-600 text-white p-4 rounded-2xl shadow-lg border-2 border-red-700 animate-in fade-in duration-200"
+        >
+          <div className="flex items-start gap-3">
+            <div className="p-2 bg-white/20 rounded-xl shrink-0">
+              <ShieldAlert className="w-6 h-6 text-white animate-pulse" aria-hidden="true" />
+            </div>
+            <div className="flex-1 space-y-2">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-white text-red-700 px-2 py-0.5 rounded">
+                  Acute Red-Flag Symptom Detected
+                </span>
+                <h3 className="text-base font-extrabold mt-1">
+                  CRITICAL ALERT: DO NOT WAIT IN OPD REGISTRATION QUEUES!
+                </h3>
+                <p className="text-xs text-red-100 font-medium mt-0.5">
+                  Sign detected: <strong className="text-white underline">{emergencyCheck.label}</strong>. Routine morning OPD clinics cannot treat active life-threatening emergencies.
+                </p>
+              </div>
+
+              <div className="bg-red-700/80 p-3 rounded-xl border border-red-500 text-xs text-white space-y-1">
+                <p className="font-bold flex items-center gap-1.5">
+                  <AlertTriangle className="w-4 h-4 text-yellow-300 shrink-0" />
+                  <span>Immediate Action Protocol:</span>
+                </p>
+                <p className="text-[11px] text-red-100 leading-relaxed">
+                  Proceed directly to <strong>Nehru Hospital Emergency Block</strong> or <strong>Advanced Trauma Centre (ATC)</strong>. Emergency triage operates 24x7 without prior OPD card or token.
+                </p>
+              </div>
+
+              <div className="flex flex-wrap gap-2 pt-1">
+                {onOpenEmergency && (
+                  <button
+                    onClick={onOpenEmergency}
+                    className="px-3.5 py-2.5 bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-bold text-xs rounded-xl inline-flex items-center gap-1.5 shadow-sm transition-colors min-h-[44px]"
+                  >
+                    <ShieldAlert className="w-4 h-4 text-red-700" />
+                    <span>Open Emergency Modal</span>
+                  </button>
+                )}
+                <a
+                  href="tel:01722755555"
+                  className="px-3.5 py-2.5 bg-white text-red-700 font-bold text-xs rounded-xl inline-flex items-center gap-1.5 hover:bg-red-50 shadow-sm transition-colors min-h-[44px]"
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>Call Emergency (0172-2755555)</span>
+                </a>
+                <a
+                  href="tel:01722755454"
+                  className="px-3.5 py-2.5 bg-slate-900 text-white font-semibold text-xs rounded-xl inline-flex items-center gap-1.5 hover:bg-slate-800 transition-colors min-h-[44px]"
+                >
+                  <Phone className="w-4 h-4 text-emerald-400" />
+                  <span>Call Trauma Centre (0172-2755454)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Quick Symptom Chips */}
       <div className="space-y-1">
@@ -130,8 +231,8 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
         </div>
       </div>
 
-      {/* OPD Schedule Card - Collapsible to avoid cluttering fold */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-3.5 shadow-sm border border-blue-800 transition-all">
+      {/* OPD Schedule Card - Collapsible */}
+      <div className="bg-linear-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-3.5 shadow-sm border border-blue-800 transition-all">
         <button
           onClick={() => setIsScheduleOpen(!isScheduleOpen)}
           aria-expanded={isScheduleOpen}
@@ -201,11 +302,24 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
         aria-live="polite"
         className="flex items-center justify-between text-xs text-slate-500 px-1"
       >
-        <span>Showing {filteredDepts.length} departments</span>
-        <span className="text-[11px] bg-slate-100 px-2 py-0.5 rounded text-slate-600">
-          {t('verified_badge')}
+        <span>
+          Showing {filteredDepts.length} {filteredDepts.length === 1 ? 'department' : 'departments'}
+          {searchQuery && ` for "${searchQuery}"`}
+        </span>
+        <span className="text-[11px] bg-slate-100 px-2 py-0.5 rounded text-slate-600 font-medium">
+          Verified Directory
         </span>
       </div>
+
+      {/* Routine Non-Diagnostic Clinical Notice */}
+      {searchQuery && !emergencyCheck.isEmergency && (
+        <div className="bg-blue-50/70 border border-blue-200 rounded-xl px-3 py-2 text-[11px] text-blue-900 flex items-center gap-2">
+          <Info className="w-4 h-4 text-blue-600 shrink-0" aria-hidden="true" />
+          <span>
+            Search suggestions provide hospital building orientation only and do not constitute clinical diagnosis or medical triage.
+          </span>
+        </div>
+      )}
 
       {/* Departments List */}
       <div className="space-y-3">
@@ -249,6 +363,7 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
             const deptTitle = getDeptTitle(dept);
             const buildingTitle = getBuildingTitle(building);
             const speechText = `${deptTitle}. Location: ${buildingTitle}. ${dept.notes || ''}`;
+            const rationale = matchRationaleMap[dept.id];
 
             return (
               <div
@@ -270,6 +385,13 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
                   </div>
                   <AudioButton text={speechText} />
                 </div>
+
+                {/* Match Rationale Pill */}
+                {rationale && (
+                  <div className="mt-2 text-[10px] text-blue-700 bg-blue-50 px-2 py-0.5 rounded-md inline-block font-medium">
+                    {rationale}
+                  </div>
+                )}
 
                 {/* Building Location Badge */}
                 <div className="mt-3 flex items-center gap-1.5 flex-wrap">
@@ -315,8 +437,8 @@ export const DepartmentFinder = ({ departments, buildings, schedule }) => {
                 {/* Symptom / Concerns tags */}
                 {dept.concerns && dept.concerns.length > 0 && (
                   <div className="mt-3 pt-2.5 border-t border-slate-100 flex flex-wrap gap-1">
-                    <span className="text-[10px] text-slate-400 font-medium py-0.5">Matched for:</span>
-                    {dept.concerns.slice(0, 5).map((c, i) => (
+                    <span className="text-[10px] text-slate-400 font-medium py-0.5">Key topics:</span>
+                    {dept.concerns.slice(0, 6).map((c, i) => (
                       <span key={i} className="text-[10px] bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">
                         {c}
                       </span>

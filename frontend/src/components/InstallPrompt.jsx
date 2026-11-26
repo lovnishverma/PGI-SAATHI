@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Download, X, Smartphone } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 
 export const InstallPrompt = () => {
   const [deferredPrompt, setDeferredPrompt] = useState(null);

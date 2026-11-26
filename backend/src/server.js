@@ -6,14 +6,27 @@ const apiRoutes = require('./routes/api');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware
-app.use(cors({
-  origin: '*', // Allow frontend requests
-  methods: ['GET', 'POST', 'OPTIONS']
-}));
-app.use(express.json());
+// Security Headers Middleware (Zero-dependency helmet implementation)
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'geolocation=(), camera=(), microphone=()');
+  next();
+});
 
-// Request logging middleware
+// Middleware: CORS & Body Size Limitation
+app.use(cors({
+  origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+// Strict request payload limit: prevents memory exhaustion/DoS attacks
+app.use(express.json({ limit: '10kb' }));
+
+// Request logging middleware (excluding sensitive body contents)
 app.use((req, res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
   next();
@@ -25,7 +38,7 @@ app.get('/health', (req, res) => {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     service: 'PGI Saathi Backend API',
-    version: '2.0.0'
+    version: '2.2.0'
   });
 });
 
@@ -43,10 +56,12 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, error: 'Internal Server Error' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 PGI Saathi Backend running on port ${PORT}`);
-  console.log(`📍 Health Check: http://localhost:${PORT}/health`);
-  console.log(`📍 Departments:  http://localhost:${PORT}/api/departments`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 PGI Saathi Backend running on port ${PORT}`);
+    console.log(`📍 Health Check: http://localhost:${PORT}/health`);
+    console.log(`📍 Departments:  http://localhost:${PORT}/api/departments`);
+  });
+}
 
 module.exports = app;

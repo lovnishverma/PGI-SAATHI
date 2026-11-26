@@ -1,0 +1,22 @@
+{
+  "name": "pgi-saathi",
+  "version": "2.2.0",
+  "description": "Independent Patient Navigation and Visit Assistance PWA for PGIMER Chandigarh",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "test:frontend": "cd frontend && npm test",
+    "test:backend": "cd backend && npm test",
+    "lint": "cd frontend && npm run lint",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "pgimer",
+    "patient-navigation",
+    "pwa",
+    "offline-first",
+    "healthcare-accessibility"
+  ],
+  "author": "Lovnish Verma & PGI Saathi Contributors",
+  "license": "MIT"
+}

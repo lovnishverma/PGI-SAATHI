@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { AlertTriangle, Phone, X, ShieldAlert } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 
 export const EmergencyModal = ({ isOpen, onClose, emergencyData }) => {
   const { t } = useLanguage();

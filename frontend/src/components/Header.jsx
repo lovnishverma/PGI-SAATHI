@@ -1,6 +1,6 @@
 import React from 'react';
 import { AlertTriangle, Eye, Search, Building2, CheckSquare, FlaskConical, HelpCircle } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 import { LogoMark } from './LogoMark';
 
 export const Header = ({ onOpenEmergency, activeTab, setActiveTab }) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Compass, Info, ChevronDown, ChevronUp, UserCheck, AlertTriangle } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 
 export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice, defaultOpen = false }) => {

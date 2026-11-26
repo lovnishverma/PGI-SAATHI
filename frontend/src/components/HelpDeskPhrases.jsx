@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { HelpCircle, MessageSquare, Send, CheckCircle2, Phone, ExternalLink } from 'lucide-react';
-import { useLanguage } from '../context/LanguageContext';
+import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 import { dataService } from '../services/dataService';
 
@@ -18,11 +18,15 @@ export const HelpDeskPhrases = ({ phrases, numbers, officialLinks }) => {
     setLoading(true);
     setSubmitStatus(null);
     try {
-      await dataService.submitFeedback({
+      const res = await dataService.submitFeedback({
         category: feedbackCategory,
         message: feedbackMsg
       });
-      setSubmitStatus({ success: true, text: "Report submitted. Thank you for helping keep information accurate!" });
+      setSubmitStatus({ 
+        success: true, 
+        text: res.message,
+        persisted: res.persisted 
+      });
       setFeedbackMsg('');
     } catch (err) {
       setSubmitStatus({ success: false, text: err.message || "Failed to submit." });

@@ -1,5 +1,17 @@
 const { db, admin, isFirebaseConnected } = require('../config/firebase');
 
+// Multi-pattern regex for identifying sensitive identifiers
+const PHONE_REGEX = /\b[6-9]\d{9}\b/;
+const AADHAAR_REGEX = /\b\d{4}\s?\d{4}\s?\d{4}\b/;
+const CR_EXPLICIT_REGEX = /\b(?:cr\s*(?:no\.?|num(?:ber)?)?|c\.r\.?)\s*[:#-]?\s*\d{4,14}\b/i;
+const LONG_DIGIT_REGEX = /\b\d{10,14}\b/;
+const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
+
+const FORBIDDEN_KEYWORDS = [
+  'cr number', 'cr no', 'cr card', 'aadhaar', 'aadhar',
+  'prescription', 'patient name', 'report pdf', 'biopsy report'
+];
+
 exports.submitFeedback = async (req, res) => {
   try {
     const { category, message } = req.body;
@@ -18,16 +30,43 @@ exports.submitFeedback = async (req, res) => {
       });
     }
 
-    // Privacy Protection: Prohibit sensitive medical or patient identifiers
+    // Privacy Protection: Multi-layered PII & PHI detection
     const lower = message.toLowerCase();
-    const forbiddenKeywords = ['cr number', 'cr no', 'aadhaar', 'prescription', 'patient name', 'report pdf'];
-    for (const kw of forbiddenKeywords) {
+    for (const kw of FORBIDDEN_KEYWORDS) {
       if (lower.includes(kw)) {
         return res.status(400).json({
           success: false,
           error: "For patient confidentiality, please do not include CR numbers, patient identifiers, or medical reports."
         });
       }
+    }
+
+    if (PHONE_REGEX.test(message)) {
+      return res.status(400).json({
+        success: false,
+        error: "Personal phone number detected. Please remove personal contact numbers."
+      });
+    }
+
+    if (CR_EXPLICIT_REGEX.test(message) || LONG_DIGIT_REGEX.test(message)) {
+      return res.status(400).json({
+        success: false,
+        error: "Potential patient ID or CR number detected. Please remove identification numbers."
+      });
+    }
+
+    if (AADHAAR_REGEX.test(message)) {
+      return res.status(400).json({
+        success: false,
+        error: "Possible 12-digit national ID detected. Please remove sensitive government IDs."
+      });
+    }
+
+    if (EMAIL_REGEX.test(message)) {
+      return res.status(400).json({
+        success: false,
+        error: "Email address detected. Please do not submit personal contact details."
+      });
     }
 
     const feedbackPayload = {
@@ -44,21 +83,24 @@ exports.submitFeedback = async (req, res) => {
       });
       return res.status(201).json({
         success: true,
+        persisted: true,
         id: docRef.id,
-        message: "Feedback submitted successfully to Firestore."
+        message: "Feedback submitted successfully to central review queue."
       });
     }
 
-    // Standalone fallback response
-    return res.status(201).json({
+    // Standalone / Mock Mode: Truthful response that data is not persisted to cloud database
+    return res.status(200).json({
       success: true,
+      persisted: false,
+      mock: true,
       id: "mock_" + Date.now(),
-      message: "Feedback recorded in mock server mode.",
+      message: "Feedback acknowledged in standalone server mode (Firestore database not connected).",
       data: feedbackPayload
     });
 
   } catch (error) {
     console.error("Error submitting feedback:", error);
-    return res.status(500).json({ success: false, error: "Internal server error while saving feedback." });
+    return res.status(500).json({ success: false, error: "Internal server error while processing feedback." });
   }
 };

@@ -10,20 +10,22 @@ service cloud.firestore {
       );
     }
 
-    // Public read for published directory entries (Departments & Buildings)
+    // Public directory entries: ONLY published records are publicly readable
+    // Prevents accidental leakage of draft, retracted, or unverified hospital guidance
     match /departments/{deptId} {
-      allow read: if true;
+      allow read: if resource.data.status == 'published';
       allow write: if isAdmin();
     }
 
     match /buildings/{buildingId} {
-      allow read: if true;
+      allow read: if resource.data.status == 'published';
       allow write: if isAdmin();
     }
 
     // System configuration (OPD timings, emergency guidelines, test counters)
+    // Only published configuration documents are readable by public clients
     match /system_config/{configId} {
-      allow read: if true;
+      allow read: if resource.data.status == 'published' || !('status' in resource.data);
       allow write: if isAdmin();
     }
 
@@ -32,9 +34,9 @@ service cloud.firestore {
     match /feedback/{feedbackId} {
       allow create: if request.resource.data.keys().hasAll(['category', 'message', 'created_at'])
                     && request.resource.data.message is string
-                    && request.resource.data.message.size() > 5
+                    && request.resource.data.message.size() >= 5
                     && request.resource.data.message.size() <= 1200
-                    && (!request.resource.data.keys().hasAny(['cr_number', 'aadhaar', 'medical_report', 'prescription']));
+                    && (!request.resource.data.keys().hasAny(['cr_number', 'aadhaar', 'medical_report', 'prescription', 'phone', 'patient_name']));
       allow read, update, delete: if isAdmin();
     }
 
@@ -47,7 +49,7 @@ service cloud.firestore {
       allow read, write: if isAdmin();
     }
 
-    // Deny all other unmatched paths
+    // Deny all other unmatched paths by default
     match /{document=**} {
       allow read, write: if false;
     }

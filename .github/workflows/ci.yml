@@ -1,4 +1,4 @@
-name: PGI Saathi CI
+name: PGI Saathi CI Quality Gate
 
 on:
   push:
@@ -6,12 +6,17 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  build-and-test:
+  quality-gate:
+    name: Lint, Test, & Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Source Code
         uses: actions/checkout@v4
 
       - name: Set up Node.js
@@ -22,16 +27,20 @@ jobs:
             frontend/package-lock.json
             backend/package-lock.json
 
-      # Test Frontend Build
+      # 1. Frontend Checks
       - name: Install Frontend Dependencies
-        run: cd frontend && npm install
+        run: cd frontend && npm ci
 
-      - name: Build Frontend (Vite)
+      - name: Frontend Code Quality (oxlint)
+        run: cd frontend && npm run lint
+
+      - name: Build Frontend Production Artifact (Vite)
         run: cd frontend && npm run build
 
-      # Test Backend
+      # 2. Backend Checks
       - name: Install Backend Dependencies
-        run: cd backend && npm install
+        run: cd backend && npm ci
 
-      - name: Test Backend Initialization
-        run: cd backend && node -e "require('./src/server.js'); console.log('Backend initialized successfully'); process.exit(0);"
+      # 3. Automated Test Suite (Emergency Interception, Data Schemas, Privacy, API Contracts)
+      - name: Execute Automated Regression Test Suite
+        run: node --test tests/*.test.mjs
