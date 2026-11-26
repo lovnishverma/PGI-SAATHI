@@ -71,6 +71,8 @@ describe('Authoritative Data Governance & Schemas', () => {
     assert.ok(schedule.weekdays.registration_timings.includes('8:00 AM'));
     assert.ok(schedule.weekdays.registration_timings.includes('11:00 AM'));
     assert.ok(schedule.saturday_and_holidays.registration_timings.includes('10:30 AM'));
+    assert.ok(schedule.afternoon_special_clinics.registration_timings.includes('2:00 PM'));
+    assert.ok(schedule.inpatient_and_visiting_rules.attendant_passes.includes('2 attendant passes'));
   });
 
   test('patient_journey_steps contains 6-step chronological walkthrough', () => {

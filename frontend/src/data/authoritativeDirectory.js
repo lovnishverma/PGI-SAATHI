@@ -923,6 +923,18 @@ export const authoritativeDirectory = {
       registration_timings: "8:00 AM – 10:30 AM",
       notes: "Closed on Sundays for routine OPD. Emergency remains open 24/7."
     },
+    afternoon_special_clinics: {
+      days: "Monday – Friday",
+      registration_timings: "2:00 PM – 3:00 PM",
+      consultation_timings: "2:00 PM – 5:00 PM",
+      notes: "Special clinics (e.g. Diabetology, Glaucoma, Allergy, Paediatric surgery) require prior referral or follow-up allotment from morning general OPD."
+    },
+    inpatient_and_visiting_rules: {
+      attendant_passes: "Up to 2 attendant passes issued per admitted indoor patient at security desk upon CR card verification.",
+      morning_visiting_slot: "6:00 AM – 7:00 AM",
+      evening_visiting_slot: "6:30 PM – 7:30 PM",
+      icu_notes: "ICU & High-Dependency units have restricted visitor entry with dedicated physician briefing windows."
+    },
     special_clinics_note: "Special clinics ke din aur timing alag ho sakte hain. Registration time aur doctor consultation time ek jaise nahi hote."
   },
 

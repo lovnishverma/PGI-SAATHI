@@ -4,6 +4,7 @@ import { useLanguage } from '../context/useLanguage';
 import { AudioButton } from './AudioButton';
 import { FloorDirectory } from './FloorDirectory';
 import { AmenitiesGuide } from './AmenitiesGuide';
+import { CampusMap } from './CampusMap';
 
 export const BuildingsGuide = ({ buildings = [], floorDirectory = [], pharmacies = [], sarais = [], transport = null, welfare = null }) => {
   const { lang, highContrast } = useLanguage();
@@ -72,6 +73,9 @@ export const BuildingsGuide = ({ buildings = [], floorDirectory = [], pharmacies
           ))}
         </div>
       </div>
+
+      {/* Interactive 2D Campus Layout Map */}
+      <CampusMap buildings={buildings} />
 
       {/* New OPD Floor-by-Floor Directory */}
       {floorDirectory && floorDirectory.length > 0 && (

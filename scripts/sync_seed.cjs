@@ -15,6 +15,7 @@ import(pathToFileURL(authPath).href).then(({ authoritativeDirectory }) => {
   seed.welfare_and_schemes = authoritativeDirectory.welfare_and_schemes;
   seed.emergency_triage_zones = authoritativeDirectory.emergency_triage_zones;
   seed.online_pre_registration_guide = authoritativeDirectory.online_pre_registration_guide;
+  seed.opd_schedule = authoritativeDirectory.opd_schedule;
 
   fs.writeFileSync(seedPath, JSON.stringify(seed, null, 2), 'utf8');
   console.log('Successfully synced seed_data/pgi_directory_seed.json with all scraped authentic data');

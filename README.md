@@ -58,16 +58,24 @@ Detailed sprint milestones, task assignments, and pull-request procedures are ou
 
 ---
 
-## 📱 Core Features (MVP)
+## 📱 Core Features (Production Standard)
 
-* 🔍 **Smart Department Finder**: Suggests the right starting department based on common symptoms or health concerns in Hindi, Punjabi, or English.
-* 🏢 **Building & Center Clarification**: Explicitly alerts users when their department is in a separate building (e.g., Advanced Cardiac Centre, Advanced Eye Centre, Advanced Paediatric Centre, or Trauma Centre) so they do not waste time in New OPD queues.
-* ⏰ **OPD Timing & Cut-offs**: Shows active registration windows (8:00 AM – 11:00 AM weekdays; 8:00 AM – 10:30 AM Saturdays) with countdown alerts.
-* 🧪 **Lab Test & Sample Collection Guide**: Practical walkthrough for blood/urine collection (Room 127), Therapeutic Drug Monitoring (Room 25), and sample fasting advisories.
-* 📝 **Offline Preparation Checklist**: Saves required documents (ID proof, old cards, reports, prescriptions) in browser memory without sending private data to any server.
-* 🚨 **Emergency Fast-Track**: Prominent warning banner directing acute emergency symptoms directly to Emergency / Nehru Hospital without waiting for routine OPD registration.
-* 🌐 **Trilingual by Design**: Full UI and content parity in English, Hindi (हिन्दी), and Punjabi (ਪੰਜਾਬੀ).
-* 📴 **Offline-First Resilience**: All directory content and guides remain accessible even without mobile reception inside hospital basements.
+* 🔍 **Smart Department Finder**: Suggests the right starting department based on common symptoms or health concerns in Hindi, Punjabi, or English with instant clinical red-flag emergency interception.
+* 👣 **6-Step Chronological Patient Journey Wizard**: Interactive step-by-step roadmap from Gate arrival (7:30–8:00 AM) to Token Dispenser, ₹10 CR card generation, Room 127 blood lab, doctor consultation, and discounted pharmacy.
+* 🗺️ **Interactive 2D Campus Map**: SVG spatial schematic showing Gate 1, 2, 3 access relative to New OPD, Nehru Hospital, ACC, AEC, APC, ATC, and Sarais with interactive directions.
+* 🏢 **New OPD Floor-by-Floor Directory**: Verified Ground through 5th Floor layout mapping Room 127 (Block C 1st Floor), Room 25 TDM, Internal Medicine units, Surgery, and specialty clinics.
+* 🚌 **Free Campus Transit & Wheelchairs**: Free battery-operated golf carts (BOV) for senior citizens and disabled visitors, Swaraj Mazda shuttle buses, wheelchair/stretcher stations, and security control assistance.
+* 💊 **Subsidized AMRIT Pharmacies & Night Stays**: Directs patients to in-campus HLL AMRIT pharmacies (50%–70% discount), Jan Aushadhi generic stores, and affordable Sarais (Infosys Red Cross Sarai, Rotary Sarai, Hansraj Dharamshala at ₹50–₹100/night).
+* 🏥 **Govt Schemes & 24x7 Blood Bank**: Physical help desks for Ayushman Bharat (AB-PMJAY), Poor Patient Welfare Fund (PPWF) BPL assistance, and Department of Transfusion Medicine replacement donor slip guidelines.
+* 🚨 **Color-Coded Emergency Triage Protocol**: Educates attendants on Nehru Hospital & ATC Red Zone (Hall A immediate resuscitation), Yellow Zone (Hall C observation), and Green Zone (minor ambulatory).
+* 🌐 **Online Pre-Registration Rules**: Clear guidance for `pgimer.edu.in` pre-registration, 30-day advance booking, 6:00 AM visit cutoff, and dedicated Counter No. 1 morning reporting times.
+* ⏰ **OPD Timing & Cut-offs**: Shows general morning registration windows (8:00 AM – 11:00 AM weekdays; 8:00 AM – 10:30 AM Saturdays), afternoon special clinics (2:00 PM – 3:00 PM registration), and inpatient visiting hours (6:00–7:00 AM & 6:30–7:30 PM).
+* 🧪 **Lab Test & Sample Collection Guide**: Practical walkthrough for blood/urine collection (Room 127), Therapeutic Drug Monitoring (Room 25), and 4 Golden Sample questions.
+* 📝 **Offline Preparation Checklist**: Saves required documents in device local storage without transmitting personal data, with one-tap WhatsApp checklist sharing.
+* 🗣️ **Help Desk Pocket Phrases**: Multilingual audio-enabled enquiry phrases in Hindi, Punjabi, and English for asking directions at hospital reception.
+* 🛡️ **Strict PII Privacy Protection**: Client- and backend-level regex redaction intercepting phone numbers, 12-digit Aadhaar, and CR numbers in feedback submissions.
+* 🧪 **Automated Quality Testing**: 40 comprehensive automated test suites (`node --test tests/*.test.mjs`) guarding schemas, security, clinical keywords, and translations.
+* 📴 **100% Offline-First PWA**: Versioned service worker caching (`pgi-saathi-v2.2.0`) enabling full navigation inside hospital basements with zero network signal.
 
 ---
 
