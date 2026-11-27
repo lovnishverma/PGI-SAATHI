@@ -78,6 +78,10 @@ async function importSeedData() {
     protocols: seed.sample_collection,
     updated_at: admin.firestore.Timestamp.now()
   });
+  await db.collection('system_config').doc('golden_rules').set({
+    rules: seed.golden_rules || [],
+    updated_at: admin.firestore.Timestamp.now()
+  });
 
   console.log("🎉 Firestore database seeding complete for PGI Saathi (Spark Plan Serverless)!");
 }

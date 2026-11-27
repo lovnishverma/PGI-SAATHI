@@ -19,16 +19,18 @@ app.use((req, res, next) => {
 // Middleware: CORS & Body Size Limitation
 app.use(cors({
   origin: process.env.ALLOWED_ORIGINS ? process.env.ALLOWED_ORIGINS.split(',') : '*',
-  methods: ['GET', 'POST', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 // Strict request payload limit: prevents memory exhaustion/DoS attacks
-app.use(express.json({ limit: '10kb' }));
+app.use(express.json({ limit: '16kb' }));
 
 // Request logging middleware (excluding sensitive body contents)
 app.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  if (process.env.NODE_ENV !== 'test') {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  }
   next();
 });
 
@@ -52,7 +54,10 @@ app.use((req, res) => {
 
 // Global error handler
 app.use((err, req, res, next) => {
-  console.error("Server Error:", err.stack);
+  if (err.type === 'entity.too.large') {
+    return res.status(413).json({ success: false, error: 'Payload too large.' });
+  }
+  console.error('Server Error:', err.stack);
   res.status(500).json({ success: false, error: 'Internal Server Error' });
 });
 

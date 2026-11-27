@@ -7,7 +7,13 @@ export const GoldenRules = ({ goldenRules, cardProcess, lostAdvice, defaultOpen 
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const { lang, highContrast } = useLanguage();
 
-  const fullAudio = goldenRules.map(r => `${r.num}. ${lang === 'hi' ? r.hindi_title : r.title}. ${lang === 'hi' ? r.hindi_desc : r.desc}`).join(" ");
+  const fullAudio = goldenRules
+    .map((r) => {
+      const title = lang === 'hi' ? r.hindi_title : lang === 'pa' ? (r.punjabi_title || r.title) : r.title;
+      const desc = lang === 'hi' ? r.hindi_desc : lang === 'pa' ? (r.punjabi_desc || r.desc) : r.desc;
+      return `${r.num}. ${title}. ${desc}`;
+    })
+    .join(' ');
 
   return (
     <div className={`rounded-2xl border transition-all shadow-xs overflow-hidden ${

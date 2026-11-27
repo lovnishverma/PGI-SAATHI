@@ -1,106 +1,77 @@
-const { db, admin, isFirebaseConnected } = require('../config/firebase');
+const dataStore = require('../utils/dataStore');
+const { validateNoPII } = require('../utils/piiGuard');
 
-// Multi-pattern regex for identifying sensitive identifiers
-const PHONE_REGEX = /\b[6-9]\d{9}\b/;
-const AADHAAR_REGEX = /\b\d{4}\s?\d{4}\s?\d{4}\b/;
-const CR_EXPLICIT_REGEX = /\b(?:cr\s*(?:no\.?|num(?:ber)?)?|c\.r\.?)\s*[:#-]?\s*\d{4,14}\b/i;
-const LONG_DIGIT_REGEX = /\b\d{10,14}\b/;
-const EMAIL_REGEX = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/;
-
-const FORBIDDEN_KEYWORDS = [
-  'cr number', 'cr no', 'cr card', 'aadhaar', 'aadhar',
-  'prescription', 'patient name', 'report pdf', 'biopsy report'
-];
+const ALLOWED_CATEGORIES = ['incorrect_room', 'stale_timing', 'accessibility_issue', 'general'];
 
 exports.submitFeedback = async (req, res) => {
   try {
-    const { category, message } = req.body;
+    const { category, message, target_id, target_type } = req.body || {};
 
-    if (!message || typeof message !== 'string' || message.trim().length < 5) {
-      return res.status(400).json({ 
-        success: false, 
-        error: "Message must be at least 5 characters long." 
-      });
-    }
-
-    if (message.length > 1200) {
-      return res.status(400).json({ 
-        success: false, 
-        error: "Message exceeds maximum allowed length of 1200 characters." 
-      });
-    }
-
-    // Privacy Protection: Multi-layered PII & PHI detection
-    const lower = message.toLowerCase();
-    for (const kw of FORBIDDEN_KEYWORDS) {
-      if (lower.includes(kw)) {
-        return res.status(400).json({
-          success: false,
-          error: "For patient confidentiality, please do not include CR numbers, patient identifiers, or medical reports."
-        });
-      }
-    }
-
-    if (PHONE_REGEX.test(message)) {
+    if (!message || typeof message !== 'string' || message.trim().length <= 5) {
       return res.status(400).json({
         success: false,
-        error: "Personal phone number detected. Please remove personal contact numbers."
+        error: 'Message must be more than 5 characters long.'
       });
     }
 
-    if (CR_EXPLICIT_REGEX.test(message) || LONG_DIGIT_REGEX.test(message)) {
+    const trimmedMessage = message.trim();
+    if (trimmedMessage.length > 1200) {
       return res.status(400).json({
         success: false,
-        error: "Potential patient ID or CR number detected. Please remove identification numbers."
+        error: 'Message exceeds maximum allowed length of 1200 characters.'
       });
     }
 
-    if (AADHAAR_REGEX.test(message)) {
-      return res.status(400).json({
-        success: false,
-        error: "Possible 12-digit national ID detected. Please remove sensitive government IDs."
-      });
-    }
+    const normalizedCategory = ALLOWED_CATEGORIES.includes(category) ? category : 'general';
 
-    if (EMAIL_REGEX.test(message)) {
+    const piiCheck = validateNoPII(req.body, trimmedMessage);
+    if (!piiCheck.valid) {
       return res.status(400).json({
         success: false,
-        error: "Email address detected. Please do not submit personal contact details."
+        error: piiCheck.reason
       });
     }
 
     const feedbackPayload = {
-      category: category || 'general',
-      message: message.trim(),
-      created_at: new Date().toISOString(),
-      status: 'pending'
+      category: normalizedCategory,
+      message: trimmedMessage,
+      status: 'pending',
+      created_at: new Date().toISOString()
     };
 
-    if (isFirebaseConnected && db) {
-      const docRef = await db.collection('feedback').add({
+    if (typeof target_id === 'string' && target_id.trim()) {
+      feedbackPayload.target_id = target_id.trim().slice(0, 80);
+    }
+    if (target_type === 'department' || target_type === 'building') {
+      feedbackPayload.target_type = target_type;
+    }
+
+    if (dataStore.isFirebaseConnected && dataStore.db) {
+      const docRef = await dataStore.db.collection('feedback').add({
         ...feedbackPayload,
-        created_at: admin.firestore.Timestamp.now()
+        created_at: dataStore.admin.firestore.Timestamp.now()
       });
       return res.status(201).json({
         success: true,
-        persisted: true,
         id: docRef.id,
-        message: "Feedback submitted successfully to central review queue."
+        message: 'Feedback submitted successfully to Firestore.'
       });
     }
 
-    // Standalone / Mock Mode: Truthful response that data is not persisted to cloud database
-    return res.status(200).json({
-      success: true,
-      persisted: false,
-      mock: true,
-      id: "mock_" + Date.now(),
-      message: "Feedback acknowledged in standalone server mode (Firestore database not connected).",
-      data: feedbackPayload
-    });
+    const mockEntry = {
+      id: 'mock_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+      ...feedbackPayload
+    };
+    dataStore.mockStore.feedback.unshift(mockEntry);
 
+    return res.status(201).json({
+      success: true,
+      id: mockEntry.id,
+      message: 'Feedback recorded in mock server mode.',
+      data: mockEntry
+    });
   } catch (error) {
-    console.error("Error submitting feedback:", error);
-    return res.status(500).json({ success: false, error: "Internal server error while processing feedback." });
+    console.error('Error submitting feedback:', error);
+    return res.status(500).json({ success: false, error: 'Internal server error while saving feedback.' });
   }
 };

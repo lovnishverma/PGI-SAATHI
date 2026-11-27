@@ -31,7 +31,7 @@ This roadmap aligns engineering deliverables with the Software Requirements Spec
 ---
 
 ## 📍 Phase 2: Improvement & Field Validation
-* **Status:** Planned 📋
+* **Status:** In Progress 🚀
 * **Scope:**
   - Real-world usability testing on low-cost Android hardware with patient attendants at PGIMER.
   - Optional browser Text-to-Speech (TTS) audio readout of guides in Hindi and Punjabi.
